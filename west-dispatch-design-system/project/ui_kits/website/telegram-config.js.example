@@ -1,0 +1,6 @@
+// Copy this file to telegram-config.js and fill in your credentials.
+// telegram-config.js is git-ignored and never committed.
+window.WD_ENV = {
+  TG_TOKEN: "YOUR_TELEGRAM_BOT_TOKEN",
+  TG_CHAT:  "YOUR_TELEGRAM_CHAT_ID",
+};

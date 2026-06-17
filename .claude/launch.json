@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "marketing-site",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "5500", "--directory", "west-dispatch-design-system/project"],
+      "port": 5500
+    },
+    {
+      "name": "design-system-gallery",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "5501", "--directory", "west-dispatch-design-system/project"],
+      "port": 5501
+    }
+  ]
+}

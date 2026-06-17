@@ -1,0 +1,76 @@
+/* ============================================================
+   West Dispatch — Color Tokens
+   Dark, premium logistics palette: deep slate-navy base,
+   electric blue primary (trust), logo crimson energy accent.
+   ============================================================ */
+:root {
+  /* ---- Brand primitives ---- */
+  --wd-navy-900: #070B12;   /* near-black base */
+  --wd-navy-850: #0A0F18;
+  --wd-navy-800: #0D1420;   /* page background */
+  --wd-navy-750: #111A2A;
+  --wd-navy-700: #152032;   /* raised surface */
+  --wd-navy-600: #1B2A40;   /* card / panel */
+  --wd-navy-500: #243650;   /* hover surface */
+  --wd-navy-400: #324965;   /* border strong */
+  --wd-slate-700: #2A3A4F;  /* logo navy family */
+
+  /* Electric blue — primary accent (trust) */
+  --wd-blue-300: #7FB0FF;
+  --wd-blue-400: #4D8DFF;
+  --wd-blue-500: #2E6BFF;   /* primary */
+  --wd-blue-600: #1E54E0;
+  --wd-blue-700: #163FAd;
+
+  /* Crimson — energy accent (from logo arrow) */
+  --wd-red-400: #FF4D6E;
+  --wd-red-500: #F0294A;    /* logo red */
+  --wd-red-600: #D21338;
+
+  /* Signal */
+  --wd-green-500: #1FBF75;  /* loaded / success */
+  --wd-amber-500: #F5A524;  /* in-transit / warning */
+
+  /* Neutrals / text */
+  --wd-white: #FFFFFF;
+  --wd-fg-1: #EEF3FA;       /* primary text on dark */
+  --wd-fg-2: #AEBCD0;       /* secondary text */
+  --wd-fg-3: #738096;       /* muted / captions */
+  --wd-fg-4: #4A5670;       /* disabled / faint */
+
+  /* ---- Semantic aliases ---- */
+  --bg-base: var(--wd-navy-800);
+  --bg-deep: var(--wd-navy-900);
+  --bg-raised: var(--wd-navy-700);
+  --surface-card: var(--wd-navy-600);
+  --surface-card-hover: var(--wd-navy-500);
+  --surface-inset: var(--wd-navy-850);
+
+  --text-strong: var(--wd-fg-1);
+  --text-body: var(--wd-fg-2);
+  --text-muted: var(--wd-fg-3);
+  --text-faint: var(--wd-fg-4);
+  --text-on-accent: var(--wd-white);
+
+  --accent: var(--wd-blue-500);
+  --accent-hover: var(--wd-blue-400);
+  --accent-press: var(--wd-blue-600);
+  --accent-soft: rgba(46, 107, 255, 0.14);
+  --accent-ring: rgba(46, 107, 255, 0.45);
+
+  --energy: var(--wd-red-500);
+  --energy-hover: var(--wd-red-400);
+  --energy-soft: rgba(240, 41, 74, 0.14);
+
+  --success: var(--wd-green-500);
+  --warning: var(--wd-amber-500);
+
+  --border-subtle: rgba(255, 255, 255, 0.07);
+  --border-default: rgba(255, 255, 255, 0.11);
+  --border-strong: rgba(255, 255, 255, 0.18);
+
+  /* Gradients */
+  --grad-hero: radial-gradient(120% 120% at 80% 0%, #16294A 0%, var(--wd-navy-800) 46%, var(--wd-navy-900) 100%);
+  --grad-accent: linear-gradient(135deg, var(--wd-blue-400) 0%, var(--wd-blue-600) 100%);
+  --grad-energy: linear-gradient(135deg, var(--wd-red-400) 0%, var(--wd-red-600) 100%);
+}

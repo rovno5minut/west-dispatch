@@ -1,0 +1,51 @@
+/* ============================================================
+   West Dispatch — Spacing, Radius, Shadow, Motion Tokens
+   8px-based spacing scale.
+   ============================================================ */
+:root {
+  /* Spacing (8px base) */
+  --space-0: 0;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+  --space-10: 128px;
+
+  /* Section rhythm */
+  --section-y: 120px;
+  --container-max: 1200px;
+  --container-pad: 32px;
+
+  /* Radius */
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-pill: 999px;
+
+  /* Border width */
+  --bw: 1px; /* @kind other */
+
+  /* Shadows — restrained, used for elevation on dark */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.45);
+  --shadow-accent: 0 12px 40px rgba(46, 107, 255, 0.35);
+  --shadow-energy: 0 12px 40px rgba(240, 41, 74, 0.30);
+
+  /* Inner highlight (top edge sheen on raised surfaces) */
+  --sheen-top: inset 0 1px 0 rgba(255, 255, 255, 0.06); /* @kind shadow */
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1); /* @kind other */
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1); /* @kind other */
+  --dur-fast: 140ms; /* @kind other */
+  --dur-base: 220ms; /* @kind other */
+  --dur-slow: 420ms; /* @kind other */
+}

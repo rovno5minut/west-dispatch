@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>West Dispatch — Smooth Scroll Hero</title>
+<link rel="stylesheet" href="ds/styles.css" />
+<link rel="stylesheet" href="site.css" />
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+<style>
+  /* ====== Smooth-scroll parallax clip-path hero (native recreation) ====== */
+  /* The DS wrapper sets overflow-x:hidden, which makes .wd-site a scroll
+     container and silently breaks position:sticky. Release it on this page. */
+  .wd-site { overflow: visible; }
+  .ssh { position: relative; width: 100%; }
+  .ssh__sticky {
+    position: sticky; top: 0; height: 100vh; width: 100%;
+    background: #000; overflow: hidden;
+  }
+  /* Scroll-scrubbed frame sequence drawn to a canvas (cover-fit) */
+  .ssh__canvas {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    display: block; background: #000;
+  }
+  /* Poster image shown until enough frames have preloaded */
+  .ssh__poster {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; object-position: center;
+    transition: opacity 0.5s var(--ease-out);
+  }
+  .ssh.is-ready .ssh__poster { opacity: 0; pointer-events: none; }
+  /* Cinematic darkening + bottom gradient so overlaid copy stays legible */
+  .ssh__scrim {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(180deg, rgba(8,12,20,0.45) 0%, rgba(8,12,20,0) 32%),
+      linear-gradient(0deg, rgba(8,12,20,0.85) 0%, rgba(8,12,20,0) 48%);
+  }
+  /* Overlay content pinned to the sticky frame */
+  .ssh__content {
+    position: absolute; inset: 0; z-index: 2;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: clamp(28px, 6vw, 88px);
+  }
+  .ssh__eyebrow {
+    font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--wd-blue-300); margin-bottom: 18px;
+  }
+  .ssh__title {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(38px, 7vw, 92px); line-height: 0.98;
+    letter-spacing: var(--ls-tight); color: #fff; max-width: 16ch;
+    text-wrap: balance; text-shadow: 0 2px 40px rgba(0,0,0,0.5);
+  }
+  .ssh__sub {
+    margin-top: 20px; max-width: 52ch; font-size: clamp(16px, 1.4vw, 20px);
+    line-height: var(--lh-relaxed); color: rgba(255,255,255,0.82);
+  }
+  .ssh__actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; }
+  /* Scroll cue */
+  .ssh__cue {
+    position: absolute; left: 50%; bottom: 26px; transform: translateX(-50%);
+    z-index: 3; display: flex; flex-direction: column; align-items: center; gap: 8px;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: rgba(255,255,255,0.6);
+    transition: opacity 0.4s var(--ease-out);
+  }
+  .ssh__cue .wd-ico { font-size: 20px; animation: ssh-bob 1.8s var(--ease-in-out) infinite; }
+  @keyframes ssh-bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
+  @media (prefers-reduced-motion: reduce) {
+    .ssh__cue .wd-ico { animation: none; }
+  }
+  /* The section AFTER the hero, to show the reveal resolves into real content */
+  .ssh-after { background: var(--bg-deep); }
+</style>
+</head>
+<body>
+<div class="wd-site">
+
+  <!-- ===================== HEADER ===================== -->
+  <header class="wd-header" data-screen-label="Header" style="position:fixed; top:0; left:0; right:0; z-index:50; background:rgba(11,16,26,0.55); backdrop-filter:blur(10px);">
+    <div class="wd-container wd-header__inner">
+      <a class="wd-logo" href="#top">
+        <img src="logo-mark-light.png" alt="West Dispatch" />
+        <span class="wd-logo__name">WEST DISPATCH</span>
+      </a>
+      <div class="wd-header__cta wd-desktop">
+        <a href="tel:+12055573100" class="wd-nav__link wd-nav__phone"><span class="wd-ico"><i data-lucide="phone"></i></span> (205) 557-3100</a>
+        <a href="#after" class="wd-btn wd-btn--primary wd-btn--sm">Get Started <span class="wd-ico"><i data-lucide="arrow-right"></i></span></a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================== SMOOTH SCROLL HERO ===================== -->
+  <section class="ssh" id="ssh" data-screen-label="Smooth Scroll Hero" data-scroll-height="2400">
+    <div class="ssh__sticky" id="ssh-sticky">
+      <canvas class="ssh__canvas" id="ssh-canvas"></canvas>
+      <img class="ssh__poster" id="ssh-poster" src="images/frames/f-000.jpg" alt="26 ft box truck on the highway at sunset" />
+      <div class="ssh__scrim"></div>
+      <div class="ssh__content">
+        <span class="ssh__eyebrow">— Owner-operator dispatching</span>
+        <h1 class="ssh__title">Keep your wheels turning.</h1>
+        <p class="ssh__sub">We find the high-paying loads, negotiate the rate, and handle the paperwork — so every mile you drive is a mile that pays.</p>
+        <div class="ssh__actions">
+          <a href="#after" class="wd-btn wd-btn--primary wd-btn--lg">Get dispatched <span class="wd-ico"><i data-lucide="arrow-right"></i></span></a>
+          <a href="tel:+12055573100" class="wd-btn wd-btn--secondary wd-btn--lg"><span class="wd-ico"><i data-lucide="phone"></i></span> (205) 557-3100</a>
+        </div>
+      </div>
+      <div class="ssh__cue" id="ssh-cue"><span>Scroll</span><span class="wd-ico"><i data-lucide="chevron-down"></i></span></div>
+    </div>
+  </section>
+
+  <!-- ===================== AFTER (proof the reveal resolves) ===================== -->
+  <section class="wd-section ssh-after" id="after" data-screen-label="After Hero">
+    <div class="wd-container" style="text-align:center; max-width:760px;">
+      <span class="wd-eyebrow">— Fully loaded</span>
+      <h2 class="wd-sectionhead__title" style="margin-top:14px;">The truck rolls in as you scroll, then your content takes over.</h2>
+      <p class="wd-sectionhead__sub" style="margin:18px auto 0;">Scroll position drives the video's playhead frame-by-frame — the 26 ft box truck advances down the highway as you move down the page. The clip never auto-plays; you're scrubbing it, so it tracks your scroll exactly and rebuilds natively without touching the design-system compiler.</p>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  (function () {
+    var section = document.getElementById('ssh');
+    var canvas  = document.getElementById('ssh-canvas');
+    var poster  = document.getElementById('ssh-poster');
+    var cue     = document.getElementById('ssh-cue');
+    var ctx     = canvas.getContext('2d');
+
+    // ---- Frame sequence (scroll-scrubbed; no <video>) ---------------------
+    // Seeking a real <video> requires keyframes + HTTP Range support; this host
+    // has neither, so currentTime snapped to keyframes. Instead we pre-rendered
+    // the clip to a numbered JPEG sequence and draw the right frame to a canvas.
+    // Image swaps are instant and frame-accurate — buttery scrubbing.
+    var FRAME_COUNT = 60;
+    var FRAME_PATH  = function (i) { return 'images/frames/f-' + String(i).padStart(3, '0') + '.jpg'; };
+    var NAT_W = 900, NAT_H = 506;   // intrinsic frame size
+
+    var scrollHeight = parseInt(section.getAttribute('data-scroll-height'), 10) || 2400;
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+    function clamp01(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
+
+    var frames = new Array(FRAME_COUNT);
+    var loaded = 0;
+    var ready  = false;
+    var curIndex = -1;
+    var targetIndex = 0;
+    var rafPending = false;
+
+    // Size the canvas backing store to the displayed box (×dpr) and redraw.
+    function resize() {
+      var w = canvas.clientWidth, h = canvas.clientHeight;
+      canvas.width  = Math.round(w * dpr);
+      canvas.height = Math.round(h * dpr);
+      curIndex = -1;            // force a redraw at the new size
+      draw();
+    }
+
+    // Draw frame `targetIndex` with object-fit: cover math.
+    function draw() {
+      if (!ready) return;
+      var i = targetIndex;
+      if (i === curIndex) return;
+      var img = frames[i];
+      if (!img || !img.complete || !img.naturalWidth) {
+        // Fall back to nearest already-loaded frame so we never blank out.
+        var j = i;
+        while (j >= 0 && (!frames[j] || !frames[j].complete)) j--;
+        if (j < 0) return;
+        img = frames[j];
+      }
+      var cw = canvas.width, ch = canvas.height;
+      var scale = Math.max(cw / NAT_W, ch / NAT_H);
+      var dw = NAT_W * scale, dh = NAT_H * scale;
+      var dx = (cw - dw) / 2, dy = (ch - dh) / 2;
+      ctx.drawImage(img, dx, dy, dw, dh);
+      curIndex = i;
+    }
+
+    function computeTarget() {
+      var y = window.scrollY || window.pageYOffset;
+      var p = clamp01(y / scrollHeight);
+      if (cue) cue.style.opacity = String(clamp01(1 - p * 2.4));
+      return Math.round(p * (FRAME_COUNT - 1));
+    }
+
+    function onScroll() {
+      targetIndex = computeTarget();
+      if (!rafPending) { rafPending = true; requestAnimationFrame(function () { rafPending = false; draw(); }); }
+    }
+
+    // Preload every frame; reveal as soon as the first handful are decoded so
+    // there's no long blank wait, and keep drawing as the rest stream in.
+    function preload() {
+      for (var i = 0; i < FRAME_COUNT; i++) {
+        (function (idx) {
+          var img = new Image();
+          img.decoding = 'async';
+          img.onload = function () {
+            loaded++;
+            if (!ready && (loaded >= 8 || loaded === FRAME_COUNT)) {
+              ready = true;
+              section.classList.add('is-ready');
+              resize();
+            } else if (idx === targetIndex || idx === curIndex) {
+              curIndex = -1; draw();
+            }
+          };
+          img.src = FRAME_PATH(idx);
+          frames[idx] = img;
+        })(i);
+      }
+    }
+
+    targetIndex = computeTarget();
+    preload();
+
+    if (reduceMotion) {
+      if (cue) cue.style.display = 'none';
+    } else {
+      window.addEventListener('scroll', onScroll, { passive: true });
+    }
+    window.addEventListener('resize', resize);
+
+    // Give the scroll section its real height: tall scrub track + one viewport.
+    section.style.height = 'calc(' + scrollHeight + 'px + 100vh)';
+
+    if (window.lucide) lucide.createIcons();
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>West Dispatch — Truck Dispatching for Owner-Operators</title>
+<meta name="description" content="West Dispatch finds high-paying loads, negotiates your rates, and handles the paperwork — so you stay loaded, cut downtime, and grow your revenue. 24/7 dispatcher support, no long-term contracts." />
+<link rel="icon" href="logo-mark-light.png" />
+<link rel="stylesheet" href="ds/styles.css" />
+<link rel="stylesheet" href="site.css" />
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+</head>
+<body>
+<div class="wd-site">
+
+  <!-- ===================== HEADER ===================== -->
+  <header class="wd-header" data-screen-label="Header">
+    <div class="wd-container wd-header__inner">
+      <a class="wd-logo" href="#top">
+        <img src="logo-mark-light.png" alt="West Dispatch" />
+        <span class="wd-logo__name">WEST DISPATCH</span>
+      </a>
+
+      <nav class="wd-nav wd-desktop">
+        <a href="#services" class="wd-nav__link">Services</a>
+        <a href="#why" class="wd-nav__link">Why Us</a>
+        <a href="#how" class="wd-nav__link">How It Works</a>
+        <a href="#faq" class="wd-nav__link">FAQ</a>
+      </nav>
+
+      <div class="wd-header__cta wd-desktop">
+        <a href="tel:+12055573100" class="wd-nav__link wd-nav__phone"><span class="wd-ico"><i data-lucide="phone"></i></span> (205) 557-3100</a>
+        <a href="#contact" class="wd-btn wd-btn--primary wd-btn--sm">Get Started <span class="wd-ico"><i data-lucide="arrow-right"></i></span></a>
+      </div>
+
+      <button class="wd-burger wd-mobile" id="wd-burger" aria-label="Menu" aria-expanded="false"><span class="wd-ico"><i data-lucide="menu"></i></span></button>
+    </div>
+
+    <div class="wd-mobilemenu" id="wd-mobilemenu">
+      <a href="#services" class="wd-mobilemenu__link">Services</a>
+      <a href="#why" class="wd-mobilemenu__link">Why Us</a>
+      <a href="#how" class="wd-mobilemenu__link">How It Works</a>
+      <a href="#faq" class="wd-mobilemenu__link">FAQ</a>
+      <a href="#contact" class="wd-btn wd-btn--primary wd-btn--block">Get Started Today <span class="wd-ico"><i data-lucide="arrow-right"></i></span></a>
+    </div>
+  </header>
+
+  <!-- ===================== SMOOTH-SCROLL VIDEO HERO ===================== -->
+  <section class="ssh" id="top" data-screen-label="Hero" data-scroll-height="2400">
+    <div class="ssh__sticky" id="ssh-sticky">
+      <canvas class="ssh__canvas" id="ssh-canvas"></canvas>
+      <img class="ssh__poster" id="ssh-poster" src="images/frames/f-000.jpg" alt="26 ft box truck driving on the highway at sunset" />
+      <div class="ssh__scrim"></div>
+      <div class="ssh__content">
+        <div class="wd-container">
+          <span class="ssh__eyebrow">— Truck dispatching for owner-operators</span>
+          <h1 class="ssh__title">Keep your wheels turning.</h1>
+          <p class="ssh__sub">West Dispatch finds the high-paying loads, negotiates your rate, and handles the paperwork — so every mile you drive is a mile that pays.</p>
+          <div class="ssh__actions">
+            <a href="#contact" class="wd-btn wd-btn--primary wd-btn--lg">Get Started Today <span class="wd-ico"><i data-lucide="arrow-right"></i></span></a>
+            <a href="tel:+12055573100" class="wd-btn wd-btn--secondary wd-btn--lg"><span class="wd-ico"><i data-lucide="phone"></i></span> (205) 557-3100</a>
+          </div>
+        </div>
+      </div>
+      <div class="ssh__cue" id="ssh-cue"><span>Scroll</span><span class="wd-ico"><i data-lucide="chevron-down"></i></span></div>
+    </div>
+  </section>
+
+  <!-- ===================== LIVE LOAD BOARD ===================== -->
+  <section class="wd-hero" id="loadboard" data-screen-label="Live Load Board">
+    <div class="wd-hero__grid-bg"></div>
+    <div class="wd-container wd-hero__inner">
+      <div class="wd-hero__copy">
+        <span class="wd-eyebrow">— Live load board</span>
+        <h2 class="wd-hero__title">Real loads, real rates,<br /><span class="wd-hero__accent">booked while you drive.</span></h2>
+        <p class="wd-hero__sub">Every load below was sourced, negotiated, and booked by your dispatch team. You keep rolling — we keep the board full.</p>
+        <div class="wd-hero__cta">
+          <a href="#contact" class="wd-btn wd-btn--primary wd-btn--lg">Get Started Today <span class="wd-ico"><i data-lucide="arrow-right"></i></span></a>
+          <a href="#how" class="wd-btn wd-btn--secondary wd-btn--lg"><span class="wd-ico"><i data-lucide="play"></i></span> See How It Works</a>
+        </div>
+        <div class="wd-hero__proof">
+          <div class="wd-hero__avatars">
+            <span class="wd-ava" style="background:hsl(210 40% 26%)">JT</span>
+            <span class="wd-ava" style="background:hsl(224 40% 30%)">MR</span>
+            <span class="wd-ava" style="background:hsl(238 40% 34%)">DK</span>
+            <span class="wd-ava" style="background:hsl(252 40% 38%)">SP</span>
+          </div>
+          <div>
+            <div class="wd-stars" aria-label="5 out of 5 stars">
+              <span class="wd-ico"><i data-lucide="star" fill="currentColor"></i></span>
+              <span class="wd-ico"><i data-lucide="star" fill="currentColor"></i></span>
+              <span class="wd-ico"><i data-lucide="star" fill="currentColor"></i></span>
+              <span class="wd-ico"><i data-lucide="star" fill="currentColor"></i></span>
+              <span class="wd-ico"><i data-lucide="star" fill="currentColor"></i></span>
+            </div>
+            <div class="wd-hero__prooftext">Trusted by <strong>1,200+</strong> owner-operators nationwide</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wd-hero__panel">
+        <div class="wd-board">
+          <div class="wd-board__head">
+            <div class="wd-board__title"><span class="wd-board__live"></span> Live Load Board</div>
+            <span class="wd-board__tag">DALLAS, TX</span>
+          </div>
+
+          <div class="wd-load">
+            <div class="wd-load__main">
+              <div class="wd-load__lane">CA → GA</div>
+              <div class="wd-load__meta">WD-48201 · 2232 mi</div>
+            </div>
+            <div class="wd-load__right">
+              <div class="wd-load__rate">$2.42/mi</div>
+              <span class="wd-badge wd-badge--success"><span class="wd-badge__dot"></span>Booked</span>
+            </div>
+          </div>
+
+          <div class="wd-load">
+            <div class="wd-load__main">
+              <div class="wd-load__lane">IL → TX</div>
+              <div class="wd-load__meta">WD-48207 · 994 mi</div>
+            </div>
+            <div class="wd-load__right">
+              <div class="wd-load__rate">$2.18/mi</div>
+              <span class="wd-badge wd-badge--warning"><span class="wd-badge__dot"></span>In Transit</span>
+            </div>
+          </div>
+
+          <div class="wd-load">
+            <div class="wd-load__main">
+              <div class="wd-load__lane">PA → NJ</div>
+              <div class="wd-load__meta">WD-48219 · 238 mi</div>
+            </div>
+            <div class="wd-load__right">
+              <div class="wd-load__rate">$3.96/mi</div>
+              <span class="wd-badge wd-badge--accent"><span class="wd-badge__dot"></span>Available</span>
+            </div>
+          </div>
+
+          <div class="wd-board__foot">
+            <div class="wd-stat">
+              <div class="wd-stat__value">$7,420<span> wk</span></div>
+              <div class="wd-stat__label">Booked this week</div>
+            </div>
+            <button class="wd-btn wd-btn--energy wd-btn--sm">Book Next Load</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SERVICES ===================== -->
+  <section class="wd-section" id="services" data-screen-label="Services">
+    <div class="wd-container">
+      <div class="wd-sectionhead wd-reveal">
+        <span class="wd-eyebrow">— What we do</span>
+        <h2 class="wd-sectionhead__title">Full-service dispatching, end to end</h2>
+        <p class="wd-sectionhead__sub">Everything it takes to keep your wheels turning and your revenue climbing — managed by a team that lives in the freight market.</p>
+      </div>
+      <div class="wd-grid-3">
+        <div class="wd-card wd-card--interactive wd-svc wd-reveal">
+          <span class="wd-svc__icon"><span class="wd-ico"><i data-lucide="truck"></i></span></span>
+          <h3 class="wd-svc__title">Load Sourcing</h3>
+          <p class="wd-svc__body">We scour load boards, broker networks, and direct shippers to keep your truck on the highest-paying lanes.</p>
+        </div>
+        <div class="wd-card wd-card--interactive wd-svc wd-reveal">
+          <span class="wd-svc__icon"><span class="wd-ico"><i data-lucide="badge-dollar-sign"></i></span></span>
+          <h3 class="wd-svc__title">Rate Negotiation</h3>
+          <p class="wd-svc__body">Our dispatchers negotiate every rate so you earn what the freight is truly worth — not the first number offered.</p>
+        </div>
+        <div class="wd-card wd-card--interactive wd-svc wd-reveal">
+          <span class="wd-svc__icon"><span class="wd-ico"><i data-lucide="route"></i></span></span>
+          <h3 class="wd-svc__title">Route Planning</h3>
+          <p class="wd-svc__body">Smart routing that minimizes deadhead miles, balances hours of service, and maximizes revenue per mile.</p>
+        </div>
+        <div class="wd-card wd-card--interactive wd-svc wd-reveal">
+          <span class="wd-svc__icon"><span class="wd-ico"><i data-lucide="phone-call"></i></span></span>
+          <h3 class="wd-svc__title">Broker Communication</h3>
+          <p class="wd-svc__body">We handle every call, email, and check-in with brokers and shippers so you can stay focused on driving.</p>
+        </div>
+        <div class="wd-card wd-card--interactive wd-svc wd-reveal">
+          <span class="wd-svc__icon"><span class="wd-ico"><i data-lucide="file-text"></i></span></span>
+          <h3 class="wd-svc__title">Paperwork Management</h3>
+          <p class="wd-svc__body">Rate cons, BOLs, setup packets, and invoicing — handled. Your documents stay organized and on time.</p>
+        </div>
+        <div class="wd-card wd-card--interactive wd-svc wd-reveal">
+          <span class="wd-svc__icon"><span class="wd-ico"><i data-lucide="headset"></i></span></span>
+          <h3 class="wd-svc__title">Dedicated Dispatcher</h3>
+          <p class="wd-svc__body">A single point of contact who knows your truck, your lanes, and your goals — available when you need them.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== EQUIPMENT ===================== -->
+  <section class="wd-section wd-equip" id="equipment" data-screen-label="Equipment">
+    <div class="wd-container">
+      <div class="wd-sectionhead wd-reveal">
+        <span class="wd-eyebrow">— What we haul</span>
+        <h2 class="wd-sectionhead__title">Every trailer type, kept loaded</h2>
+        <p class="wd-sectionhead__sub">Box truck, dry van, or flatbed — whatever you run, we keep it booked on high-paying lanes.</p>
+      </div>
+    </div>
+    <div class="wd-marquee">
+      <div class="wd-marquee__track">
+        <!-- set 1 -->
+        <figure class="wd-truck">
+          <div class="wd-truck__media"><img class="wd-truck__photo" src="images/truck-box.jpg" alt="White 26 ft box truck at a loading dock" /></div>
+          <figcaption class="wd-truck__cap"><span class="wd-truck__name">26 ft Box Truck</span><span class="wd-truck__spec">Straight truck · liftgate</span></figcaption>
+        </figure>
+        <figure class="wd-truck">
+          <div class="wd-truck__media"><img class="wd-truck__photo" src="images/truck-dryvan.jpg" alt="White 53-foot dry van tractor-trailer" /></div>
+          <figcaption class="wd-truck__cap"><span class="wd-truck__name">53' Dry Van</span><span class="wd-truck__spec">Enclosed dry freight</span></figcaption>
+        </figure>
+        <figure class="wd-truck">
+          <div class="wd-truck__media"><img class="wd-truck__photo" src="images/truck-flatbed.jpg" alt="White day-cab tractor with 48-foot flatbed trailer" /></div>
+          <figcaption class="wd-truck__cap"><span class="wd-truck__name">48' Flatbed</span><span class="wd-truck__spec">Open deck · step-deck</span></figcaption>
+        </figure>
+        <!-- set 2 (duplicate for seamless loop) -->
+        <figure class="wd-truck" aria-hidden="true">
+          <div class="wd-truck__media"><img class="wd-truck__photo" src="images/truck-box.jpg" alt="" /></div>
+          <figcaption class="wd-truck__cap"><span class="wd-truck__name">26 ft Box Truck</span><span class="wd-truck__spec">Straight truck · liftgate</span></figcaption>
+        </figure>
+        <figure class="wd-truck" aria-hidden="true">
+          <div class="wd-truck__media"><img class="wd-truck__photo" src="images/truck-dryvan.jpg" alt="" /></div>
+          <figcaption class="wd-truck__cap"><span class="wd-truck__name">53' Dry Van</span><span class="wd-truck__spec">Enclosed dry freight</span></figcaption>
+        </figure>
+        <figure class="wd-truck" aria-hidden="true">
+          <div class="wd-truck__media"><img class="wd-truck__photo" src="images/truck-flatbed.jpg" alt="" /></div>
+          <figcaption class="wd-truck__cap"><span class="wd-truck__name">48' Flatbed</span><span class="wd-truck__spec">Open deck · step-deck</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== WHY CHOOSE ===================== -->
+  <section class="wd-section wd-why" id="why" data-screen-label="Why Choose">
+    <div class="wd-container wd-why__grid">
+      <div class="wd-why__left wd-reveal">
+        <span class="wd-eyebrow">— Why West Dispatch</span>
+        <h2 class="wd-sectionhead__title" style="text-align:left">Carriers stay with us because the numbers work</h2>
+        <p class="wd-sectionhead__sub" style="margin-left:0">We treat your truck like our own business. Less downtime, better rates, and a dispatcher who actually picks up the phone.</p>
+        <div class="wd-why__list">
+          <div class="wd-why__item">
+            <span class="wd-why__check"><span class="wd-ico"><i data-lucide="shield-check"></i></span></span>
+            <div>
+              <div class="wd-why__t">No long-term contracts</div>
+              <div class="wd-why__b">Month-to-month. Stay because the loads are good — never because you're locked in.</div>
+            </div>
+          </div>
+          <div class="wd-why__item">
+            <span class="wd-why__check"><span class="wd-ico"><i data-lucide="percent"></i></span></span>
+            <div>
+              <div class="wd-why__t">Transparent flat fee</div>
+              <div class="wd-why__b">One clear dispatch fee per load. No hidden cuts, no surprise factoring deductions.</div>
+            </div>
+          </div>
+          <div class="wd-why__item">
+            <span class="wd-why__check"><span class="wd-ico"><i data-lucide="clock"></i></span></span>
+            <div>
+              <div class="wd-why__t">24/7 dispatcher support</div>
+              <div class="wd-why__b">Real people on the phone when you need them — nights, weekends, and breakdowns included.</div>
+            </div>
+          </div>
+          <div class="wd-why__item">
+            <span class="wd-why__check"><span class="wd-ico"><i data-lucide="trending-up"></i></span></span>
+            <div>
+              <div class="wd-why__t">Higher revenue per mile</div>
+              <div class="wd-why__b">Our negotiators consistently book lanes above market — more money on every haul.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wd-why__right wd-reveal">
+        <div class="wd-card wd-card--accent wd-why__stats">
+          <div class="wd-stat">
+            <div class="wd-stat__value">$2,840<span>/wk</span></div>
+            <div class="wd-stat__label">Avg. revenue lift per truck</div>
+          </div>
+          <div class="wd-stat wd-stat--energy">
+            <div class="wd-stat__value">36%</div>
+            <div class="wd-stat__label">Less downtime between loads</div>
+          </div>
+          <div class="wd-stat">
+            <div class="wd-stat__value">400+</div>
+            <div class="wd-stat__label">Owner-operators dispatched</div>
+          </div>
+          <div class="wd-stat wd-stat--energy">
+            <div class="wd-stat__value">24/7</div>
+            <div class="wd-stat__label">Dispatcher availability</div>
+          </div>
+        </div>
+        <div class="wd-why__quote">
+          <span class="wd-ico"><i data-lucide="quote"></i></span>
+          <p>"They keep me loaded every single week. I just drive — they handle everything else."</p>
+          <div class="wd-why__quoteby">— Marcus R., reefer owner-op, 3 trucks</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== HOW IT WORKS ===================== -->
+  <section class="wd-section" id="how" data-screen-label="How It Works">
+    <div class="wd-container">
+      <div class="wd-sectionhead wd-reveal">
+        <span class="wd-eyebrow">— How it works</span>
+        <h2 class="wd-sectionhead__title">From sign-up to loaded in 24 hours</h2>
+        <p class="wd-sectionhead__sub">A simple, proven process built around keeping your truck moving.</p>
+      </div>
+      <div class="wd-steps">
+        <div class="wd-steps__line"></div>
+        <div class="wd-step wd-reveal">
+          <div class="wd-step__node"><span class="wd-ico"><i data-lucide="clipboard-list"></i></span><span class="wd-step__num">01</span></div>
+          <h3 class="wd-step__title">Quick Onboarding</h3>
+          <p class="wd-step__body">Send us your authority, insurance, and equipment details. We get you set up with our broker network in under a day.</p>
+        </div>
+        <div class="wd-step wd-reveal">
+          <div class="wd-step__node"><span class="wd-ico"><i data-lucide="search"></i></span><span class="wd-step__num">02</span></div>
+          <h3 class="wd-step__title">We Find Your Loads</h3>
+          <p class="wd-step__body">Your dedicated dispatcher sources high-paying lanes that fit your truck, your home time, and your preferred routes.</p>
+        </div>
+        <div class="wd-step wd-reveal">
+          <div class="wd-step__node"><span class="wd-ico"><i data-lucide="handshake"></i></span><span class="wd-step__num">03</span></div>
+          <h3 class="wd-step__title">We Negotiate &amp; Book</h3>
+          <p class="wd-step__body">We push for the best rate, confirm the load, and handle all the paperwork and broker setup for you.</p>
+        </div>
+        <div class="wd-step wd-reveal">
+          <div class="wd-step__node"><span class="wd-ico"><i data-lucide="banknote"></i></span><span class="wd-step__num">04</span></div>
+          <h3 class="wd-step__title">You Drive &amp; Get Paid</h3>
+          <p class="wd-step__body">Hit the road with a full schedule. We manage check calls and invoicing so the money keeps flowing.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== TESTIMONIALS ===================== -->
+  <section class="wd-section wd-testi" id="testimonials" data-screen-label="Testimonials">
+    <div class="wd-container">
+      <div class="wd-sectionhead wd-reveal">
+        <span class="wd-eyebrow">— From the cab</span>
+        <h2 class="wd-sectionhead__title">Drivers who never look back</h2>
+      </div>
+      <div class="wd-grid-3">
+        <div class="wd-card wd-testi__card wd-reveal">
+          <div class="wd-stars">
+            <span class="wd-ico"><i data-lucide="star" fill="currentColor"></i></span><span class="wd-ico"><i data-lucide="star" fill="currentColor"></i></span><span class="wd-ico"><i data-lucide="star" fill="currentColor"></i></span><span class="wd-ico"><i data-lucide="star" fill="currentColor"></i></span><span class="wd-ico"><i data-lucide="star" fill="currentColor"></i></span>
+          </div>
+          <p class="wd-testi__quote">"Since switching to West Dispatch my trucks haven't sat a single weekend. The rates they pull are 15–20% better than I booked on my own."</p>
+          <div class="wd-testi__by">
+            <span class="wd-ava" style="background:hsl(210 42% 30%)">MR</span>
+            <div>
+              <div class="wd-testi__name">Marcus R.</div>
+              <div class="wd-testi__meta">Reefer · 3 trucks · GA</div>
+            </div>
+          </div>
+        </div>
+        <div class="wd-card wd-testi__card wd-reveal">
+          <div class="wd-stars">
+            <span class="wd-ico"><i data-lucide="star" fill="currentColor"></i></span><span class="wd-ico"><i data-lucide="star" fill="currentColor"></i></span><span class="wd-ico"><i data-lucide="star" fill="currentColor"></i></span><span class="wd-ico"><i data-lucide="star" fill="currentColor"></i></span><span class="wd-ico"><i data-lucide="star" fill="currentColor"></i></span>
+          </div>
+          <p class="wd-testi__quote">"My dispatcher knows my home time and never books me a load that ruins my weekend. Feels like having a partner, not a service."</p>
+          <div class="wd-testi__by">
+            <span class="wd-ava" style="background:hsl(224 42% 30%)">DK</span>
+            <div>
+              <div class="wd-testi__name">Dana K.</div>
+              <div class="wd-testi__meta">Dry van owner-op · TX</div>
+            </div>
+          </div>
+        </div>
+        <div class="wd-card wd-testi__card wd-reveal">
+          <div class="wd-stars">
+            <span class="wd-ico"><i data-lucide="star" fill="currentColor"></i></span><span class="wd-ico"><i data-lucide="star" fill="currentColor"></i></span><span class="wd-ico"><i data-lucide="star" fill="currentColor"></i></span><span class="wd-ico"><i data-lucide="star" fill="currentColor"></i></span><span class="wd-ico"><i data-lucide="star" fill="currentColor"></i></span>
+          </div>
+          <p class="wd-testi__quote">"The paperwork used to eat my evenings. Now it's just handled. I drive, they dispatch, and the invoices get paid on time."</p>
+          <div class="wd-testi__by">
+            <span class="wd-ava" style="background:hsl(196 42% 30%)">SP</span>
+            <div>
+              <div class="wd-testi__name">Sofia P.</div>
+              <div class="wd-testi__meta">Flatbed · 2 trucks · OH</div>
+            </div>
+          </div>
+        </div>
+        <div class="wd-card wd-testi__card wd-reveal">
+          <div class="wd-stars">
+            <span class="wd-ico"><i data-lucide="star" fill="currentColor"></i></span><span class="wd-ico"><i data-lucide="star" fill="currentColor"></i></span><span class="wd-ico"><i data-lucide="star" fill="currentColor"></i></span><span class="wd-ico"><i data-lucide="star" fill="currentColor"></i></span><span class="wd-ico"><i data-lucide="star" fill="currentColor"></i></span>
+          </div>
+          <p class="wd-testi__quote">"Went owner-op on my 26-footer last year and had no clue where to start. West Dispatch set me up on regional loops out of Dallas — home every other night and clearing $4,500 a week."</p>
+          <div class="wd-testi__by">
+            <span class="wd-ava" style="background:hsl(28 42% 30%)">DT</span>
+            <div>
+              <div class="wd-testi__name">Darnell T.</div>
+              <div class="wd-testi__meta">26ft box truck · TX</div>
+            </div>
+          </div>
+        </div>
+        <div class="wd-card wd-testi__card wd-reveal">
+          <div class="wd-stars">
+            <span class="wd-ico"><i data-lucide="star" fill="currentColor"></i></span><span class="wd-ico"><i data-lucide="star" fill="currentColor"></i></span><span class="wd-ico"><i data-lucide="star" fill="currentColor"></i></span><span class="wd-ico"><i data-lucide="star" fill="currentColor"></i></span><span class="wd-ico"><i data-lucide="star" fill="currentColor"></i></span>
+          </div>
+          <p class="wd-testi__quote">"They actually specialize in box trucks. My dispatcher knows which lanes and brokers work for a 26ft, so I'm never chasing loads that don't fit. Revenue is up 22% since I signed on."</p>
+          <div class="wd-testi__by">
+            <span class="wd-ava" style="background:hsl(155 42% 30%)">AV</span>
+            <div>
+              <div class="wd-testi__name">Angela V.</div>
+              <div class="wd-testi__meta">26ft box truck · FL</div>
+            </div>
+          </div>
+        </div>
+        <div class="wd-card wd-testi__card wd-reveal">
+          <div class="wd-stars">
+            <span class="wd-ico"><i data-lucide="star" fill="currentColor"></i></span><span class="wd-ico"><i data-lucide="star" fill="currentColor"></i></span><span class="wd-ico"><i data-lucide="star" fill="currentColor"></i></span><span class="wd-ico"><i data-lucide="star" fill="currentColor"></i></span><span class="wd-ico"><i data-lucide="star" fill="currentColor"></i></span>
+          </div>
+          <p class="wd-testi__quote">"I was doing $2,800–$3,000 weeks before West Dispatch. Now I'm consistently at $3,800–$4,200. They negotiate hard with brokers and I rarely sit more than a couple hours between loads."</p>
+          <div class="wd-testi__by">
+            <span class="wd-ava" style="background:hsl(265 42% 30%)">RM</span>
+            <div>
+              <div class="wd-testi__name">Ray M.</div>
+              <div class="wd-testi__meta">26ft box truck · IL</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FAQ ===================== -->
+  <section class="wd-section" id="faq" data-screen-label="FAQ">
+    <div class="wd-container wd-faq">
+      <div class="wd-faq__head wd-reveal">
+        <span class="wd-eyebrow">— Questions</span>
+        <h2 class="wd-sectionhead__title">Everything you want to know</h2>
+        <p class="wd-sectionhead__sub" style="margin-left:0">Still unsure? Call a real dispatcher at (205) 557-3100 — no bots, no phone trees.</p>
+      </div>
+      <div class="wd-faq__body wd-reveal">
+        <div class="wd-acc" id="wd-acc">
+          <div class="wd-acc__item is-open">
+            <button class="wd-acc__q">Do you require a long-term contract?<span class="wd-acc__plus">+</span></button>
+            <div class="wd-acc__panel"><div class="wd-acc__a">No. West Dispatch is month-to-month agreement. We earn your business one load at a time — if you're not making more money, you're free to walk.</div></div>
+          </div>
+          <div class="wd-acc__item">
+            <button class="wd-acc__q">What do you charge?<span class="wd-acc__plus">+</span></button>
+            <div class="wd-acc__panel"><div class="wd-acc__a">
+              <p style="margin:0">We charge a 10% dispatch fee based on the load amount. However, whenever possible, we negotiate higher rates with brokers and shippers to cover our fee.</p>
+              <p style="margin:12px 0 0">For example, if a load pays $1,000, our fee would normally be $100. Instead, we may negotiate the rate up to $1,100, allowing you to receive the full $1,000 while our fee is covered by the increased rate.</p>
+              <p style="margin:12px 0 0">Our goal is simple: maximize your revenue while keeping your trucks moving.</p>
+            </div></div>
+          </div>
+          <div class="wd-acc__item">
+            <button class="wd-acc__q">How fast can I get my first load?<span class="wd-acc__plus">+</span></button>
+            <div class="wd-acc__panel"><div class="wd-acc__a">Most owner-operators are onboarded and booked on a paying load within 24 hours, as long as your authority and insurance are active.</div></div>
+          </div>
+          <div class="wd-acc__item">
+            <button class="wd-acc__q">Do I need my own authority?<span class="wd-acc__plus">+</span></button>
+            <div class="wd-acc__panel"><div class="wd-acc__a">Yes — you'll need active operating authority (MC/DOT) and insurance. If you're still setting up, we can point you to trusted partners who help with that.</div></div>
+          </div>
+          <div class="wd-acc__item">
+            <button class="wd-acc__q">Can you work with my preferred lanes and home time?<span class="wd-acc__plus">+</span></button>
+            <div class="wd-acc__panel"><div class="wd-acc__a">Absolutely. Your dedicated dispatcher builds your schedule around the lanes you want to run and the days you need to be home.</div></div>
+          </div>
+          <div class="wd-acc__item">
+            <button class="wd-acc__q">What equipment types do you dispatch?<span class="wd-acc__plus">+</span></button>
+            <div class="wd-acc__panel"><div class="wd-acc__a">Dry van, reefer, flatbed, step deck, and power-only. Tell us what you run and we'll match you with a dispatcher who knows that freight.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CONTACT ===================== -->
+  <section class="wd-section wd-contact" id="contact" data-screen-label="Contact">
+    <div class="wd-container wd-contact__grid">
+      <div class="wd-contact__left wd-reveal">
+        <span class="wd-eyebrow">— Get started</span>
+        <h2 class="wd-sectionhead__title" style="text-align:left">Let's keep your trucks loaded</h2>
+        <p class="wd-sectionhead__sub" style="margin-left:0">Tell us about your operation and a dispatcher will reach out within one business hour. No obligation, no pressure.</p>
+        <div class="wd-contact__info">
+          <div class="wd-contact__row">
+            <span class="wd-contact__ic"><span class="wd-ico"><i data-lucide="phone"></i></span></span>
+            <div>
+              <div class="wd-contact__l">Call dispatch</div>
+              <div class="wd-contact__v">(205) 557-3100</div>
+            </div>
+          </div>
+          <div class="wd-contact__row">
+            <span class="wd-contact__ic"><span class="wd-ico"><i data-lucide="mail"></i></span></span>
+            <div>
+              <div class="wd-contact__l">Email us</div>
+              <div class="wd-contact__v">westdispatch@hotmail.com</div>
+            </div>
+          </div>
+          <div class="wd-contact__row">
+            <span class="wd-contact__ic"><span class="wd-ico"><i data-lucide="clock"></i></span></span>
+            <div>
+              <div class="wd-contact__l">Hours</div>
+              <div class="wd-contact__v">24 / 7 / 365</div>
+            </div>
+          </div>
+        </div>
+        <div class="wd-contact__badges">
+          <span class="wd-badge wd-badge--success"><span class="wd-badge__dot"></span>FMCSA compliant</span>
+          <span class="wd-badge wd-badge--accent"><span class="wd-badge__dot"></span>48 states</span>
+        </div>
+      </div>
+
+      <div class="wd-contact__formwrap wd-reveal">
+        <form class="wd-contact__form" id="wd-form">
+          <div class="wd-contact__formbody">
+            <h3 class="wd-contact__formtitle">Request your free dispatch consult</h3>
+            <div class="wd-form__grid">
+              <label class="wd-field"><span class="wd-field__label">Full name</span><input class="wd-field__input" id="wd-name" type="text" placeholder="Jordan Hayes" /></label>
+              <label class="wd-field"><span class="wd-field__label">Phone</span><input class="wd-field__input" id="wd-phone" type="tel" placeholder="(555) 123-4567" /></label>
+              <label class="wd-field"><span class="wd-field__label">MC / DOT number</span><input class="wd-field__input" id="wd-mc" type="text" placeholder="MC-123456" /></label>
+              <label class="wd-field"><span class="wd-field__label">Equipment type</span><input class="wd-field__input" id="wd-equip" type="text" placeholder="Reefer, dry van…" /></label>
+              <label class="wd-field wd-field--full"><span class="wd-field__label">Tell us about your fleet</span><textarea class="wd-field__input" rows="3" placeholder="How many trucks, lanes you run, home time…" id="wd-fleet"></textarea></label>
+              <!-- Math captcha -->
+              <div class="wd-field wd-field--full" id="wd-captcha-wrap" style="background:rgba(255,255,255,0.03);border:1px solid var(--border-default);border-radius:var(--radius-md);padding:14px 16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+                <span style="font-family:var(--font-mono);font-size:13px;color:var(--text-muted);letter-spacing:0.04em;flex-shrink:0">
+                  🤖 Anti-spam: <strong id="wd-captcha-q" style="color:var(--text-strong);font-size:16px"></strong>
+                </span>
+                <input id="wd-captcha-input" type="number" placeholder="Answer" style="width:90px;background:rgba(255,255,255,0.06);border:1px solid var(--border-default);border-radius:var(--radius-sm);padding:8px 12px;color:var(--text-strong);font-size:15px;font-family:inherit;outline:none" />
+                <span id="wd-captcha-err" style="color:var(--wd-red-400,#f0294a);font-size:13px;font-family:var(--font-mono);display:none">Wrong answer — try again.</span>
+              </div>
+            </div>
+            <button type="submit" class="wd-btn wd-btn--energy wd-btn--lg wd-btn--block">Get Started Today <span class="wd-ico"><i data-lucide="arrow-right"></i></span></button>
+            <p class="wd-contact__fine">By submitting you agree to be contacted by West Dispatch. We never sell your information.</p>
+          </div>
+          <div class="wd-contact__sent">
+            <span class="wd-contact__sentic"><span class="wd-ico"><i data-lucide="check"></i></span></span>
+            <h3 class="wd-svc__title">You're all set!</h3>
+            <p class="wd-svc__body">A West Dispatch dispatcher will call you within the hour. Keep your phone close.</p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="wd-footer" data-screen-label="Footer">
+    <div class="wd-container wd-footer__grid">
+      <div class="wd-footer__brand">
+        <a class="wd-logo" href="#top">
+          <img src="logo-mark-light.png" alt="West Dispatch" />
+          <span class="wd-logo__name">WEST DISPATCH</span>
+        </a>
+        <p class="wd-footer__tag">Keeping America's owner-operators loaded, paid, and moving — 24/7.</p>
+        <div class="wd-footer__social">
+          <a href="#" class="wd-footer__soc" aria-label="facebook"><span class="wd-ico"><i data-lucide="facebook"></i></span></a>
+          <a href="#" class="wd-footer__soc" aria-label="instagram"><span class="wd-ico"><i data-lucide="instagram"></i></span></a>
+          <a href="#" class="wd-footer__soc" aria-label="linkedin"><span class="wd-ico"><i data-lucide="linkedin"></i></span></a>
+          <a href="#" class="wd-footer__soc" aria-label="youtube"><span class="wd-ico"><i data-lucide="youtube"></i></span></a>
+        </div>
+      </div>
+      <div class="wd-footer__col">
+        <div class="wd-footer__h">Services</div>
+        <a href="#services" class="wd-footer__link">Load Sourcing</a>
+        <a href="#services" class="wd-footer__link">Rate Negotiation</a>
+        <a href="#services" class="wd-footer__link">Route Planning</a>
+        <a href="#services" class="wd-footer__link">Paperwork Management</a>
+      </div>
+      <div class="wd-footer__col">
+        <div class="wd-footer__h">Company</div>
+        <a href="#" class="wd-footer__link">About Us</a>
+        <a href="#why" class="wd-footer__link">Why West Dispatch</a>
+        <a href="#" class="wd-footer__link">Careers</a>
+        <a href="#contact" class="wd-footer__link">Contact</a>
+      </div>
+      <div class="wd-footer__col">
+        <div class="wd-footer__h">Resources</div>
+        <a href="#faq" class="wd-footer__link">FAQ</a>
+        <a href="#" class="wd-footer__link">Owner-Operator Guide</a>
+        <a href="#" class="wd-footer__link">Rate Calculator</a>
+        <a href="#" class="wd-footer__link">Blog</a>
+      </div>
+    </div>
+    <div class="wd-container wd-footer__bar">
+      <span>© 2026 West Dispatch LLC. All rights reserved.</span>
+      <span class="wd-footer__legal"><a href="#">Privacy</a> · <a href="#">Terms</a></span>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  // ----- Icons -----
+  function drawIcons() { if (window.lucide) window.lucide.createIcons({ attrs: { "stroke-width": 1.75 } }); }
+  drawIcons();
+
+  // ----- Mobile menu -----
+  var burger = document.getElementById("wd-burger");
+  var menu = document.getElementById("wd-mobilemenu");
+  burger.addEventListener("click", function () {
+    var open = menu.classList.toggle("is-open");
+    burger.setAttribute("aria-expanded", String(open));
+    burger.querySelector("i").setAttribute("data-lucide", open ? "x" : "menu");
+    drawIcons();
+  });
+  menu.querySelectorAll("a").forEach(function (a) {
+    a.addEventListener("click", function () {
+      menu.classList.remove("is-open");
+      burger.setAttribute("aria-expanded", "false");
+      burger.querySelector("i").setAttribute("data-lucide", "menu");
+      drawIcons();
+    });
+  });
+
+  // ----- Accordion -----
+  document.getElementById("wd-acc").querySelectorAll(".wd-acc__q").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var item = btn.closest(".wd-acc__item");
+      var isOpen = item.classList.contains("is-open");
+      document.querySelectorAll(".wd-acc__item").forEach(function (i) { i.classList.remove("is-open"); });
+      if (!isOpen) item.classList.add("is-open");
+    });
+  });
+
+  // ----- Telegram bot config -----
+  var TG_TOKEN = "8871274229:AAH8Vo7X2xYpkR3sSbGjcPiHElNdfu8A42w";
+  var TG_CHAT  = "245780";
+  var TG_URL   = "https://api.telegram.org/bot" + TG_TOKEN + "/sendMessage";
+
+  // ----- Captcha setup -----
+  var captchaAnswer = 0;
+  function refreshCaptcha() {
+    var a = Math.floor(Math.random() * 9) + 1;
+    var b = Math.floor(Math.random() * 9) + 1;
+    captchaAnswer = a + b;
+    var q = document.getElementById("wd-captcha-q");
+    if (q) q.textContent = a + " + " + b + " = ?";
+    var inp = document.getElementById("wd-captcha-input");
+    if (inp) inp.value = "";
+  }
+  refreshCaptcha();
+
+  // ----- Contact form -----
+  var form = document.getElementById("wd-form");
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var captchaErr = document.getElementById("wd-captcha-err");
+    var captchaInput = document.getElementById("wd-captcha-input");
+    captchaErr.style.display = "none";
+
+    if (parseInt(captchaInput.value, 10) !== captchaAnswer) {
+      captchaErr.style.display = "inline";
+      refreshCaptcha();
+      return;
+    }
+
+    var name  = (document.getElementById("wd-name")  || {}).value  || "—";
+    var phone = (document.getElementById("wd-phone") || {}).value || "—";
+    var mc    = (document.getElementById("wd-mc")    || {}).value    || "—";
+    var equip = (document.getElementById("wd-equip") || {}).value || "—";
+    var fleet = (document.getElementById("wd-fleet") || {}).value || "—";
+
+    var text =
+      "🚛 <b>Новая заявка на консультацию</b>\n\n" +
+      "👤 <b>Имя:</b> " + name + "\n" +
+      "📞 <b>Телефон:</b> " + phone + "\n" +
+      "🔖 <b>MC / DOT:</b> " + mc + "\n" +
+      "🚚 <b>Оборудование:</b> " + equip + "\n" +
+      "📝 <b>О флоте:</b> " + fleet;
+
+    var btn = form.querySelector("button[type=submit]");
+    if (btn) { btn.disabled = true; btn.textContent = "Sending…"; }
+
+    fetch(TG_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ chat_id: TG_CHAT, text: text, parse_mode: "HTML" })
+    })
+    .then(function (r) { return r.json(); })
+    .then(function (json) {
+      if (!json.ok) throw new Error(json.description || "Telegram error");
+      form.classList.add("is-sent");
+      form.querySelector(".wd-contact__sent").classList.add("is-shown");
+      drawIcons();
+    })
+    .catch(function () {
+      if (btn) { btn.disabled = false; btn.textContent = "Get Started Today"; drawIcons(); }
+      alert("Ошибка отправки. Позвоните нам: (205) 557-3100");
+    });
+  });
+
+  // ----- Scroll reveal -----
+  var reveals = document.querySelectorAll(".wd-reveal");
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add("is-in"); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+    reveals.forEach(function (el) { io.observe(el); });
+  } else {
+    reveals.forEach(function (el) { el.classList.add("is-in"); });
+  }
+
+  // ----- Smooth-scroll video hero (canvas frame sequence) -----
+  (function () {
+    var section = document.getElementById("ssh-canvas") ? document.querySelector(".ssh") : null;
+    if (!section) return;
+    var canvas = document.getElementById("ssh-canvas");
+    var cue = document.getElementById("ssh-cue");
+    var ctx = canvas.getContext("2d");
+
+    var FRAME_COUNT = 60;
+    var framePath = function (i) { return "images/frames/f-" + String(i).padStart(3, "0") + ".jpg"; };
+    var NAT_W = 900, NAT_H = 506;
+    var scrollHeight = parseInt(section.getAttribute("data-scroll-height"), 10) || 2400;
+    var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    function clamp01(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
+
+    var frames = new Array(FRAME_COUNT), loaded = 0, ready = false, curIndex = -1, targetIndex = 0, rafPending = false;
+
+    function resize() {
+      canvas.width = Math.round(canvas.clientWidth * dpr);
+      canvas.height = Math.round(canvas.clientHeight * dpr);
+      curIndex = -1; draw();
+    }
+    function draw() {
+      if (!ready) return;
+      var i = targetIndex;
+      if (i === curIndex) return;
+      var img = frames[i];
+      if (!img || !img.complete || !img.naturalWidth) {
+        var j = i; while (j >= 0 && (!frames[j] || !frames[j].complete)) j--;
+        if (j < 0) return; img = frames[j];
+      }
+      var cw = canvas.width, ch = canvas.height;
+      var scale = Math.max(cw / NAT_W, ch / NAT_H);
+      var dw = NAT_W * scale, dh = NAT_H * scale;
+      ctx.drawImage(img, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
+      curIndex = i;
+    }
+    function computeTarget() {
+      var y = window.scrollY || window.pageYOffset;
+      var p = clamp01(y / scrollHeight);
+      if (cue) cue.style.opacity = String(clamp01(1 - p * 2.4));
+      return Math.round(p * (FRAME_COUNT - 1));
+    }
+    function onScroll() {
+      targetIndex = computeTarget();
+      if (!rafPending) { rafPending = true; requestAnimationFrame(function () { rafPending = false; draw(); }); }
+    }
+    function preload() {
+      for (var i = 0; i < FRAME_COUNT; i++) {
+        (function (idx) {
+          var img = new Image();
+          img.decoding = "async";
+          img.onload = function () {
+            loaded++;
+            if (!ready && (loaded >= 8 || loaded === FRAME_COUNT)) { ready = true; section.classList.add("is-ready"); resize(); }
+            else if (idx === targetIndex || idx === curIndex) { curIndex = -1; draw(); }
+          };
+          img.src = framePath(idx);
+          frames[idx] = img;
+        })(i);
+      }
+    }
+    targetIndex = computeTarget();
+    preload();
+    if (reduceMotion) { if (cue) cue.style.display = "none"; }
+    else { window.addEventListener("scroll", onScroll, { passive: true }); }
+    window.addEventListener("resize", resize);
+    section.style.height = "calc(" + scrollHeight + "px + 100vh)";
+  })();
+})();
+</script>
+</body>
+</html>

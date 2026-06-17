@@ -1,0 +1,13 @@
+<!-- @dsCard group="Colors" viewport="700x160" name="Signal & Status" subtitle="Load states: loaded, in-transit" -->
+<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../styles.css">
+<style>
+  body{margin:0;padding:24px;background:var(--bg-base);display:flex;gap:14px;flex-wrap:wrap}
+  .sw{flex:1;min-width:150px;border-radius:var(--radius-md);padding:14px;height:90px;display:flex;flex-direction:column;justify-content:space-between;border:1px solid var(--border-subtle)}
+  .dot{width:12px;height:12px;border-radius:50%}
+  .n{font-family:var(--font-body);font-weight:700;color:var(--text-strong);font-size:14px}
+  .h{font-family:var(--font-mono);font-size:11px;color:var(--text-muted)}
+</style></head><body>
+  <div class="sw"><span class="dot" style="background:var(--success);box-shadow:0 0 12px var(--success)"></span><div><div class="n">Success / Loaded</div><div class="h">#1FBF75 · --success</div></div></div>
+  <div class="sw"><span class="dot" style="background:var(--warning);box-shadow:0 0 12px var(--warning)"></span><div><div class="n">Warning / In Transit</div><div class="h">#F5A524 · --warning</div></div></div>
+  <div class="sw"><span class="dot" style="background:var(--accent);box-shadow:0 0 12px var(--accent)"></span><div><div class="n">Accent / Available</div><div class="h">#2E6BFF · --accent</div></div></div>
+</body></html>

@@ -1,0 +1,43 @@
+/* ============================================================
+   West Dispatch — Typography Tokens
+   Display: Space Grotesk (confident technical grotesque)
+   Body/UI: Manrope (clean, modern, geometric)
+   Mono:    Space Mono (rates, load IDs, technical data)
+   ============================================================ */
+:root {
+  --font-display: "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Manrope", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "Space Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* Weights */
+  --fw-regular: 400; /* @kind font */
+  --fw-medium: 500; /* @kind font */
+  --fw-semibold: 600; /* @kind font */
+  --fw-bold: 700; /* @kind font */
+
+  /* Type scale (fluid-ready base) */
+  --fs-display-xl: 76px;  /* hero */
+  --fs-display-lg: 56px;
+  --fs-display-md: 42px;  /* section titles */
+  --fs-heading: 30px;
+  --fs-title: 22px;
+  --fs-subtitle: 18px;
+  --fs-body-lg: 18px;
+  --fs-body: 16px;
+  --fs-body-sm: 14px;
+  --fs-caption: 13px;
+  --fs-overline: 12px;
+
+  /* Line heights */
+  --lh-tight: 1.04; /* @kind other */
+  --lh-snug: 1.18; /* @kind other */
+  --lh-normal: 1.5; /* @kind other */
+  --lh-relaxed: 1.65; /* @kind other */
+
+  /* Tracking */
+  --ls-tight: -0.03em; /* @kind other */
+  --ls-snug: -0.015em; /* @kind other */
+  --ls-normal: 0; /* @kind other */
+  --ls-wide: 0.04em; /* @kind other */
+  --ls-overline: 0.16em; /* @kind other */
+}

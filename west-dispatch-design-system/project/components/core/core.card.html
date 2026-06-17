@@ -1,0 +1,59 @@
+<!-- @dsCard group="Components" viewport="700x440" name="Buttons, Badges, Cards & Stats" subtitle="Core surface & action primitives" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../../styles.css" />
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>
+  body { margin: 0; padding: 28px; background: var(--bg-base); }
+  .row { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-bottom: 22px; }
+  .lbl { font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--text-faint); margin: 0 0 12px; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+  const { Button, Badge, Card, Stat } = window.WestDispatchDesignSystem_52aa6d;
+  const Arrow = () => <span style={{fontFamily:'var(--font-mono)'}}>→</span>;
+  function Demo() {
+    return (
+      <div>
+        <p className="lbl">Buttons</p>
+        <div className="row">
+          <Button variant="primary" iconRight={<Arrow/>}>Get Started Today</Button>
+          <Button variant="energy">Book a Dispatcher</Button>
+          <Button variant="secondary">View Pricing</Button>
+          <Button variant="ghost">Learn more</Button>
+          <Button variant="primary" size="sm">Small</Button>
+          <Button variant="primary" disabled>Disabled</Button>
+        </div>
+        <p className="lbl">Badges</p>
+        <div className="row">
+          <Badge tone="success" dot>Loaded</Badge>
+          <Badge tone="warning" dot>In Transit</Badge>
+          <Badge tone="accent" dot>Available</Badge>
+          <Badge tone="energy">Hot Lane</Badge>
+          <Badge tone="neutral">48 States</Badge>
+        </div>
+        <p className="lbl">Cards &amp; Stats</p>
+        <div className="row" style={{alignItems:'stretch'}}>
+          <Card variant="default" interactive style={{width:220}}>
+            <Badge tone="accent">Load Sourcing</Badge>
+            <h3 style={{margin:'14px 0 6px',fontSize:20}}>Always Loaded</h3>
+            <p style={{margin:0,color:'var(--text-body)',fontSize:14}}>We find the highest-paying lanes for your equipment.</p>
+          </Card>
+          <Card variant="accent" style={{width:200,display:'flex',alignItems:'center'}}>
+            <Stat value="$2,840" suffix="/wk" label="Avg. revenue lift" />
+          </Card>
+        </div>
+      </div>
+    );
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(<Demo/>);
+</script>
+</body>
+</html>
