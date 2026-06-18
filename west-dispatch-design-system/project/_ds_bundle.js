@@ -1213,43 +1213,97 @@ try { (() => {
 /* global React */
 (function () {
   const Icon = window.Icon;
-  const STEPS = [["clipboard-list", "01", "Quick Onboarding", "Send us your MC authority, COI, W9 and equipment details. We get you set up within 30 minutes."], ["search", "02", "We Find Your Loads", "Your dedicated dispatcher sources high-paying lanes that fit your truck, your home time, and your preferred routes."], ["handshake", "03", "We Negotiate & Book", "We push for the best rate, confirm the load, and handle all the paperwork and broker setup for you."], ["banknote", "04", "You Drive & Get Paid", "Hit the road with a full schedule. We manage check calls and invoicing so the money keeps flowing."]];
+  const STEPS = [
+    ["clipboard-list","01","Quick Onboarding",   "Send us your MC authority, COI, W9 and equipment details. We get you set up within 30 minutes.",1],
+    ["search",        "02","We Find Your Loads", "Your dedicated dispatcher sources high-paying lanes that fit your truck, your home time, and your preferred routes.",2],
+    ["handshake",     "03","We Negotiate & Book","We push for the best rate, confirm the load, and handle all the paperwork and broker setup for you.",3],
+    ["banknote",      "04","You Drive & Get Paid","Hit the road with a full schedule. We manage check calls and invoicing so the money keeps flowing.",4],
+  ];
+  const HOLD = [1400,1400,1400,2200], TRAVEL = 650;
   function HowItWorks() {
-    return /*#__PURE__*/React.createElement("section", {
-      className: "wd-section",
-      id: "how"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "wd-container"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "wd-sectionhead"
-    }, /*#__PURE__*/React.createElement("span", {
-      className: "wd-eyebrow"
-    }, "\u2014 How it works"), /*#__PURE__*/React.createElement("h2", {
-      className: "wd-sectionhead__title"
-    }, "From sign-up to loaded in 24 hours"), /*#__PURE__*/React.createElement("p", {
-      className: "wd-sectionhead__sub"
-    }, "A simple, proven process built around keeping your truck moving.")), /*#__PURE__*/React.createElement("div", {
-      className: "wd-steps"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "wd-steps__line"
-    }), STEPS.map(([ic, n, t, b]) => /*#__PURE__*/React.createElement("div", {
-      className: "wd-step",
-      key: n
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "wd-step__node"
-    }, /*#__PURE__*/React.createElement("span", {
-      className: "wd-step__icon"
-    }, /*#__PURE__*/React.createElement(Icon, {
-      name: ic,
-      size: 26,
-      color: "var(--wd-blue-300)"
-    })), /*#__PURE__*/React.createElement("span", {
-      className: "wd-step__num"
-    }, n)), /*#__PURE__*/React.createElement("h3", {
-      className: "wd-step__title"
-    }, t), /*#__PURE__*/React.createElement("p", {
-      className: "wd-step__body"
-    }, b))))));
+    const containerRef = React.useRef(null);
+    React.useEffect(() => {
+      const container = containerRef.current; if (!container) return;
+      const fill = container.querySelector('#wd-flow-fill');
+      const dot  = container.querySelector('#wd-flow-dot');
+      const line = container.querySelector('.wd-flow__line');
+      const steps = Array.from(container.querySelectorAll('[data-step]'));
+      if (!fill || !dot || !steps.length) return;
+      function posOf(i) {
+        if (!line) return 0;
+        const node = steps[i].querySelector('.wd-step__node');
+        const l = line.getBoundingClientRect(), n = node.getBoundingClientRect();
+        return Math.max(0, Math.min(100, (n.left + n.width/2 - l.left) / l.width * 100));
+      }
+      function setClasses(i) {
+        const s = steps[i];
+        s.classList.remove('wd-step--muted','wd-step--active','wd-step--done','wd-step--success');
+        for (let a=1;a<arguments.length;a++) s.classList.add(arguments[a]);
+      }
+      function moveLine(toIdx,cb) {
+        const p = posOf(toIdx)+'%';
+        fill.style.transition = `width ${TRAVEL}ms cubic-bezier(0.4,0,0.2,1)`;
+        dot.style.transition  = `left ${TRAVEL}ms cubic-bezier(0.4,0,0.2,1), opacity 0.3s ease`;
+        fill.style.width = p; dot.style.left = p; dot.style.opacity='1';
+        timers.push(setTimeout(cb,TRAVEL));
+      }
+      const timers=[]; let active=true;
+      function cycle() {
+        if (!active) return;
+        steps.forEach(s=>{s.classList.remove('wd-step--active','wd-step--done','wd-step--success');s.classList.add('wd-step--muted');});
+        requestAnimationFrame(()=>{
+          fill.style.transition='none'; fill.style.width=posOf(0)+'%';
+          dot.style.transition='none'; dot.style.left=posOf(0)+'%'; dot.style.opacity='0';
+          requestAnimationFrame(()=>{
+            setClasses(0,'wd-step--active'); dot.style.transition='opacity 0.3s ease'; dot.style.opacity='1';
+            timers.push(setTimeout(()=>{
+              setClasses(0,'wd-step--done');
+              moveLine(1,()=>{ setClasses(1,'wd-step--active');
+                timers.push(setTimeout(()=>{
+                  setClasses(1,'wd-step--done');
+                  moveLine(2,()=>{ setClasses(2,'wd-step--active');
+                    timers.push(setTimeout(()=>{
+                      setClasses(2,'wd-step--done');
+                      moveLine(3,()=>{ setClasses(3,'wd-step--active','wd-step--success');
+                        timers.push(setTimeout(()=>{
+                          setClasses(3,'wd-step--done');
+                          dot.style.transition='opacity 0.5s ease'; dot.style.opacity='0';
+                          timers.push(setTimeout(cycle,700));
+                        },HOLD[3]));
+                      });
+                    },HOLD[2]));
+                  });
+                },HOLD[1]));
+              });
+            },HOLD[0]));
+          });
+        });
+      }
+      const section = container.closest('#how') || container.parentElement;
+      if (window.IntersectionObserver && section) {
+        const io = new IntersectionObserver(entries=>{ if(entries[0].isIntersecting){io.disconnect();timers.push(setTimeout(cycle,400));} },{threshold:0.25});
+        io.observe(section);
+      } else { timers.push(setTimeout(cycle,800)); }
+      return ()=>{ active=false; timers.forEach(clearTimeout); };
+    },[]);
+    return React.createElement("section",{className:"wd-section",id:"how"},
+      React.createElement("div",{className:"wd-container"},
+        React.createElement("div",{className:"wd-sectionhead"},
+          React.createElement("span",{className:"wd-eyebrow"},"\u2014 How it works"),
+          React.createElement("h2",{className:"wd-sectionhead__title"},"From sign-up to loaded in 24 hours"),
+          React.createElement("p",{className:"wd-sectionhead__sub"},"A simple, proven process built around keeping your truck moving.")),
+        React.createElement("div",{className:"wd-steps",id:"wd-flow-steps",ref:containerRef},
+          React.createElement("div",{className:"wd-flow__line","aria-hidden":"true"},
+            React.createElement("div",{className:"wd-flow__fill",id:"wd-flow-fill"}),
+            React.createElement("div",{className:"wd-flow__dot",id:"wd-flow-dot"})),
+          STEPS.map(([ic,n,t,b,stepNum])=>
+            React.createElement("div",{className:"wd-step",key:n,"data-step":stepNum},
+              React.createElement("div",{className:"wd-step__node"},
+                React.createElement("span",{className:"wd-step__icon"},React.createElement(Icon,{name:ic,size:26,color:"var(--wd-blue-300)"})),
+                React.createElement("span",{className:"wd-step__num"},n),
+                React.createElement("span",{className:"wd-step__check","aria-hidden":"true"})),
+              React.createElement("h3",{className:"wd-step__title"},t),
+              React.createElement("p",{className:"wd-step__body"},b))))));
   }
   window.HowItWorks = HowItWorks;
 })();
@@ -1546,7 +1600,53 @@ try { (() => {
   } = window.WestDispatchDesignSystem_52aa6d;
   const Icon = window.Icon;
   const REASONS = [["shield-check", "No long-term contracts", "Month-to-month. Stay because the loads are good — never because you're locked in."], ["percent", "Transparent flat fee", "One clear dispatch fee per load. No hidden cuts, no surprise factoring deductions."], ["clock", "24/7 dispatcher support", "Real people on the phone when you need them — nights, weekends, and breakdowns included."], ["trending-up", "Higher revenue per mile", "Our negotiators consistently book lanes above market — more money on every haul."]];
+  const LIVE_STATS = [
+    { id: "wd-live-revenue",    min: 2500, max: 7500, minJump: 300 },
+    { id: "wd-live-downtime",   min: 30,   max: 40,   minJump: 2   },
+    { id: "wd-live-dispatched", min: 100,  max: 200,  minJump: 8   },
+  ];
+  const statValStyle = { fontFamily: "var(--font-display)", fontWeight: "var(--fw-bold)", fontSize: 46, lineHeight: 1, letterSpacing: "var(--ls-tight)", color: "var(--text-strong)" };
+  const statLblStyle = { marginTop: 10, fontSize: 13, fontFamily: "var(--font-mono)", letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--text-muted)" };
+
   function WhyChoose() {
+    React.useEffect(() => {
+      const rnd = (min, max) => Math.round(min + Math.random() * (max - min));
+      const stats = LIVE_STATS.map(s => ({ ...s, cur: rnd(s.min, s.max), hist: [] }));
+      const timers = [];
+      function ease(t) { return t < 0.5 ? 2*t*t : -1 + (4-2*t)*t; }
+      function fmt(s, v) {
+        const n = Math.round(v);
+        if (s.id === "wd-live-revenue")    return "$" + n.toLocaleString() + '<span style="color:var(--wd-blue-300);margin-left:2px">/wk</span>';
+        if (s.id === "wd-live-downtime")   return n + "%";
+        if (s.id === "wd-live-dispatched") return n + '<span style="color:var(--wd-blue-300);margin-left:2px">+</span>';
+      }
+      stats.forEach(s => { const el = document.getElementById(s.id); if (el) el.innerHTML = fmt(s, s.cur); });
+      function nextVal(s) {
+        let n, tries = 0;
+        do { n = rnd(s.min, s.max); tries++; }
+        while (tries < 30 && (Math.abs(n - s.cur) < s.minJump || s.hist.indexOf(n) !== -1));
+        s.hist.push(n); if (s.hist.length > 4) s.hist.shift();
+        return n;
+      }
+      function animateTo(s, target) {
+        const from = s.cur, dur = 1000 + Math.random() * 600, t0 = performance.now();
+        const el = document.getElementById(s.id);
+        if (!el) return;
+        (function tick(now) {
+          const p = Math.min((now - t0) / dur, 1);
+          el.innerHTML = fmt(s, from + (target - from) * ease(p));
+          if (p < 1) requestAnimationFrame(tick);
+          else { s.cur = target; schedule(s); }
+        })(t0);
+      }
+      function schedule(s) {
+        const t = setTimeout(() => animateTo(s, nextVal(s)), 2000 + Math.random() * 3000);
+        timers.push(t);
+      }
+      stats.forEach((s, i) => { const t = setTimeout(() => schedule(s), Math.random() * 1500 + i * 500); timers.push(t); });
+      return () => timers.forEach(clearTimeout);
+    }, []);
+
     return /*#__PURE__*/React.createElement("section", {
       className: "wd-section wd-why",
       id: "why"
@@ -1580,23 +1680,27 @@ try { (() => {
     }, /*#__PURE__*/React.createElement(Card, {
       variant: "accent",
       padding: 32,
-      style: {
-        display: "grid",
-        gridTemplateColumns: "1fr 1fr",
-        gap: 32
-      }
-    }, /*#__PURE__*/React.createElement(Stat, {
-      value: "$2,840",
-      suffix: "/wk",
-      label: "Avg. revenue lift per truck"
-    }), /*#__PURE__*/React.createElement(Stat, {
-      value: "36%",
-      label: "Less downtime between loads",
-      tone: "energy"
-    }), /*#__PURE__*/React.createElement(Stat, {
-      value: "400+",
-      label: "Owner-operators dispatched"
-    }), /*#__PURE__*/React.createElement(Stat, {
+      style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32 }
+    }, /*#__PURE__*/React.createElement("div", { className: "wd-live-header" },
+      /*#__PURE__*/React.createElement("span", { className: "wd-live-badge" },
+        /*#__PURE__*/React.createElement("span", { className: "wd-live-dot" }),
+        "LIVE"
+      ),
+      /*#__PURE__*/React.createElement("span", { className: "wd-live-label" }, "Dispatch metrics")
+    ), /*#__PURE__*/React.createElement("div", null,
+      /*#__PURE__*/React.createElement("div", { id: "wd-live-revenue", style: statValStyle },
+        "$2,840", /*#__PURE__*/React.createElement("span", { style: { color: "var(--wd-blue-300)", marginLeft: 2 } }, "/wk")
+      ),
+      /*#__PURE__*/React.createElement("div", { style: statLblStyle }, "Avg. revenue lift per truck")
+    ), /*#__PURE__*/React.createElement("div", null,
+      /*#__PURE__*/React.createElement("div", { id: "wd-live-downtime", style: statValStyle }, "36%"),
+      /*#__PURE__*/React.createElement("div", { style: statLblStyle }, "Less downtime between loads")
+    ), /*#__PURE__*/React.createElement("div", null,
+      /*#__PURE__*/React.createElement("div", { id: "wd-live-dispatched", style: statValStyle },
+        "207", /*#__PURE__*/React.createElement("span", { style: { color: "var(--wd-blue-300)", marginLeft: 2 } }, "+")
+      ),
+      /*#__PURE__*/React.createElement("div", { style: statLblStyle }, "Owner-operators dispatched")
+    ), /*#__PURE__*/React.createElement(Stat, {
       value: "24/7",
       label: "Dispatcher availability",
       tone: "energy"

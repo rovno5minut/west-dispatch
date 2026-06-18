@@ -150,6 +150,11 @@ html { overflow-x: hidden; }
 .wd-why__b { font-size: 15px; color: var(--text-body); margin-top: 4px; line-height: var(--lh-normal); }
 .wd-why__right { display: flex; flex-direction: column; gap: 22px; }
 .wd-why__stats { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; padding: 32px; }
+.wd-live-header { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; margin-bottom: -8px; }
+.wd-live-badge { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; color: #1FBF75; text-transform: uppercase; }
+.wd-live-dot { width: 7px; height: 7px; border-radius: 50%; background: #1FBF75; flex-shrink: 0; animation: wd-live-pulse 1.8s ease-in-out infinite; }
+@keyframes wd-live-pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(31,191,117,0.6); } 60% { box-shadow: 0 0 0 5px rgba(31,191,117,0); } }
+.wd-live-label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); }
 .wd-why__quote { background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 26px 28px; box-shadow: var(--sheen-top); }
 .wd-why__quote .wd-ico { color: var(--accent); font-size: 28px; }
 .wd-why__quote p { font-family: var(--font-display); font-size: 20px; font-weight: 500; color: var(--text-strong); line-height: 1.4; margin: 12px 0; letter-spacing: -0.01em; }
@@ -157,12 +162,38 @@ html { overflow-x: hidden; }
 
 /* How it works */
 .wd-steps { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
-.wd-steps__line { position: absolute; top: 34px; left: 12%; right: 12%; height: 2px; background: linear-gradient(90deg, transparent, var(--border-strong), transparent); }
-.wd-step { position: relative; text-align: center; }
-.wd-step__node { position: relative; width: 70px; height: 70px; margin: 0 auto 22px; border-radius: 50%; background: var(--surface-card); border: 1px solid var(--border-default); display: inline-flex; align-items: center; justify-content: center; box-shadow: var(--shadow-md); font-size: 26px; color: var(--wd-blue-300); }
+/* Animated flow line */
+.wd-flow__line { position: absolute; top: 34px; left: 12%; right: 12%; height: 2px; background: rgba(255,255,255,0.07); border-radius: 1px; overflow: visible; pointer-events: none; }
+.wd-flow__fill { position: absolute; top: 0; left: 0; height: 100%; width: 0%; background: linear-gradient(90deg, rgba(46,107,255,0.9), rgba(46,107,255,0.45)); border-radius: 1px; }
+.wd-flow__dot  { position: absolute; top: 50%; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 14px 5px rgba(46,107,255,0.65); transform: translate(-50%,-50%); opacity: 0; }
+
+/* Step base */
+.wd-step { position: relative; text-align: center; transition: opacity 0.45s ease; }
+.wd-step__node { position: relative; width: 70px; height: 70px; margin: 0 auto 22px; border-radius: 50%; background: var(--surface-card); border: 1px solid var(--border-default); display: inline-flex; align-items: center; justify-content: center; box-shadow: var(--shadow-md); font-size: 26px; color: var(--wd-blue-300); transition: border-color 0.4s ease, background 0.4s ease, box-shadow 0.4s ease, color 0.4s ease, transform 0.4s ease; }
 .wd-step__num { position: absolute; top: -6px; right: -6px; font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--wd-red-400); background: var(--bg-base); border: 1px solid rgba(240,41,74,0.35); border-radius: var(--radius-pill); padding: 2px 7px; }
 .wd-step__title { font-size: var(--fs-subtitle); }
 .wd-step__body { font-size: 14px; color: var(--text-body); margin-top: 10px; line-height: var(--lh-relaxed); }
+
+/* Check badge */
+.wd-step__check { position: absolute; top: -5px; right: -5px; width: 22px; height: 22px; border-radius: 50%; background: #1FBF75; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #fff; font-weight: 700; line-height: 1; opacity: 0; transform: scale(0.4); transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.34,1.56,0.64,1); pointer-events: none; }
+.wd-step__check::before { content: '✓'; }
+
+/* Muted state */
+.wd-step--muted { opacity: 0.28; }
+
+/* Active state — blue glow */
+.wd-step--active .wd-step__node { border-color: rgba(46,107,255,0.65); background: rgba(46,107,255,0.10); color: #7ca8ff; transform: scale(1.08); box-shadow: 0 0 0 5px rgba(46,107,255,0.08), 0 0 28px 6px rgba(46,107,255,0.22), var(--shadow-md); }
+.wd-step--active .wd-step__node::after { content: ''; position: absolute; inset: -8px; border-radius: 50%; border: 2px solid rgba(46,107,255,0.45); animation: wd-step-ring 1.5s ease-out infinite; }
+@keyframes wd-step-ring { 0% { opacity: 0.9; transform: scale(1); } 100% { opacity: 0; transform: scale(1.6); } }
+
+/* Done state — green tint + checkmark */
+.wd-step--done .wd-step__node { border-color: rgba(31,191,117,0.4); background: rgba(31,191,117,0.07); color: #1FBF75; transform: scale(1); box-shadow: var(--shadow-md); }
+.wd-step--done .wd-step__check { opacity: 1; transform: scale(1); }
+
+/* Success state — step 4 green glow */
+.wd-step--success.wd-step--active .wd-step__node { border-color: rgba(31,191,117,0.65); background: rgba(31,191,117,0.10); color: #1FBF75; box-shadow: 0 0 0 5px rgba(31,191,117,0.08), 0 0 28px 6px rgba(31,191,117,0.22), var(--shadow-md); }
+.wd-step--success.wd-step--active .wd-step__node::after { border-color: rgba(31,191,117,0.5); animation: wd-step-ring-g 1.5s ease-out infinite; }
+@keyframes wd-step-ring-g { 0% { opacity: 0.9; transform: scale(1); } 100% { opacity: 0; transform: scale(1.6); } }
 
 /* Testimonials */
 .wd-testi { background: var(--bg-deep); }
@@ -288,7 +319,7 @@ textarea.wd-field__input { height: auto; padding: 14px 16px; resize: vertical; }
   .wd-faq__head .wd-sectionhead__title { text-align: left; }
   .wd-grid-3 { grid-template-columns: 1fr 1fr; }
   .wd-steps { grid-template-columns: 1fr 1fr; gap: 40px 28px; }
-  .wd-steps__line { display: none; }
+  .wd-flow__line { display: none; }
   .wd-footer__grid { grid-template-columns: 1fr 1fr; gap: 32px; }
 }
 @media (max-width: 600px) {
