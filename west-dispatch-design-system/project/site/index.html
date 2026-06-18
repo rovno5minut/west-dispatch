@@ -7,7 +7,7 @@
 <meta name="description" content="West Dispatch finds high-paying loads, negotiates your rates, and handles the paperwork — so you stay loaded, cut downtime, and grow your revenue. 24/7 dispatcher support, no long-term contracts." />
 <link rel="icon" href="logo-mark-light.png" />
 <link rel="stylesheet" href="ds/styles.css" />
-<link rel="stylesheet" href="site.css?v=9" />
+<link rel="stylesheet" href="site.css?v=19" />
 <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
 </head>
 <body>
@@ -45,13 +45,44 @@
     </div>
   </header>
 
+  <main>
   <!-- ===================== INTERACTIVE FREIGHT MAP HERO ===================== -->
   <section class="ssh" id="top" data-screen-label="Hero">
     <div class="ssh__sticky" id="ssh-sticky">
       <div class="fmap" id="fmap">
-        <svg id="fmap-svg" class="fmap__svg"></svg>
         <canvas id="fmap-canvas" class="fmap__canvas"></canvas>
+        <svg id="fmap-svg" class="fmap__svg"></svg>
         <div id="fmap-tooltip" class="fmap__tooltip"></div>
+        <div class="fmap__legend" aria-label="Freight volume legend">
+          <div class="fmap__legend-title">FREIGHT DEMAND</div>
+          <div class="fmap__legend-scale">
+            <span class="fmap__legend-label">Low</span>
+            <div class="fmap__legend-bar"></div>
+            <span class="fmap__legend-label">High</span>
+          </div>
+          <div class="fmap__legend-tiers">
+            <span class="fmap__legend-tier fmap__legend-tier--5"></span>
+            <span class="fmap__legend-tier fmap__legend-tier--4"></span>
+            <span class="fmap__legend-tier fmap__legend-tier--3"></span>
+            <span class="fmap__legend-tier fmap__legend-tier--2"></span>
+            <span class="fmap__legend-tier fmap__legend-tier--1"></span>
+          </div>
+        </div>
+        <div class="fmap__hint" aria-hidden="true">TAP ANY STATE TO VIEW LIVE LOADS</div>
+      </div>
+      <div class="ssh__market-bar" role="region" aria-label="Live freight market data">
+        <div class="ssh__mbar-stat ssh__mbar-stat--loads">
+          <div class="ssh__mbar-num">1,247</div>
+          <div class="ssh__mbar-label">Available Loads</div>
+        </div>
+        <div class="ssh__mbar-stat">
+          <div class="ssh__mbar-num ssh__mbar-num--rate">$2.48</div>
+          <div class="ssh__mbar-label">Average Rate</div>
+        </div>
+        <div class="ssh__mbar-stat">
+          <div class="ssh__mbar-num">38</div>
+          <div class="ssh__mbar-label">Booked Today</div>
+        </div>
       </div>
       <div class="ssh__scrim"></div>
       <div class="ssh__content">
@@ -89,7 +120,7 @@
             <span class="wd-ava" style="background:hsl(252 40% 38%)">SP</span>
           </div>
           <div>
-            <div class="wd-stars" aria-label="5 out of 5 stars">
+            <div class="wd-stars" role="img" aria-label="5 out of 5 stars">
               <span class="wd-ico"><i data-lucide="star" fill="currentColor"></i></span>
               <span class="wd-ico"><i data-lucide="star" fill="currentColor"></i></span>
               <span class="wd-ico"><i data-lucide="star" fill="currentColor"></i></span>
@@ -209,15 +240,15 @@
       <div class="wd-marquee__track">
         <!-- set 1 -->
         <figure class="wd-truck">
-          <div class="wd-truck__media"><img class="wd-truck__photo" src="images/truck-box.jpg" alt="White 26 ft box truck at a loading dock" /></div>
+          <div class="wd-truck__media"><img class="wd-truck__photo" src="images/truck-box.jpg" alt="White 26 ft box truck at a loading dock" loading="lazy" /></div>
           <figcaption class="wd-truck__cap"><span class="wd-truck__name">26 ft Box Truck</span><span class="wd-truck__spec">Straight truck · liftgate</span></figcaption>
         </figure>
         <figure class="wd-truck">
-          <div class="wd-truck__media"><img class="wd-truck__photo" src="images/truck-dryvan.jpg" alt="White 53-foot dry van tractor-trailer" /></div>
+          <div class="wd-truck__media"><img class="wd-truck__photo" src="images/truck-dryvan.jpg" alt="White 53-foot dry van tractor-trailer" loading="lazy" /></div>
           <figcaption class="wd-truck__cap"><span class="wd-truck__name">53' Dry Van</span><span class="wd-truck__spec">Enclosed dry freight</span></figcaption>
         </figure>
         <figure class="wd-truck">
-          <div class="wd-truck__media"><img class="wd-truck__photo" src="images/truck-flatbed.jpg" alt="White day-cab tractor with 48-foot flatbed trailer" /></div>
+          <div class="wd-truck__media"><img class="wd-truck__photo" src="images/truck-flatbed.jpg" alt="White day-cab tractor with 48-foot flatbed trailer" loading="lazy" /></div>
           <figcaption class="wd-truck__cap"><span class="wd-truck__name">48' Flatbed</span><span class="wd-truck__spec">Open deck · step-deck</span></figcaption>
         </figure>
         <!-- set 2 (duplicate for seamless loop) -->
@@ -558,6 +589,7 @@
     </div>
   </section>
 
+  </main>
   <!-- ===================== FOOTER ===================== -->
   <footer class="wd-footer" data-screen-label="Footer">
     <div class="wd-container wd-footer__grid">
@@ -630,11 +662,18 @@
 
   // ----- Accordion -----
   document.getElementById("wd-acc").querySelectorAll(".wd-acc__q").forEach(function (btn) {
+    btn.setAttribute("aria-expanded", btn.closest(".wd-acc__item").classList.contains("is-open") ? "true" : "false");
     btn.addEventListener("click", function () {
       var item = btn.closest(".wd-acc__item");
       var isOpen = item.classList.contains("is-open");
-      document.querySelectorAll(".wd-acc__item").forEach(function (i) { i.classList.remove("is-open"); });
-      if (!isOpen) item.classList.add("is-open");
+      document.querySelectorAll(".wd-acc__item").forEach(function (i) {
+        i.classList.remove("is-open");
+        i.querySelector(".wd-acc__q").setAttribute("aria-expanded", "false");
+      });
+      if (!isOpen) {
+        item.classList.add("is-open");
+        btn.setAttribute("aria-expanded", "true");
+      }
     });
   });
 
@@ -727,34 +766,184 @@
     var tooltipEl = document.getElementById('fmap-tooltip');
     var cue       = document.getElementById('ssh-cue');
     if (!svgEl || !canvasEl) return;
-    /* ---- State freight data ---- */
+    /* ---- State freight data (structured by market tier) ---- */
     var SDATA = {
-      'Alabama':{'loads':48,'rate':'$2.36'},'Alaska':{'loads':4,'rate':'$3.45'},
-      'Arizona':{'loads':52,'rate':'$2.55'},'Arkansas':{'loads':44,'rate':'$2.37'},
-      'California':{'loads':94,'rate':'$2.72'},'Colorado':{'loads':46,'rate':'$2.62'},
-      'Connecticut':{'loads':18,'rate':'$2.81'},'Delaware':{'loads':12,'rate':'$2.71'},
-      'Florida':{'loads':81,'rate':'$2.31'},'Georgia':{'loads':58,'rate':'$2.44'},
-      'Hawaii':{'loads':6,'rate':'$3.12'},'Idaho':{'loads':24,'rate':'$2.57'},
-      'Illinois':{'loads':65,'rate':'$2.58'},'Indiana':{'loads':57,'rate':'$2.42'},
-      'Iowa':{'loads':39,'rate':'$2.41'},'Kansas':{'loads':43,'rate':'$2.44'},
-      'Kentucky':{'loads':53,'rate':'$2.48'},'Louisiana':{'loads':39,'rate':'$2.42'},
-      'Maine':{'loads':13,'rate':'$2.68'},'Maryland':{'loads':34,'rate':'$2.67'},
-      'Massachusetts':{'loads':22,'rate':'$2.89'},'Michigan':{'loads':44,'rate':'$2.47'},
-      'Minnesota':{'loads':42,'rate':'$2.52'},'Mississippi':{'loads':37,'rate':'$2.33'},
-      'Missouri':{'loads':61,'rate':'$2.46'},'Montana':{'loads':18,'rate':'$2.63'},
-      'Nebraska':{'loads':36,'rate':'$2.43'},'Nevada':{'loads':38,'rate':'$2.74'},
-      'New Hampshire':{'loads':11,'rate':'$2.76'},'New Jersey':{'loads':29,'rate':'$2.78'},
-      'New Mexico':{'loads':28,'rate':'$2.51'},'New York':{'loads':38,'rate':'$2.85'},
-      'North Carolina':{'loads':49,'rate':'$2.38'},'North Dakota':{'loads':19,'rate':'$2.41'},
-      'Ohio':{'loads':62,'rate':'$2.51'},'Oklahoma':{'loads':51,'rate':'$2.46'},
-      'Oregon':{'loads':35,'rate':'$2.58'},'Pennsylvania':{'loads':55,'rate':'$2.61'},
-      'Rhode Island':{'loads':8,'rate':'$2.83'},'South Carolina':{'loads':41,'rate':'$2.35'},
-      'South Dakota':{'loads':21,'rate':'$2.44'},'Tennessee':{'loads':73,'rate':'$2.39'},
-      'Texas':{'loads':127,'rate':'$2.48'},'Utah':{'loads':32,'rate':'$2.61'},
-      'Vermont':{'loads':9,'rate':'$2.74'},'Virginia':{'loads':47,'rate':'$2.55'},
-      'Washington':{'loads':41,'rate':'$2.69'},'West Virginia':{'loads':26,'rate':'$2.52'},
-      'Wisconsin':{'loads':38,'rate':'$2.49'},'Wyoming':{'loads':16,'rate':'$2.59'},
+      /* Tier 1 — Major Freight Markets (100–180 loads) */
+      'Texas':         {loads:147, rate:'$2.48', tier:1},
+      'California':    {loads:138, rate:'$2.72', tier:1},
+      'Florida':       {loads:119, rate:'$2.31', tier:1},
+      'Illinois':      {loads:112, rate:'$2.58', tier:1},
+      'Georgia':       {loads:108, rate:'$2.44', tier:1},
+      'Pennsylvania':  {loads:104, rate:'$2.61', tier:1},
+      'Ohio':          {loads:102, rate:'$2.51', tier:1},
+      'New Jersey':    {loads:101, rate:'$2.78', tier:1},
+      /* Tier 2 — Strong Freight Markets (70–99 loads) */
+      'Tennessee':     {loads:96,  rate:'$2.39', tier:2},
+      'Michigan':      {loads:89,  rate:'$2.47', tier:2},
+      'New York':      {loads:87,  rate:'$2.85', tier:2},
+      'North Carolina':{loads:84,  rate:'$2.38', tier:2},
+      'Missouri':      {loads:82,  rate:'$2.46', tier:2},
+      'Indiana':       {loads:80,  rate:'$2.42', tier:2},
+      'Virginia':      {loads:76,  rate:'$2.55', tier:2},
+      'Wisconsin':     {loads:73,  rate:'$2.49', tier:2},
+      'Minnesota':     {loads:72,  rate:'$2.52', tier:2},
+      'Arizona':       {loads:71,  rate:'$2.55', tier:2},
+      /* Tier 3 — Active Freight Markets (40–69 loads) */
+      'Alabama':       {loads:62,  rate:'$2.36', tier:3},
+      'South Carolina':{loads:61,  rate:'$2.35', tier:3},
+      'Kentucky':      {loads:60,  rate:'$2.48', tier:3},
+      'Washington':    {loads:58,  rate:'$2.69', tier:3},
+      'Colorado':      {loads:56,  rate:'$2.62', tier:3},
+      'Louisiana':     {loads:54,  rate:'$2.42', tier:3},
+      'Oklahoma':      {loads:52,  rate:'$2.46', tier:3},
+      'Arkansas':      {loads:50,  rate:'$2.37', tier:3},
+      'Mississippi':   {loads:49,  rate:'$2.33', tier:3},
+      'Iowa':          {loads:48,  rate:'$2.41', tier:3},
+      'Kansas':        {loads:47,  rate:'$2.44', tier:3},
+      'Nebraska':      {loads:46,  rate:'$2.43', tier:3},
+      'Maryland':      {loads:45,  rate:'$2.67', tier:3},
+      'Connecticut':   {loads:44,  rate:'$2.81', tier:3},
+      'Oregon':        {loads:43,  rate:'$2.58', tier:3},
+      'Massachusetts': {loads:42,  rate:'$2.89', tier:3},
+      'Utah':          {loads:41,  rate:'$2.61', tier:3},
+      /* Tier 4 — Light Freight Markets (20–39 loads) */
+      'Nevada':        {loads:38,  rate:'$2.74', tier:4},
+      'New Mexico':    {loads:34,  rate:'$2.51', tier:4},
+      'West Virginia': {loads:31,  rate:'$2.52', tier:4},
+      'New Hampshire': {loads:28,  rate:'$2.76', tier:4},
+      'Delaware':      {loads:26,  rate:'$2.71', tier:4},
+      'Rhode Island':  {loads:22,  rate:'$2.83', tier:4},
+      /* Tier 5 — Thin Freight Markets (5–19 loads) */
+      'South Dakota':  {loads:17,  rate:'$2.44', tier:5},
+      'Maine':         {loads:15,  rate:'$2.68', tier:5},
+      'Idaho':         {loads:14,  rate:'$1.94', tier:5},
+      'Montana':       {loads:12,  rate:'$2.63', tier:5},
+      'North Dakota':  {loads:11,  rate:'$2.41', tier:5},
+      'Vermont':       {loads:9,   rate:'$2.74', tier:5},
+      'Wyoming':       {loads:8,   rate:'$1.81', tier:5},
+      'Hawaii':        {loads:7,   rate:'$3.12', tier:5},
+      'Alaska':        {loads:6,   rate:'$3.45', tier:5},
     };
+
+    /* ---- Tier → visual style mapping ---- */
+    /* Base fills: navy (#0E2342) → blue (#3A8DFF) by freight demand.
+       Hover stays amber (#C9A84C) — reserved exclusively for interaction. */
+    function getTierStyle(tier) {
+      switch (tier) {
+        case 1: return {                              /* Major Market — #3A8DFF */
+          baseFill:         'rgba(58,141,255,0.38)',
+          baseStroke:       'rgba(90,165,255,0.60)',
+          hoverFillOpacity: 0.58,
+          hoverFill:        'rgba(201,168,76,0.58)',
+          hoverStroke: '#C9A84C', hoverWidth: '3',
+          hoverFilter: 'drop-shadow(0 0 22px rgba(201,168,76,0.98)) drop-shadow(0 0 9px rgba(201,168,76,1))'
+        };
+        case 2: return {                              /* Strong Market */
+          baseFill:         'rgba(36,98,188,0.48)',
+          baseStroke:       'rgba(65,130,225,0.52)',
+          hoverFillOpacity: 0.48,
+          hoverFill:        'rgba(201,168,76,0.48)',
+          hoverStroke: '#C9A84C', hoverWidth: '2.5',
+          hoverFilter: 'drop-shadow(0 0 16px rgba(201,168,76,0.88)) drop-shadow(0 0 6px rgba(201,168,76,1))'
+        };
+        case 3: return {                              /* Active Market — #1D4F91 */
+          baseFill:         'rgba(26,70,140,0.56)',
+          baseStroke:       'rgba(48,105,200,0.46)',
+          hoverFillOpacity: 0.38,
+          hoverFill:        'rgba(201,168,76,0.38)',
+          hoverStroke: '#C9A84C', hoverWidth: '2',
+          hoverFilter: 'drop-shadow(0 0 12px rgba(201,168,76,0.74)) drop-shadow(0 0 4px rgba(201,168,76,0.88))'
+        };
+        case 4: return {                              /* Light Market */
+          baseFill:         'rgba(18,48,96,0.62)',
+          baseStroke:       'rgba(34,75,155,0.40)',
+          hoverFillOpacity: 0.26,
+          hoverFill:        'rgba(201,168,76,0.26)',
+          hoverStroke: '#C9A84C', hoverWidth: '1.8',
+          hoverFilter: 'drop-shadow(0 0 8px rgba(201,168,76,0.56)) drop-shadow(0 0 3px rgba(201,168,76,0.68))'
+        };
+        default: return {                             /* Thin Market — #0E2342 */
+          baseFill:         'rgba(14,35,66,0.75)',
+          baseStroke:       'rgba(22,52,105,0.35)',
+          hoverFillOpacity: 0.16,
+          hoverFill:        'rgba(201,168,76,0.16)',
+          hoverStroke: '#C9A84C', hoverWidth: '1.5',
+          hoverFilter: 'drop-shadow(0 0 5px rgba(201,168,76,0.36)) drop-shadow(0 0 2px rgba(201,168,76,0.44))'
+        };
+      }
+    }
+
+    /* ---- Live loads ticker ---- */
+    var TIER_MAX  = {1:25, 2:15, 3:8,  4:4, 5:2};
+    var TIER_STEP = {1:10, 2:7,  3:5,  4:3, 5:2};
+    var LIVE = {};
+    Object.keys(SDATA).forEach(function(n) {
+      LIVE[n] = {cur: SDATA[n].loads, prev: SDATA[n].loads, dir: 0};
+    });
+
+    function liveClamp(v, lo, hi) { return Math.max(lo, Math.min(hi, Math.round(v))); }
+
+    function liveHoverFill(tier, name) {
+      var ts   = getTierStyle(tier);
+      var d    = SDATA[name];
+      var live = LIVE[name];
+      if (!live || !d) return ts.hoverFill;
+      var max  = TIER_MAX[tier] || 5;
+      var ratio = (live.cur - d.loads) / max;
+      var op   = Math.max(0.08, Math.min(0.72, ts.hoverFillOpacity + ratio * 0.07));
+      return 'rgba(201,168,76,' + op.toFixed(2) + ')';
+    }
+
+    function updateTooltipLoads(name) {
+      if (!tooltipEl || !tooltipEl.classList.contains('is-visible')) return;
+      var live = LIVE[name]; if (!live) return;
+      var arrow = live.dir > 0
+        ? '<span class="ftt__dir ftt__dir--up">&#8593;</span>'
+        : live.dir < 0
+          ? '<span class="ftt__dir ftt__dir--dn">&#8595;</span>'
+          : '';
+      var el = tooltipEl.querySelector('.ftt__loads-val');
+      if (el) el.innerHTML = live.cur + ' ' + arrow;
+    }
+
+    function tickState(name) {
+      var d    = SDATA[name]; if (!d) return;
+      var tier = d.tier;
+      var max  = TIER_MAX[tier] || 5;
+      var step = TIER_STEP[tier] || 3;
+      var live = LIVE[name];
+      var from = live.cur;
+      var base = d.loads;
+
+      var delta = Math.round((Math.random() * 2 - 1) * step);
+      if (delta === 0) delta = Math.random() > 0.5 ? 1 : -1;
+      var to = liveClamp(from + delta, base - max, base + max);
+      if (to === from) to = liveClamp(from + (Math.random() > 0.5 ? 1 : -1), base - max, base + max);
+
+      live.prev = from;
+      live.dir  = to > from ? 1 : to < from ? -1 : 0;
+
+      var dur = 500 + Math.random() * 500;
+      var t0  = performance.now();
+      (function anim(now) {
+        var p = Math.min((now - t0) / dur, 1);
+        var e = p < 0.5 ? 2*p*p : -1+(4-2*p)*p;
+        live.cur = liveClamp(from + (to - from) * e, base - max, base + max);
+        if (activeEl && activeEl.getAttribute('data-name') === name) {
+          activeEl.style.fill = liveHoverFill(parseInt(activeEl.getAttribute('data-tier')) || 5, name);
+          updateTooltipLoads(name);
+        }
+        if (p < 1) requestAnimationFrame(anim);
+        else live.cur = to;
+      })(t0);
+
+      setTimeout(function() { tickState(name); }, 2000 + Math.random() * 3000);
+    }
+
+    /* stagger starts so states don't all pulse at once */
+    Object.keys(SDATA).forEach(function(name) {
+      setTimeout(function() { tickState(name); }, Math.random() * 2500);
+    });
 
     /* ---- FIPS → state name ---- */
     var FIPS = {
@@ -807,13 +996,19 @@
 
     function showTooltip(event, name) {
       var d = SDATA[name]; if (!d || !tooltipEl) return;
+      var live  = LIVE[name] || {cur: d.loads, dir: 0};
+      var arrow = live.dir > 0
+        ? '<span class="ftt__dir ftt__dir--up">&#8593;</span>'
+        : live.dir < 0
+          ? '<span class="ftt__dir ftt__dir--dn">&#8595;</span>'
+          : '';
       tooltipEl.innerHTML =
         '<div class="ftt__header"><span class="ftt__dot"></span><span class="ftt__name">' +
-        name.toUpperCase() + '</span></div>' +
-        '<div class="ftt__row"><span class="ftt__label">Loads Available</span>' +
-        '<span class="ftt__val">' + d.loads + '</span></div>' +
-        '<div class="ftt__row"><span class="ftt__label">Avg Rate</span>' +
-        '<span class="ftt__val">' + d.rate + '/mi</span></div>';
+        name + '</span><span class="ftt__tier">T' + d.tier + '</span></div>' +
+        '<div class="ftt__row"><span class="ftt__label">Available Loads</span>' +
+        '<span class="ftt__val ftt__loads-val">' + live.cur + ' ' + arrow + '</span></div>' +
+        '<div class="ftt__row"><span class="ftt__label">Average Rate</span>' +
+        '<span class="ftt__val">' + d.rate + '/mile</span></div>';
       tooltipEl.classList.add('is-visible');
       moveTooltip(event);
     }
@@ -827,6 +1022,7 @@
       var TW = 210, TH = 100;
       var tx = ex + 18, ty = ey - TH / 2;
       if (tx + TW > rect.width  - 8) tx = ex - TW - 18;
+      if (tx < 8) tx = 8;
       if (ty < 8) ty = 8;
       if (ty + TH > rect.height - 8) ty = rect.height - TH - 8;
       tooltipEl.style.left = tx + 'px';
@@ -855,7 +1051,10 @@
       while (svgEl.firstChild) svgEl.removeChild(svgEl.firstChild);
       svgEl.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
 
-      projection = d3.geoAlbersUsa().scale(W * 1.28).translate([W / 2, H * 0.47]);
+      var isMobile = W < 768;
+      projection = d3.geoAlbersUsa()
+        .scale(W * (isMobile ? 1.45 : 1.28))
+        .translate([isMobile ? W * 0.51 : W / 2, isMobile ? H * 0.40 : H * 0.47]);
       var path = d3.geoPath().projection(projection);
 
       /* Background */
@@ -870,20 +1069,27 @@
         var fid  = String(feat.id).padStart(2, '0');
         var name = FIPS[fid] || '';
         var d    = path(feat); if (!d) return;
+        var sdata = SDATA[name];
+        var tier  = sdata ? sdata.tier : 5;
+        var ts    = getTierStyle(tier);
+
         var el   = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         el.setAttribute('d', d);
         el.setAttribute('data-name', name);
-        el.style.cssText = 'fill:rgba(14,32,68,0.35);stroke:rgba(70,120,210,0.38);' +
-          'stroke-width:0.6;transition:fill 250ms ease,stroke 250ms ease,' +
-          'stroke-width 250ms ease,filter 250ms ease;' + (name ? 'cursor:pointer;' : '');
+        el.setAttribute('data-tier', tier);
+        el.style.cssText = 'fill:' + ts.baseFill + ';stroke:' + ts.baseStroke + ';' +
+          'stroke-width:0.7;transition:fill 200ms ease,stroke 200ms ease,' +
+          'stroke-width 200ms ease,filter 200ms ease;' + (name ? 'cursor:pointer;' : '');
 
         if (name) {
           el.addEventListener('mouseover', function(e) {
             if (activeEl && activeEl !== el) resetState(activeEl);
             activeEl = el;
-            el.style.fill = 'rgba(245,183,79,0.22)';
-            el.style.stroke = '#F5B74F'; el.style.strokeWidth = '2';
-            el.style.filter = 'drop-shadow(0 0 7px rgba(245,183,79,0.70))';
+            var t = parseInt(el.getAttribute('data-tier')) || 5;
+            var s = getTierStyle(t);
+            el.style.fill = liveHoverFill(t, name);
+            el.style.stroke = s.hoverStroke; el.style.strokeWidth = s.hoverWidth;
+            el.style.filter = s.hoverFilter;
             showTooltip(e, name);
           });
           el.addEventListener('mousemove', moveTooltip);
@@ -894,9 +1100,11 @@
             e.preventDefault();
             if (activeEl && activeEl !== el) resetState(activeEl);
             activeEl = el;
-            el.style.fill = 'rgba(245,183,79,0.22)';
-            el.style.stroke = '#F5B74F'; el.style.strokeWidth = '2';
-            el.style.filter = 'drop-shadow(0 0 7px rgba(245,183,79,0.70))';
+            var t = parseInt(el.getAttribute('data-tier')) || 5;
+            var s = getTierStyle(t);
+            el.style.fill = liveHoverFill(t, name);
+            el.style.stroke = s.hoverStroke; el.style.strokeWidth = s.hoverWidth;
+            el.style.filter = s.hoverFilter;
             showTooltip(e, name);
           }, { passive: false });
           el.addEventListener('touchend', function() {
@@ -910,16 +1118,40 @@
       var mesh = topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; });
       var borders = document.createElementNS('http://www.w3.org/2000/svg', 'path');
       borders.setAttribute('d', path(mesh));
-      borders.style.cssText = 'fill:none;stroke:rgba(80,130,220,0.28);stroke-width:0.5;pointer-events:none;';
+      borders.style.cssText = 'fill:none;stroke:rgba(60,100,180,0.10);stroke-width:0.3;pointer-events:none;';
       svgEl.appendChild(borders);
+
+      /* ── Mobile: trim dead space but enforce minimum 62vh height ── */
+      if (isMobile) {
+        var maxStateY = 0;
+        svgEl.querySelectorAll('path[data-name]').forEach(function(p) {
+          var n = p.getAttribute('data-name');
+          if (!n || n === 'Alaska' || n === 'Hawaii') return;
+          try {
+            var b = p.getBBox();
+            if (b.x + b.width > 0 && b.x < W) {
+              maxStateY = Math.max(maxStateY, Math.min(b.y + b.height, H));
+            }
+          } catch(e) {}
+        });
+        if (maxStateY > 80) {
+          var minH = Math.round(window.innerHeight * (window.innerHeight <= 700 ? 0.50 : 0.62));
+          var trimH = Math.max(Math.round(maxStateY + 72), minH);
+          svgEl.setAttribute('viewBox', '0 0 ' + W + ' ' + trimH);
+          var fmapEl = document.getElementById('fmap');
+          fmapEl.style.height = trimH + 'px';
+          H = trimH;
+        }
+      }
 
       initCanvas(W, H);
     }
 
     function resetState(el) {
-      el.style.fill = 'rgba(14,32,68,0.35)';
-      el.style.stroke = 'rgba(70,120,210,0.38)';
-      el.style.strokeWidth = '0.6';
+      var ts = getTierStyle(parseInt(el.getAttribute('data-tier')) || 5);
+      el.style.fill = ts.baseFill;
+      el.style.stroke = ts.baseStroke;
+      el.style.strokeWidth = '0.7';
       el.style.filter = '';
     }
 
@@ -980,14 +1212,14 @@
       }
       ctx.lineCap = 'round';
       if (rt.tier === 1) {
-        qs(28, 0.018); qs(13, 0.052); qs(4.5, 0.22); qs(1.4, 0.70);
+        qs(28, 0.007); qs(13, 0.020); qs(4.5, 0.08); qs(1.4, 0.28);
         ctx.beginPath(); ctx.moveTo(a.x, a.y);
         ctx.quadraticCurveTo(rt.cx, rt.cy, b.x, b.y);
-        ctx.strokeStyle = 'rgba(255,230,160,0.18)'; ctx.lineWidth = 0.5; ctx.stroke();
+        ctx.strokeStyle = 'rgba(255,230,160,0.07)'; ctx.lineWidth = 0.5; ctx.stroke();
       } else if (rt.tier === 2) {
-        qs(16, 0.014); qs(8, 0.038); qs(2.8, 0.17); qs(0.9, 0.52);
+        qs(16, 0.005); qs(8, 0.015); qs(2.8, 0.06); qs(0.9, 0.20);
       } else {
-        qs(9, 0.010); qs(4, 0.028); qs(1.4, 0.11); qs(0.6, 0.36);
+        qs(9, 0.003); qs(4, 0.010); qs(1.4, 0.04); qs(0.6, 0.14);
       }
     }
 
@@ -1002,8 +1234,8 @@
       for (var i = 1; i < p.trail.length; i++) {
         var f = i / p.trail.length, p0 = p.trail[i-1], p1 = p.trail[i];
         ctx.beginPath(); ctx.moveTo(p0.x, p0.y); ctx.lineTo(p1.x, p1.y);
-        ctx.strokeStyle = 'rgba(255,210,120,' + (f*f*0.58) + ')';
-        ctx.lineWidth = f * 2.8; ctx.stroke();
+        ctx.strokeStyle = 'rgba(255,210,120,' + (f*f*0.26) + ')';
+        ctx.lineWidth = f * 1.8; ctx.stroke();
       }
       var hg = ctx.createRadialGradient(pos.x, pos.y, 0, pos.x, pos.y, 12);
       hg.addColorStop(0, 'rgba(255,242,200,0.94)');
@@ -1020,7 +1252,7 @@
       var rc = Math.max(1.8, w * 4.8);
       var br = 0.68 + 0.32 * Math.sin(time * 0.9 + h.breathPh);
       var hg = ctx.createRadialGradient(x, y, 0, x, y, rc * 6.5 * br);
-      hg.addColorStop(0, 'rgba(245,183,79,' + (w * 0.18 * br) + ')');
+      hg.addColorStop(0, 'rgba(245,183,79,' + (w * 0.08 * br) + ')');
       hg.addColorStop(1, 'rgba(245,183,79,0)');
       ctx.beginPath(); ctx.arc(x, y, rc * 6.5 * br, 0, Math.PI*2);
       ctx.fillStyle = hg; ctx.fill();
