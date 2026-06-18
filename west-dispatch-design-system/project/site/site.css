@@ -481,11 +481,12 @@ textarea.wd-field__input { height: auto; padding: 14px 16px; resize: vertical; }
   }
   .ssh__mbar-stat {
     flex: 1;
+    min-height: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 16px 8px;
+    padding: 14px 8px;
   }
   .ssh__mbar-stat + .ssh__mbar-stat {
     border-left: 1px solid rgba(255, 255, 255, 0.055);
@@ -494,9 +495,11 @@ textarea.wd-field__input { height: auto; padding: 14px 16px; resize: vertical; }
     font-family: var(--font-display);
     font-weight: 700;
     font-size: 26px;
-    line-height: 1;
+    /* line-height:1 clips Space Grotesk bold on Safari iOS — ascenders exceed the em-box */
+    line-height: 1.2;
     letter-spacing: -0.02em;
     color: #e4eaf4;
+    overflow: visible;
   }
   .ssh__mbar-num--rate { color: #C9A84C; }
   .ssh__mbar-label {
