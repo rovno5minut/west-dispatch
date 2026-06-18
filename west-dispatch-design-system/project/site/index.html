@@ -7,7 +7,7 @@
 <meta name="description" content="West Dispatch finds high-paying loads, negotiates your rates, and handles the paperwork — so you stay loaded, cut downtime, and grow your revenue. 24/7 dispatcher support, no long-term contracts." />
 <link rel="icon" href="logo-mark-light.png" />
 <link rel="stylesheet" href="ds/styles.css" />
-<link rel="stylesheet" href="site.css?v=3" />
+<link rel="stylesheet" href="site.css?v=5" />
 <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
 </head>
 <body>
@@ -45,11 +45,12 @@
     </div>
   </header>
 
-  <!-- ===================== SMOOTH-SCROLL VIDEO HERO ===================== -->
-  <section class="ssh" id="top" data-screen-label="Hero" data-scroll-height="2400">
+  <!-- ===================== VIDEO HERO ===================== -->
+  <section class="ssh" id="top" data-screen-label="Hero">
     <div class="ssh__sticky" id="ssh-sticky">
-      <canvas class="ssh__canvas" id="ssh-canvas"></canvas>
-      <img class="ssh__poster" id="ssh-poster" src="images/frames/f-000.jpg" alt="26 ft box truck driving on the highway at sunset" />
+      <video class="ssh__video" autoplay muted loop playsinline preload="auto">
+        <source src="images/hero-bg.mp4" type="video/mp4">
+      </video>
       <div class="ssh__scrim"></div>
       <div class="ssh__content">
         <div class="wd-container">
@@ -323,15 +324,27 @@
           <h3 class="wd-step__title">Quick Onboarding</h3>
           <p class="wd-step__body">Send us your authority, insurance, and equipment details. We get you set up with our broker network in under a day.</p>
         </div>
+        <div class="wd-step-arrow" data-arrow="1" aria-hidden="true">
+          <div class="wd-arrow-track"><div class="wd-arrow-fill"></div><div class="wd-arrow-pulse"></div></div>
+          <svg class="wd-arrow-chevron" viewBox="0 0 22 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L11 10L21 1" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
         <div class="wd-step" data-step="2">
           <div class="wd-step__node"><span class="wd-ico"><i data-lucide="search"></i></span><span class="wd-step__num">02</span><span class="wd-step__check" aria-hidden="true"></span></div>
           <h3 class="wd-step__title">We Find Your Loads</h3>
           <p class="wd-step__body">Your dedicated dispatcher sources high-paying lanes that fit your truck, your home time, and your preferred routes.</p>
         </div>
+        <div class="wd-step-arrow" data-arrow="2" aria-hidden="true">
+          <div class="wd-arrow-track"><div class="wd-arrow-fill"></div><div class="wd-arrow-pulse"></div></div>
+          <svg class="wd-arrow-chevron" viewBox="0 0 22 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L11 10L21 1" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
         <div class="wd-step" data-step="3">
           <div class="wd-step__node"><span class="wd-ico"><i data-lucide="handshake"></i></span><span class="wd-step__num">03</span><span class="wd-step__check" aria-hidden="true"></span></div>
           <h3 class="wd-step__title">We Negotiate &amp; Book</h3>
           <p class="wd-step__body">We push for the best rate, confirm the load, and handle all the paperwork and broker setup for you.</p>
+        </div>
+        <div class="wd-step-arrow" data-arrow="3" aria-hidden="true">
+          <div class="wd-arrow-track"><div class="wd-arrow-fill"></div><div class="wd-arrow-pulse"></div></div>
+          <svg class="wd-arrow-chevron" viewBox="0 0 22 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L11 10L21 1" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
         <div class="wd-step" data-step="4">
           <div class="wd-step__node"><span class="wd-ico"><i data-lucide="banknote"></i></span><span class="wd-step__num">04</span><span class="wd-step__check" aria-hidden="true"></span></div>
@@ -838,8 +851,9 @@
   if (!container || !fill || !dot) return;
 
   var steps  = Array.from(container.querySelectorAll('[data-step]'));
-  var HOLD   = [1400, 1400, 1400, 2200]; // ms each step stays active
-  var TRAVEL = 650;                       // ms line travels between steps
+  var arrows = Array.from(container.querySelectorAll('[data-arrow]'));
+  var HOLD   = [1400, 1400, 1400, 2200];
+  var TRAVEL = 650;
   var line   = container.querySelector('.wd-flow__line');
 
   function posOf(i) {
@@ -856,6 +870,19 @@
     for (var a = 1; a < arguments.length; a++) s.classList.add(arguments[a]);
   }
 
+  /* Trigger the mobile arrow pulse between steps */
+  function fireArrow(arrowIdx) {
+    var a = container.querySelector('[data-arrow="' + arrowIdx + '"]');
+    if (!a) return;
+    a.classList.remove('wd-step-arrow--active', 'wd-step-arrow--done');
+    void a.offsetWidth; /* force reflow so animation restarts */
+    a.classList.add('wd-step-arrow--active');
+    setTimeout(function () {
+      a.classList.remove('wd-step-arrow--active');
+      a.classList.add('wd-step-arrow--done');
+    }, TRAVEL);
+  }
+
   function moveLine(toIdx, cb) {
     var p = posOf(toIdx) + '%';
     fill.style.transition = 'width '  + TRAVEL + 'ms cubic-bezier(0.4,0,0.2,1)';
@@ -863,6 +890,7 @@
     fill.style.width = p;
     dot.style.left   = p;
     dot.style.opacity = '1';
+    fireArrow(toIdx); /* toIdx 1/2/3 matches data-arrow="1/2/3" */
     setTimeout(cb, TRAVEL);
   }
 
@@ -871,8 +899,10 @@
       s.classList.remove('wd-step--active', 'wd-step--done', 'wd-step--success');
       s.classList.add('wd-step--muted');
     });
+    arrows.forEach(function (a) {
+      a.classList.remove('wd-step-arrow--active', 'wd-step-arrow--done');
+    });
     requestAnimationFrame(function () {
-      /* snap line back to step 1 without animation */
       fill.style.transition = 'none';
       fill.style.width = posOf(0) + '%';
       dot.style.transition = 'none';
@@ -880,7 +910,6 @@
       dot.style.opacity = '0';
 
       requestAnimationFrame(function () {
-        /* Step 1 active */
         setClasses(0, 'wd-step--active');
         dot.style.transition = 'opacity 0.3s ease';
         dot.style.opacity = '1';
@@ -888,28 +917,21 @@
         setTimeout(function () {
           setClasses(0, 'wd-step--done');
           moveLine(1, function () {
-
-            /* Step 2 active */
             setClasses(1, 'wd-step--active');
             setTimeout(function () {
               setClasses(1, 'wd-step--done');
               moveLine(2, function () {
-
-                /* Step 3 active */
                 setClasses(2, 'wd-step--active');
                 setTimeout(function () {
                   setClasses(2, 'wd-step--done');
                   moveLine(3, function () {
-
-                    /* Step 4 active — green success */
                     setClasses(3, 'wd-step--active', 'wd-step--success');
                     setTimeout(function () {
                       setClasses(3, 'wd-step--done');
                       dot.style.transition = 'opacity 0.5s ease';
                       dot.style.opacity = '0';
-                      setTimeout(cycle, 700);
+                      setTimeout(cycle, 2000);
                     }, HOLD[3]);
-
                   });
                 }, HOLD[2]);
               });
@@ -920,7 +942,6 @@
     });
   }
 
-  /* Start when section enters viewport */
   var section = document.getElementById('how');
   if (window.IntersectionObserver && section) {
     var io = new IntersectionObserver(function (entries) {

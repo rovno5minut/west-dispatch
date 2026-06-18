@@ -1214,12 +1214,20 @@ try { (() => {
 (function () {
   const Icon = window.Icon;
   const STEPS = [
-    ["clipboard-list","01","Quick Onboarding",   "Send us your MC authority, COI, W9 and equipment details. We get you set up within 30 minutes.",1],
-    ["search",        "02","We Find Your Loads", "Your dedicated dispatcher sources high-paying lanes that fit your truck, your home time, and your preferred routes.",2],
-    ["handshake",     "03","We Negotiate & Book","We push for the best rate, confirm the load, and handle all the paperwork and broker setup for you.",3],
+    ["clipboard-list","01","Quick Onboarding",    "Send us your MC authority, COI, W9 and equipment details. We get you set up within 30 minutes.",1],
+    ["search",        "02","We Find Your Loads",  "Your dedicated dispatcher sources high-paying lanes that fit your truck, your home time, and your preferred routes.",2],
+    ["handshake",     "03","We Negotiate & Book", "We push for the best rate, confirm the load, and handle all the paperwork and broker setup for you.",3],
     ["banknote",      "04","You Drive & Get Paid","Hit the road with a full schedule. We manage check calls and invoicing so the money keeps flowing.",4],
   ];
   const HOLD = [1400,1400,1400,2200], TRAVEL = 650;
+  function ArrowConnector({index}) {
+    return React.createElement("div",{className:"wd-step-arrow","data-arrow":index,"aria-hidden":"true"},
+      React.createElement("div",{className:"wd-arrow-track"},
+        React.createElement("div",{className:"wd-arrow-fill"}),
+        React.createElement("div",{className:"wd-arrow-pulse"})),
+      React.createElement("svg",{className:"wd-arrow-chevron",viewBox:"0 0 22 11",fill:"none",xmlns:"http://www.w3.org/2000/svg"},
+        React.createElement("path",{d:"M1 1L11 10L21 1",stroke:"currentColor",strokeWidth:"2.2",strokeLinecap:"round",strokeLinejoin:"round"})));
+  }
   function HowItWorks() {
     const containerRef = React.useRef(null);
     React.useEffect(() => {
@@ -1228,6 +1236,7 @@ try { (() => {
       const dot  = container.querySelector('#wd-flow-dot');
       const line = container.querySelector('.wd-flow__line');
       const steps = Array.from(container.querySelectorAll('[data-step]'));
+      const arrowEls = Array.from(container.querySelectorAll('[data-arrow]'));
       if (!fill || !dot || !steps.length) return;
       function posOf(i) {
         if (!line) return 0;
@@ -1240,17 +1249,27 @@ try { (() => {
         s.classList.remove('wd-step--muted','wd-step--active','wd-step--done','wd-step--success');
         for (let a=1;a<arguments.length;a++) s.classList.add(arguments[a]);
       }
+      function fireArrow(arrowIdx) {
+        const a = container.querySelector('[data-arrow="'+arrowIdx+'"]');
+        if (!a) return;
+        a.classList.remove('wd-step-arrow--active','wd-step-arrow--done');
+        void a.offsetWidth;
+        a.classList.add('wd-step-arrow--active');
+        timers.push(setTimeout(()=>{ a.classList.remove('wd-step-arrow--active'); a.classList.add('wd-step-arrow--done'); }, TRAVEL));
+      }
       function moveLine(toIdx,cb) {
         const p = posOf(toIdx)+'%';
         fill.style.transition = `width ${TRAVEL}ms cubic-bezier(0.4,0,0.2,1)`;
         dot.style.transition  = `left ${TRAVEL}ms cubic-bezier(0.4,0,0.2,1), opacity 0.3s ease`;
         fill.style.width = p; dot.style.left = p; dot.style.opacity='1';
+        fireArrow(toIdx);
         timers.push(setTimeout(cb,TRAVEL));
       }
       const timers=[]; let active=true;
       function cycle() {
         if (!active) return;
         steps.forEach(s=>{s.classList.remove('wd-step--active','wd-step--done','wd-step--success');s.classList.add('wd-step--muted');});
+        arrowEls.forEach(a=>{a.classList.remove('wd-step-arrow--active','wd-step-arrow--done');});
         requestAnimationFrame(()=>{
           fill.style.transition='none'; fill.style.width=posOf(0)+'%';
           dot.style.transition='none'; dot.style.left=posOf(0)+'%'; dot.style.opacity='0';
@@ -1268,7 +1287,7 @@ try { (() => {
                         timers.push(setTimeout(()=>{
                           setClasses(3,'wd-step--done');
                           dot.style.transition='opacity 0.5s ease'; dot.style.opacity='0';
-                          timers.push(setTimeout(cycle,700));
+                          timers.push(setTimeout(cycle,2000));
                         },HOLD[3]));
                       });
                     },HOLD[2]));
@@ -1296,14 +1315,16 @@ try { (() => {
           React.createElement("div",{className:"wd-flow__line","aria-hidden":"true"},
             React.createElement("div",{className:"wd-flow__fill",id:"wd-flow-fill"}),
             React.createElement("div",{className:"wd-flow__dot",id:"wd-flow-dot"})),
-          STEPS.map(([ic,n,t,b,stepNum])=>
-            React.createElement("div",{className:"wd-step",key:n,"data-step":stepNum},
-              React.createElement("div",{className:"wd-step__node"},
-                React.createElement("span",{className:"wd-step__icon"},React.createElement(Icon,{name:ic,size:26,color:"var(--wd-blue-300)"})),
-                React.createElement("span",{className:"wd-step__num"},n),
-                React.createElement("span",{className:"wd-step__check","aria-hidden":"true"})),
-              React.createElement("h3",{className:"wd-step__title"},t),
-              React.createElement("p",{className:"wd-step__body"},b))))));
+          STEPS.map(([ic,n,t,b,stepNum],i)=>
+            React.createElement(React.Fragment,{key:n},
+              React.createElement("div",{className:"wd-step","data-step":stepNum},
+                React.createElement("div",{className:"wd-step__node"},
+                  React.createElement("span",{className:"wd-step__icon"},React.createElement(Icon,{name:ic,size:26,color:"var(--wd-blue-300)"})),
+                  React.createElement("span",{className:"wd-step__num"},n),
+                  React.createElement("span",{className:"wd-step__check","aria-hidden":"true"})),
+                React.createElement("h3",{className:"wd-step__title"},t),
+                React.createElement("p",{className:"wd-step__body"},b)),
+              i < STEPS.length-1 && React.createElement(ArrowConnector,{index:stepNum}))))));
   }
   window.HowItWorks = HowItWorks;
 })();

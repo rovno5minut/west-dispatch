@@ -12,16 +12,29 @@ const STEPS = [
 const HOLD   = [1400, 1400, 1400, 2200];
 const TRAVEL = 650;
 
+const ArrowConnector = ({ index }) => (
+  <div className="wd-step-arrow" data-arrow={index} aria-hidden="true">
+    <div className="wd-arrow-track">
+      <div className="wd-arrow-fill"></div>
+      <div className="wd-arrow-pulse"></div>
+    </div>
+    <svg className="wd-arrow-chevron" viewBox="0 0 22 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M1 1L11 10L21 1" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  </div>
+);
+
 function HowItWorks() {
   const containerRef = React.useRef(null);
 
   React.useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
-    const fill = container.querySelector('#wd-flow-fill');
-    const dot  = container.querySelector('#wd-flow-dot');
-    const line = container.querySelector('.wd-flow__line');
+    const fill  = container.querySelector('#wd-flow-fill');
+    const dot   = container.querySelector('#wd-flow-dot');
+    const line  = container.querySelector('.wd-flow__line');
     const steps = Array.from(container.querySelectorAll('[data-step]'));
+    const arrowEls = Array.from(container.querySelectorAll('[data-arrow]'));
     if (!fill || !dot || !steps.length) return;
 
     function posOf(i) {
@@ -38,6 +51,18 @@ function HowItWorks() {
       cls.forEach(c => s.classList.add(c));
     }
 
+    function fireArrow(arrowIdx) {
+      const a = container.querySelector('[data-arrow="' + arrowIdx + '"]');
+      if (!a) return;
+      a.classList.remove('wd-step-arrow--active', 'wd-step-arrow--done');
+      void a.offsetWidth;
+      a.classList.add('wd-step-arrow--active');
+      timers.push(setTimeout(() => {
+        a.classList.remove('wd-step-arrow--active');
+        a.classList.add('wd-step-arrow--done');
+      }, TRAVEL));
+    }
+
     function moveLine(toIdx, cb) {
       const p = posOf(toIdx) + '%';
       fill.style.transition = `width ${TRAVEL}ms cubic-bezier(0.4,0,0.2,1)`;
@@ -45,6 +70,7 @@ function HowItWorks() {
       fill.style.width = p;
       dot.style.left   = p;
       dot.style.opacity = '1';
+      fireArrow(toIdx);
       timers.push(setTimeout(cb, TRAVEL));
     }
 
@@ -57,18 +83,19 @@ function HowItWorks() {
         s.classList.remove('wd-step--active', 'wd-step--done', 'wd-step--success');
         s.classList.add('wd-step--muted');
       });
+      arrowEls.forEach(a => {
+        a.classList.remove('wd-step-arrow--active', 'wd-step-arrow--done');
+      });
       requestAnimationFrame(() => {
         fill.style.transition = 'none';
         fill.style.width = posOf(0) + '%';
         dot.style.transition = 'none';
         dot.style.left   = posOf(0) + '%';
         dot.style.opacity = '0';
-
         requestAnimationFrame(() => {
           setClasses(0, 'wd-step--active');
           dot.style.transition = 'opacity 0.3s ease';
           dot.style.opacity = '1';
-
           timers.push(setTimeout(() => {
             setClasses(0, 'wd-step--done');
             moveLine(1, () => {
@@ -85,7 +112,7 @@ function HowItWorks() {
                         setClasses(3, 'wd-step--done');
                         dot.style.transition = 'opacity 0.5s ease';
                         dot.style.opacity = '0';
-                        timers.push(setTimeout(cycle, 700));
+                        timers.push(setTimeout(cycle, 2000));
                       }, HOLD[3]));
                     });
                   }, HOLD[2]));
@@ -123,16 +150,19 @@ function HowItWorks() {
             <div className="wd-flow__fill" id="wd-flow-fill"></div>
             <div className="wd-flow__dot"  id="wd-flow-dot"></div>
           </div>
-          {STEPS.map(([ic, n, t, b, stepNum]) => (
-            <div className="wd-step" key={n} data-step={stepNum}>
-              <div className="wd-step__node">
-                <span className="wd-step__icon"><Icon name={ic} size={26} color="var(--wd-blue-300)" /></span>
-                <span className="wd-step__num">{n}</span>
-                <span className="wd-step__check" aria-hidden="true"></span>
+          {STEPS.map(([ic, n, t, b, stepNum], i) => (
+            <React.Fragment key={n}>
+              <div className="wd-step" data-step={stepNum}>
+                <div className="wd-step__node">
+                  <span className="wd-step__icon"><Icon name={ic} size={26} color="var(--wd-blue-300)" /></span>
+                  <span className="wd-step__num">{n}</span>
+                  <span className="wd-step__check" aria-hidden="true"></span>
+                </div>
+                <h3 className="wd-step__title">{t}</h3>
+                <p className="wd-step__body">{b}</p>
               </div>
-              <h3 className="wd-step__title">{t}</h3>
-              <p className="wd-step__body">{b}</p>
-            </div>
+              {i < STEPS.length - 1 && <ArrowConnector index={stepNum} />}
+            </React.Fragment>
           ))}
         </div>
       </div>

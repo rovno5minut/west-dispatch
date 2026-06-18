@@ -195,6 +195,21 @@ html { overflow-x: hidden; }
 .wd-step--success.wd-step--active .wd-step__node::after { border-color: rgba(31,191,117,0.5); animation: wd-step-ring-g 1.5s ease-out infinite; }
 @keyframes wd-step-ring-g { 0% { opacity: 0.9; transform: scale(1); } 100% { opacity: 0; transform: scale(1.6); } }
 
+/* Mobile step arrows — shown only in single-column layout */
+.wd-step-arrow { display: none; flex-direction: column; align-items: center; padding: 10px 0; }
+@media (max-width: 600px) { .wd-step-arrow { display: flex; } }
+.wd-arrow-track { position: relative; width: 2px; height: 48px; background: rgba(255,255,255,0.09); border-radius: 1px; }
+.wd-arrow-fill { position: absolute; top: 0; left: 0; right: 0; height: 0; border-radius: 1px; background: linear-gradient(180deg, rgba(46,107,255,0.9), rgba(46,107,255,0.3)); }
+.wd-arrow-pulse { position: absolute; left: 50%; top: 0; width: 10px; height: 10px; border-radius: 50%; background: #4a85ff; box-shadow: 0 0 14px 6px rgba(46,107,255,0.65); transform: translate(-50%,-50%); opacity: 0; pointer-events: none; }
+.wd-arrow-chevron { display: block; width: 22px; height: 11px; margin-top: 4px; color: rgba(255,255,255,0.13); transition: color 0.35s ease; flex-shrink: 0; }
+.wd-step-arrow--active .wd-arrow-chevron { color: rgba(46,107,255,0.8); }
+.wd-step-arrow--active .wd-arrow-pulse { animation: wd-mob-pulse 650ms cubic-bezier(0.4,0,0.2,1) forwards; }
+.wd-step-arrow--active .wd-arrow-fill  { animation: wd-mob-fill  650ms cubic-bezier(0.4,0,0.2,1) forwards; }
+@keyframes wd-mob-pulse { 0% { top: 0;    opacity: 1; } 80% { top: 48px; opacity: 1; } 100% { top: 48px; opacity: 0; } }
+@keyframes wd-mob-fill  { from { height: 0; } to { height: 48px; } }
+.wd-step-arrow--done .wd-arrow-fill { height: 48px; background: linear-gradient(180deg, rgba(31,191,117,0.55), rgba(31,191,117,0.15)); }
+.wd-step-arrow--done .wd-arrow-chevron { color: rgba(31,191,117,0.55); }
+
 /* Testimonials */
 .wd-testi { background: var(--bg-deep); }
 .wd-testi__card { display: flex; flex-direction: column; gap: 18px; height: 100%; }
@@ -291,11 +306,9 @@ textarea.wd-field__input { height: auto; padding: 14px 16px; resize: vertical; }
 }
 
 /* ---------- Smooth-scroll video hero (frame sequence on canvas) ---------- */
-.ssh { position: relative; width: 100%; }
-.ssh__sticky { position: sticky; top: 0; height: 100vh; width: 100%; background: #000; overflow: hidden; }
-.ssh__canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; background: #000; }
-.ssh__poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; transition: opacity 0.5s var(--ease-out); }
-.ssh.is-ready .ssh__poster { opacity: 0; pointer-events: none; }
+.ssh { position: relative; width: 100%; height: 100vh; }
+.ssh__sticky { position: relative; top: 0; height: 100vh; width: 100%; background: #000; overflow: hidden; }
+.ssh__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; background: #000; }
 .ssh__scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(8,12,20,0.5) 0%, rgba(8,12,20,0) 30%), linear-gradient(0deg, rgba(8,12,20,0.88) 0%, rgba(8,12,20,0) 50%); }
 .ssh__content { position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column; justify-content: flex-end; padding: clamp(28px, 6vw, 92px); }
 .ssh__content .wd-container { width: 100%; padding-left: 0; padding-right: 0; }

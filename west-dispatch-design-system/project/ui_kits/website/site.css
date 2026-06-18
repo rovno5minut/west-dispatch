@@ -126,6 +126,21 @@ html { overflow-x: hidden; }
 .wd-step--success.wd-step--active .wd-step__node::after { border-color: rgba(31,191,117,0.5); animation: wd-step-ring-g 1.5s ease-out infinite; }
 @keyframes wd-step-ring-g { 0% { opacity: 0.9; transform: scale(1); } 100% { opacity: 0; transform: scale(1.6); } }
 
+/* Mobile step arrows — shown only in single-column layout */
+.wd-step-arrow { display: none; flex-direction: column; align-items: center; padding: 10px 0; }
+@media (max-width: 600px) { .wd-step-arrow { display: flex; } }
+.wd-arrow-track { position: relative; width: 2px; height: 48px; background: rgba(255,255,255,0.09); border-radius: 1px; }
+.wd-arrow-fill { position: absolute; top: 0; left: 0; right: 0; height: 0; border-radius: 1px; background: linear-gradient(180deg, rgba(46,107,255,0.9), rgba(46,107,255,0.3)); }
+.wd-arrow-pulse { position: absolute; left: 50%; top: 0; width: 10px; height: 10px; border-radius: 50%; background: #4a85ff; box-shadow: 0 0 14px 6px rgba(46,107,255,0.65); transform: translate(-50%,-50%); opacity: 0; pointer-events: none; }
+.wd-arrow-chevron { display: block; width: 22px; height: 11px; margin-top: 4px; color: rgba(255,255,255,0.13); transition: color 0.35s ease; flex-shrink: 0; }
+.wd-step-arrow--active .wd-arrow-chevron { color: rgba(46,107,255,0.8); }
+.wd-step-arrow--active .wd-arrow-pulse { animation: wd-mob-pulse 650ms cubic-bezier(0.4,0,0.2,1) forwards; }
+.wd-step-arrow--active .wd-arrow-fill  { animation: wd-mob-fill  650ms cubic-bezier(0.4,0,0.2,1) forwards; }
+@keyframes wd-mob-pulse { 0% { top: 0;    opacity: 1; } 80% { top: 48px; opacity: 1; } 100% { top: 48px; opacity: 0; } }
+@keyframes wd-mob-fill  { from { height: 0; } to { height: 48px; } }
+.wd-step-arrow--done .wd-arrow-fill { height: 48px; background: linear-gradient(180deg, rgba(31,191,117,0.55), rgba(31,191,117,0.15)); }
+.wd-step-arrow--done .wd-arrow-chevron { color: rgba(31,191,117,0.55); }
+
 /* Testimonials */
 .wd-testi { background: var(--bg-deep); }
 .wd-testi__quote { font-size: 16px; color: var(--text-strong); line-height: var(--lh-relaxed); flex: 1; }
