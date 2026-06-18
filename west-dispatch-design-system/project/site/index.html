@@ -7,7 +7,7 @@
 <meta name="description" content="West Dispatch finds high-paying loads, negotiates your rates, and handles the paperwork — so you stay loaded, cut downtime, and grow your revenue. 24/7 dispatcher support, no long-term contracts." />
 <link rel="icon" href="logo-mark-light.png" />
 <link rel="stylesheet" href="ds/styles.css" />
-<link rel="stylesheet" href="site.css?v=5" />
+<link rel="stylesheet" href="site.css?v=6" />
 <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
 </head>
 <body>
@@ -45,10 +45,10 @@
     </div>
   </header>
 
-  <!-- ===================== VIDEO HERO ===================== -->
-  <section class="ssh" id="top" data-screen-label="Hero">
+  <!-- ===================== SCROLL-DRIVEN VIDEO HERO ===================== -->
+  <section class="ssh" id="top" data-screen-label="Hero" data-scroll-height="2400">
     <div class="ssh__sticky" id="ssh-sticky">
-      <video class="ssh__video" autoplay muted loop playsinline preload="auto">
+      <video class="ssh__video" muted playsinline preload="auto">
         <source src="images/hero-bg.mp4" type="video/mp4">
       </video>
       <div class="ssh__scrim"></div>
@@ -716,75 +716,49 @@
     reveals.forEach(function (el) { el.classList.add("is-in"); });
   }
 
-  // ----- Smooth-scroll video hero (canvas frame sequence) -----
+  // ----- Scroll-driven video hero -----
   (function () {
-    var section = document.getElementById("ssh-canvas") ? document.querySelector(".ssh") : null;
-    if (!section) return;
-    var canvas = document.getElementById("ssh-canvas");
-    var cue = document.getElementById("ssh-cue");
-    var ctx = canvas.getContext("2d");
+    var section = document.querySelector('.ssh');
+    var video   = document.querySelector('.ssh__video');
+    var cue     = document.getElementById('ssh-cue');
+    if (!section || !video) return;
 
-    var FRAME_COUNT = 60;
-    var framePath = function (i) { return "images/frames/f-" + String(i).padStart(3, "0") + ".jpg"; };
-    var NAT_W = 900, NAT_H = 506;
-    var scrollHeight = parseInt(section.getAttribute("data-scroll-height"), 10) || 2400;
-    var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var SCROLL_HEIGHT = parseInt(section.getAttribute('data-scroll-height'), 10) || 2400;
+    var reduceMotion  = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var rafPending    = false;
+
     function clamp01(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
 
-    var frames = new Array(FRAME_COUNT), loaded = 0, ready = false, curIndex = -1, targetIndex = 0, rafPending = false;
-
-    function resize() {
-      canvas.width = Math.round(canvas.clientWidth * dpr);
-      canvas.height = Math.round(canvas.clientHeight * dpr);
-      curIndex = -1; draw();
-    }
-    function draw() {
-      if (!ready) return;
-      var i = targetIndex;
-      if (i === curIndex) return;
-      var img = frames[i];
-      if (!img || !img.complete || !img.naturalWidth) {
-        var j = i; while (j >= 0 && (!frames[j] || !frames[j].complete)) j--;
-        if (j < 0) return; img = frames[j];
-      }
-      var cw = canvas.width, ch = canvas.height;
-      var scale = Math.max(cw / NAT_W, ch / NAT_H);
-      var dw = NAT_W * scale, dh = NAT_H * scale;
-      ctx.drawImage(img, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
-      curIndex = i;
-    }
-    function computeTarget() {
+    function update() {
+      rafPending = false;
       var y = window.scrollY || window.pageYOffset;
-      var p = clamp01(y / scrollHeight);
+      var p = clamp01(y / SCROLL_HEIGHT);
       if (cue) cue.style.opacity = String(clamp01(1 - p * 2.4));
-      return Math.round(p * (FRAME_COUNT - 1));
-    }
-    function onScroll() {
-      targetIndex = computeTarget();
-      if (!rafPending) { rafPending = true; requestAnimationFrame(function () { rafPending = false; draw(); }); }
-    }
-    function preload() {
-      for (var i = 0; i < FRAME_COUNT; i++) {
-        (function (idx) {
-          var img = new Image();
-          img.decoding = "async";
-          img.onload = function () {
-            loaded++;
-            if (!ready && (loaded >= 8 || loaded === FRAME_COUNT)) { ready = true; section.classList.add("is-ready"); resize(); }
-            else if (idx === targetIndex || idx === curIndex) { curIndex = -1; draw(); }
-          };
-          img.src = framePath(idx);
-          frames[idx] = img;
-        })(i);
+      if (video.readyState >= 2 && video.duration) {
+        var t = p * video.duration;
+        if (Math.abs(video.currentTime - t) > 0.016) { video.currentTime = t; }
       }
     }
-    targetIndex = computeTarget();
-    preload();
-    if (reduceMotion) { if (cue) cue.style.display = "none"; }
-    else { window.addEventListener("scroll", onScroll, { passive: true }); }
-    window.addEventListener("resize", resize);
-    section.style.height = "calc(" + scrollHeight + "px + 100vh)";
+
+    function onScroll() {
+      if (!rafPending) { rafPending = true; requestAnimationFrame(update); }
+    }
+
+    video.addEventListener('loadedmetadata', function () {
+      section.classList.add('is-ready');
+      video.currentTime = 0;
+      update();
+    });
+
+    /* Reserve scroll space so the sticky panel is pinned during the full sequence */
+    section.style.height = 'calc(' + SCROLL_HEIGHT + 'px + 100vh)';
+
+    if (reduceMotion) {
+      if (cue) cue.style.display = 'none';
+    } else {
+      window.addEventListener('scroll', onScroll, { passive: true });
+      update();
+    }
   })();
 })();
 </script>
