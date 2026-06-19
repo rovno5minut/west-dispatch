@@ -762,3 +762,242 @@ textarea.wd-field__input { height: auto; padding: 14px 16px; resize: vertical; }
   from { opacity: 0; transform: translateY(18px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+
+/* ============================================================
+   DESKTOP PREMIUM — all 10 improvements
+   ============================================================ */
+
+/* ── 01  Live market bar on desktop ───────────────────────── */
+@media (min-width: 768px) {
+  .ssh__market-bar {
+    display: flex;
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    z-index: 4;
+    justify-content: center;
+    background: rgba(8,17,31,0.84);
+    backdrop-filter: blur(16px) saturate(1.3);
+    -webkit-backdrop-filter: blur(16px) saturate(1.3);
+    border-top: 1px solid rgba(46,107,255,0.15);
+  }
+  .ssh__mbar-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 14px 52px;
+    min-height: 64px;
+    flex: 0 1 auto;
+  }
+  .ssh__mbar-stat + .ssh__mbar-stat {
+    border-left: 1px solid rgba(255,255,255,0.055);
+    border-top: none;
+  }
+  .ssh__mbar-num {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    color: #e4eaf4;
+    overflow: visible;
+    padding: 0;
+  }
+  .ssh__mbar-num--rate { color: #C9A84C; }
+  .ssh__mbar-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    margin-top: 3px;
+    text-align: left;
+  }
+  .ssh__mbar-stat--loads .ssh__mbar-num {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    animation: wd-loads-pulse 2.6s ease-in-out infinite;
+  }
+  .ssh__mbar-stat--loads .ssh__mbar-num::before {
+    content: '';
+    display: block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #1FBF75;
+    box-shadow: 0 0 6px 2px rgba(31,191,117,0.45);
+    flex-shrink: 0;
+    animation: wd-live-pulse 1.8s ease-in-out infinite;
+  }
+  /* Fit sticky to visible viewport below the header (76px + 1px border = 77px) */
+  .ssh__sticky { height: calc(100vh - 77px); }
+  /* Push content up so text clears the ~64px bar */
+  .ssh__content { padding-bottom: clamp(84px, 9vw, 112px); }
+  .ssh__cue { bottom: 74px; }
+}
+
+/* ── 02  Hero title staggered entrance (desktop only) ───────── */
+@keyframes wd-hero-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+  .ssh__eyebrow,
+  .ssh__title,
+  .ssh__sub,
+  .ssh__actions {
+    opacity: 0;
+    transform: translateY(24px);
+    will-change: opacity, transform;
+  }
+  .ssh--entered .ssh__eyebrow { animation: wd-hero-up 700ms cubic-bezier(0.16,1,0.3,1) 180ms both; }
+  .ssh--entered .ssh__title   { animation: wd-hero-up 900ms cubic-bezier(0.16,1,0.3,1) 360ms both; }
+  .ssh--entered .ssh__sub     { animation: wd-hero-up 700ms cubic-bezier(0.16,1,0.3,1) 580ms both; }
+  .ssh--entered .ssh__actions { animation: wd-hero-up 700ms cubic-bezier(0.16,1,0.3,1) 740ms both; }
+}
+
+/* ── 03  Load board row hover ──────────────────────────────── */
+.wd-load {
+  transition: background 220ms ease, border-color 220ms ease;
+}
+@media (min-width: 961px) {
+  .wd-load { cursor: pointer; }
+  .wd-load:hover {
+    background: rgba(46,107,255,0.07);
+    border-color: rgba(46,107,255,0.32);
+  }
+  .wd-load:hover .wd-load__rate { color: #C9A84C; transition: color 200ms ease; }
+  .wd-load:hover .wd-load__lane { color: #fff; transition: color 200ms ease; }
+}
+
+/* ── 04  Service cards: staggered entrance + shimmer ───────── */
+@media (prefers-reduced-motion: no-preference) {
+  #services .wd-grid-3 .wd-reveal:nth-child(1),
+  #services .wd-grid-3 .wd-reveal:nth-child(4) { transition-delay:   0ms; }
+  #services .wd-grid-3 .wd-reveal:nth-child(2),
+  #services .wd-grid-3 .wd-reveal:nth-child(5) { transition-delay: 100ms; }
+  #services .wd-grid-3 .wd-reveal:nth-child(3),
+  #services .wd-grid-3 .wd-reveal:nth-child(6) { transition-delay: 200ms; }
+}
+.wd-card.wd-svc::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.07) 50%, transparent 70%);
+  transform: translateX(-160%);
+  pointer-events: none;
+  border-radius: inherit;
+}
+.wd-card.wd-svc:hover::after {
+  transform: translateX(160%);
+  transition: transform 560ms ease;
+}
+.wd-card.wd-svc:hover .wd-svc__icon { transform: scale(1.12) rotate(-4deg); }
+
+/* ── 05  Stats glow-flash on count-up land (class set by JS) ── */
+@keyframes wd-stat-land {
+  0%   { text-shadow: 0 0 0   rgba(46,107,255,0); }
+  35%  { text-shadow: 0 0 22px rgba(46,107,255,0.85), 0 0 8px rgba(120,170,255,0.7); }
+  100% { text-shadow: 0 0 0   rgba(46,107,255,0); }
+}
+.wd-stat--landed { animation: wd-stat-land 800ms ease forwards; }
+
+/* ── 06  Testimonials: cascade stagger + ghost quote mark ───── */
+@media (prefers-reduced-motion: no-preference) {
+  .wd-testi .wd-grid-3 .wd-reveal:nth-child(1) { transition-delay:   0ms; }
+  .wd-testi .wd-grid-3 .wd-reveal:nth-child(2) { transition-delay:  80ms; }
+  .wd-testi .wd-grid-3 .wd-reveal:nth-child(3) { transition-delay: 160ms; }
+  .wd-testi .wd-grid-3 .wd-reveal:nth-child(4) { transition-delay: 240ms; }
+  .wd-testi .wd-grid-3 .wd-reveal:nth-child(5) { transition-delay: 320ms; }
+  .wd-testi .wd-grid-3 .wd-reveal:nth-child(6) { transition-delay: 400ms; }
+}
+.wd-testi__card { position: relative; overflow: hidden; }
+.wd-testi__card::before {
+  content: '\201C';
+  position: absolute;
+  top: -18px; right: 14px;
+  font-family: var(--font-display);
+  font-size: 130px;
+  font-weight: 700;
+  line-height: 1;
+  color: rgba(255,255,255,0.034);
+  pointer-events: none;
+  user-select: none;
+  transition: color 300ms ease;
+}
+.wd-testi__card:hover::before { color: rgba(46,107,255,0.11); }
+.wd-testi__card:hover { border-color: rgba(46,107,255,0.32); }
+.wd-testi__card:hover .wd-ava { box-shadow: 0 0 12px 3px rgba(46,107,255,0.35); transition: box-shadow 300ms ease; }
+
+/* ── 07  How it works — desktop step hover ──────────────────── */
+@media (min-width: 961px) and (prefers-reduced-motion: no-preference) {
+  .wd-step:not(.wd-step--active):not(.wd-step--done):hover .wd-step__node {
+    border-color: rgba(46,107,255,0.50);
+    background: rgba(46,107,255,0.08);
+    transform: scale(1.07);
+    box-shadow: 0 0 0 6px rgba(46,107,255,0.07), 0 0 22px 5px rgba(46,107,255,0.20), var(--shadow-md);
+  }
+  .wd-step:not(.wd-step--active):not(.wd-step--done):hover .wd-step__title {
+    color: var(--text-strong);
+    transition: color 250ms ease;
+  }
+}
+
+/* ── 08  Contact icon hover glow + button shimmer beam ──────── */
+.wd-contact__ic {
+  transition: transform 250ms var(--ease-out), box-shadow 250ms var(--ease-out), border-color 250ms var(--ease-out);
+}
+.wd-contact__ic:hover {
+  transform: translateY(-2px) scale(1.06);
+  border-color: rgba(46,107,255,0.50);
+  box-shadow: 0 0 18px 3px rgba(46,107,255,0.28);
+}
+.wd-btn { position: relative; overflow: hidden; }
+.wd-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.13) 50%, transparent 70%);
+  transform: translateX(-180%);
+  pointer-events: none;
+  border-radius: inherit;
+}
+.wd-btn:hover::after {
+  transform: translateX(180%);
+  transition: transform 580ms ease;
+}
+
+/* ── 09  Nav underline draw + active scroll state ───────────── */
+.wd-nav .wd-nav__link { position: relative; }
+.wd-nav .wd-nav__link::after {
+  content: '';
+  position: absolute;
+  bottom: -5px; left: 0; right: 0;
+  height: 1.5px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 260ms var(--ease-out);
+  border-radius: 1px;
+}
+.wd-nav .wd-nav__link:hover::after,
+.wd-nav .wd-nav__link--active::after { transform: scaleX(1); }
+.wd-nav .wd-nav__link--active { color: var(--text-strong); }
+
+/* ── 10  Footer social brand-color hover glows ──────────────── */
+.wd-footer__soc {
+  transition: border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out),
+              box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+}
+.wd-footer__soc:hover { transform: translateY(-2px); }
+.wd-footer__soc[aria-label="facebook"]:hover {
+  border-color: rgba(24,119,242,0.55);
+  color: #5b9cf6;
+  box-shadow: 0 0 14px 3px rgba(24,119,242,0.32);
+}
+.wd-footer__soc[aria-label="instagram"]:hover {
+  border-color: rgba(225,48,108,0.45);
+  color: #e1306c;
+  box-shadow: 0 0 14px 3px rgba(225,48,108,0.28), 0 0 18px 3px rgba(255,148,60,0.16);
+}

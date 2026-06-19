@@ -1831,5 +1831,84 @@ window.addEventListener('pageshow', function(e) {
   }
 })();
 </script>
+<script>
+/* ── 02  Hero entrance — add class after page paints; CSS media query handles mobile ── */
+(function () {
+  var ssh = document.querySelector('.ssh');
+  if (!ssh) return;
+  /* Small timeout so the initial opacity:0 state is painted before the animation begins */
+  setTimeout(function () { ssh.classList.add('ssh--entered'); }, 80);
+})();
+</script>
+<script>
+/* ── 05  Stats count-up on first scroll into Why section ── */
+(function () {
+  var fmts = [
+    function (v) { return '$' + Math.round(v).toLocaleString() + '<span>/wk</span>'; },
+    function (v) { return Math.round(v) + '%'; },
+    function (v) { return Math.round(v) + '<span>+</span>'; }
+  ];
+  var stats = [
+    { id: 'wd-live-revenue',   from: 800,  fmt: fmts[0] },
+    { id: 'wd-live-downtime',  from: 10,   fmt: fmts[1] },
+    { id: 'wd-live-dispatched', from: 50,  fmt: fmts[2] }
+  ];
+  var done = false;
+  function ease(t) { return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t; }
+  function countUp(el, from, to, fmt, dur, onDone) {
+    var t0 = performance.now();
+    (function tick(now) {
+      var p = Math.min((now - t0) / dur, 1);
+      el.innerHTML = fmt(from + (to - from) * ease(p));
+      if (p < 1) requestAnimationFrame(tick);
+      else if (onDone) onDone();
+    })(t0);
+  }
+  function run() {
+    if (done) return; done = true;
+    stats.forEach(function (s, i) {
+      var el = document.getElementById(s.id);
+      if (!el) return;
+      var raw = parseFloat(el.textContent.replace(/[^0-9.]/g, '')) || 0;
+      setTimeout(function () {
+        countUp(el, s.from, raw, s.fmt, 1400, function () {
+          el.classList.add('wd-stat--landed');
+          setTimeout(function () { el.classList.remove('wd-stat--landed'); }, 900);
+        });
+      }, i * 180);
+    });
+  }
+  var section = document.getElementById('why');
+  if (window.IntersectionObserver && section) {
+    var io = new IntersectionObserver(function (entries) {
+      if (entries[0].isIntersecting) { io.disconnect(); run(); }
+    }, { threshold: 0.25 });
+    io.observe(section);
+  }
+})();
+</script>
+<script>
+/* ── 09  Nav active link on scroll ── */
+(function () {
+  var map = { services: null, why: null, how: null, contact: null };
+  Object.keys(map).forEach(function (id) {
+    map[id] = document.querySelector('.wd-nav a[href="#' + id + '"]');
+  });
+  function clearActive() {
+    Object.values(map).forEach(function (a) { if (a) a.classList.remove('wd-nav__link--active'); });
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      var link = map[entry.target.id];
+      if (!link) return;
+      if (entry.isIntersecting) { clearActive(); link.classList.add('wd-nav__link--active'); }
+    });
+  }, { threshold: 0.25, rootMargin: '-76px 0px -40% 0px' });
+  Object.keys(map).forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el) io.observe(el);
+  });
+})();
+</script>
 </body>
 </html>
