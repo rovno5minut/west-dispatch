@@ -12,6 +12,12 @@
       "runtimeExecutable": "python3",
       "runtimeArgs": ["-m", "http.server", "5501", "--directory", "west-dispatch-design-system/project"],
       "port": 5501
+    },
+    {
+      "name": "site-preview",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "5502", "--directory", "west-dispatch-design-system/project/site"],
+      "port": 5502
     }
   ]
 }
