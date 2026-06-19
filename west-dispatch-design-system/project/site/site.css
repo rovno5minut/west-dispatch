@@ -328,6 +328,9 @@ textarea.wd-field__input { height: auto; padding: 14px 16px; resize: vertical; }
 .ftt__dot { width: 8px; height: 8px; border-radius: 50%; background: #F5B74F; box-shadow: 0 0 8px 3px rgba(245,183,79,0.55); flex-shrink: 0; }
 .ftt__name { font-family: var(--font-display); font-size: 14px; font-weight: 700; letter-spacing: -0.01em; color: #C9A84C; }
 .ftt__tier { margin-left: auto; font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.08em; color: rgba(201,168,76,0.70); background: rgba(201,168,76,0.10); border: 1px solid rgba(201,168,76,0.22); border-radius: 4px; padding: 2px 6px; }
+.ftt__close { display: none; pointer-events: auto; background: none; border: none; color: rgba(255,255,255,0.40); font-size: 15px; line-height: 1; padding: 2px 0 2px 8px; cursor: pointer; flex-shrink: 0; -webkit-tap-highlight-color: transparent; }
+.ftt__close:active { color: rgba(255,255,255,0.85); }
+@media (max-width: 767px) { .ftt__close { display: block; } }
 .ftt__dir { font-size: 11px; font-weight: 700; margin-left: 3px; line-height: 1; }
 .ftt__dir--up { color: #1FBF75; }
 .ftt__dir--dn { color: #F0294A; }

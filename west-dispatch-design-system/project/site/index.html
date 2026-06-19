@@ -929,8 +929,9 @@
         var p = Math.min((now - t0) / dur, 1);
         var e = p < 0.5 ? 2*p*p : -1+(4-2*p)*p;
         live.cur = liveClamp(from + (to - from) * e, base - max, base + max);
-        if (activeEl && activeEl.getAttribute('data-name') === name) {
-          activeEl.style.fill = liveHoverFill(parseInt(activeEl.getAttribute('data-tier')) || 5, name);
+        var trackedEl = activeEl || mobileSelectedEl;
+        if (trackedEl && trackedEl.getAttribute('data-name') === name) {
+          trackedEl.style.fill = liveHoverFill(parseInt(trackedEl.getAttribute('data-tier')) || 5, name);
           updateTooltipLoads(name);
         }
         if (p < 1) requestAnimationFrame(anim);
@@ -993,6 +994,7 @@
 
     /* ---- Tooltip helpers ---- */
     var activeEl = null;
+    var mobileSelectedEl = null;
 
     function showTooltip(event, name) {
       var d = SDATA[name]; if (!d || !tooltipEl) return;
@@ -1004,13 +1006,27 @@
           : '';
       tooltipEl.innerHTML =
         '<div class="ftt__header"><span class="ftt__dot"></span><span class="ftt__name">' +
-        name + '</span><span class="ftt__tier">T' + d.tier + '</span></div>' +
+        name + '</span><span class="ftt__tier">T' + d.tier + '</span>' +
+        '<button class="ftt__close" aria-label="Dismiss">&#x2715;</button></div>' +
         '<div class="ftt__row"><span class="ftt__label">Available Loads</span>' +
         '<span class="ftt__val ftt__loads-val">' + live.cur + ' ' + arrow + '</span></div>' +
         '<div class="ftt__row"><span class="ftt__label">Average Rate</span>' +
         '<span class="ftt__val">' + d.rate + '/mile</span></div>';
       tooltipEl.classList.add('is-visible');
       moveTooltip(event);
+      var closeBtn = tooltipEl.querySelector('.ftt__close');
+      if (closeBtn) {
+        closeBtn.addEventListener('touchstart', function(e) {
+          e.stopPropagation(); e.preventDefault();
+          if (mobileSelectedEl) { resetState(mobileSelectedEl); mobileSelectedEl = null; }
+          hideTooltip();
+        }, { passive: false });
+        closeBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          if (mobileSelectedEl) { resetState(mobileSelectedEl); mobileSelectedEl = null; }
+          hideTooltip();
+        });
+      }
     }
 
     function moveTooltip(event) {
@@ -1046,6 +1062,8 @@
 
     function renderMap(us) {
       cachedUS = us;
+      activeEl = null;
+      if (mobileSelectedEl) { mobileSelectedEl = null; hideTooltip(); }
       var W = svgEl.clientWidth  || window.innerWidth;
       var H = svgEl.clientHeight || window.innerHeight;
       while (svgEl.firstChild) svgEl.removeChild(svgEl.firstChild);
@@ -1098,18 +1116,21 @@
           });
           el.addEventListener('touchstart', function(e) {
             e.preventDefault();
-            if (activeEl && activeEl !== el) resetState(activeEl);
-            activeEl = el;
-            var t = parseInt(el.getAttribute('data-tier')) || 5;
-            var s = getTierStyle(t);
-            el.style.fill = liveHoverFill(t, name);
-            el.style.stroke = s.hoverStroke; el.style.strokeWidth = s.hoverWidth;
-            el.style.filter = s.hoverFilter;
-            showTooltip(e, name);
+            e.stopPropagation();
+            var wasSelf = mobileSelectedEl === el;
+            if (mobileSelectedEl && mobileSelectedEl !== el) resetState(mobileSelectedEl);
+            if (wasSelf) {
+              resetState(el); mobileSelectedEl = null; hideTooltip();
+            } else {
+              mobileSelectedEl = el;
+              var t = parseInt(el.getAttribute('data-tier')) || 5;
+              var s = getTierStyle(t);
+              el.style.fill = liveHoverFill(t, name);
+              el.style.stroke = s.hoverStroke; el.style.strokeWidth = s.hoverWidth;
+              el.style.filter = s.hoverFilter;
+              showTooltip(e, name);
+            }
           }, { passive: false });
-          el.addEventListener('touchend', function() {
-            setTimeout(function() { resetState(el); activeEl = null; hideTooltip(); }, 1400);
-          });
         }
         svgEl.appendChild(el);
       });
@@ -1120,6 +1141,12 @@
       borders.setAttribute('d', path(mesh));
       borders.style.cssText = 'fill:none;stroke:rgba(60,100,180,0.10);stroke-width:0.3;pointer-events:none;';
       svgEl.appendChild(borders);
+
+      svgEl.addEventListener('touchstart', function(e) {
+        if (!mobileSelectedEl) return;
+        var dataName = e.target && e.target.getAttribute ? e.target.getAttribute('data-name') : null;
+        if (!dataName) { resetState(mobileSelectedEl); mobileSelectedEl = null; hideTooltip(); }
+      }, { passive: true });
 
       /* ── Mobile: trim dead space but enforce minimum 62vh height ── */
       if (isMobile) {
@@ -1299,6 +1326,15 @@
       clearTimeout(rsTimer);
       rsTimer = setTimeout(function() { if (cachedUS) renderMap(cachedUS); }, 180);
     });
+
+    /* ── Mobile: dismiss tooltip when tapping outside the map container ── */
+    document.addEventListener('touchstart', function(e) {
+      if (!mobileSelectedEl) return;
+      var fmapCont = document.getElementById('fmap');
+      if (fmapCont && !fmapCont.contains(e.target)) {
+        resetState(mobileSelectedEl); mobileSelectedEl = null; hideTooltip();
+      }
+    }, { passive: true });
 
     /* ---- Bootstrap: load D3 → topojson → us-atlas → render ---- */
     loadScript('https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js')
