@@ -1400,7 +1400,7 @@
 })();
 </script>
 <script>
-/* ---- Live market bar: Available Loads + Average Rate ---- */
+/* ---- Live market bar: Available Loads + Average Rate (random walk) ---- */
 (function () {
   function rndF(a, b) { return a + Math.random() * (b - a); }
   function ease(t) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
@@ -1408,16 +1408,14 @@
   var stats = [
     {
       id: 'mbar-loads',
-      min: 60, max: 137, minJump: 7,
-      cur: Math.round(rndF(60, 137)),
-      hist: [],
+      min: 60, max: 137,
+      cur: Math.round(rndF(85, 115)),
       fmt: function(v) { return String(Math.round(v)); }
     },
     {
       id: 'mbar-rate',
-      min: 1.67, max: 2.21, minJump: 0.06,
-      cur: parseFloat(rndF(1.67, 2.21).toFixed(2)),
-      hist: [],
+      min: 1.67, max: 2.21,
+      cur: parseFloat(rndF(1.80, 2.05).toFixed(2)),
       fmt: function(v) { return '$' + v.toFixed(2); }
     }
   ];
@@ -1428,18 +1426,31 @@
   });
 
   function nextVal(s) {
-    var n, tries = 0, isInt = s.id === 'mbar-loads';
+    var isInt = s.id === 'mbar-loads';
+    var r = Math.random();
+    var step, dir, n, attempt = 0;
     do {
-      n = isInt ? Math.round(rndF(s.min, s.max)) : parseFloat(rndF(s.min, s.max).toFixed(2));
-      tries++;
-    } while (tries < 30 && (Math.abs(n - s.cur) < s.minJump || s.hist.indexOf(n) !== -1));
-    s.hist.push(n);
-    if (s.hist.length > 3) s.hist.shift();
+      r = Math.random();
+      if (isInt) {
+        /* loads: ±1 ~60%, ±2 ~30%, ±3 ~10% */
+        step = r < 0.60 ? 1 : r < 0.90 ? 2 : 3;
+      } else {
+        /* rate: ±0.01 ~50%, ±0.02 ~30%, ±0.03 ~15%, ±0.04-0.05 ~5% */
+        step = r < 0.50 ? 0.01 : r < 0.80 ? 0.02 : r < 0.95 ? 0.03 : (Math.random() < 0.5 ? 0.04 : 0.05);
+      }
+      /* Bias toward center when within 10% of a boundary */
+      var pos = (s.cur - s.min) / (s.max - s.min);
+      dir = pos > 0.90 ? -1 : pos < 0.10 ? 1 : (Math.random() < 0.5 ? 1 : -1);
+      n = isInt
+        ? Math.round(Math.max(s.min, Math.min(s.max, s.cur + dir * step)))
+        : parseFloat(Math.max(s.min, Math.min(s.max, s.cur + dir * step)).toFixed(2));
+      attempt++;
+    } while (n === s.cur && attempt < 6);
     return n;
   }
 
   function animate(s, target) {
-    var from = s.cur, dur = 900 + Math.random() * 400, t0 = performance.now();
+    var from = s.cur, dur = 700 + Math.random() * 300, t0 = performance.now();
     var el = document.getElementById(s.id);
     if (!el) return;
     (function tick(now) {
