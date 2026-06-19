@@ -7,8 +7,16 @@
 <meta name="description" content="West Dispatch finds high-paying loads, negotiates your rates, and handles the paperwork — so you stay loaded, cut downtime, and grow your revenue. 24/7 dispatcher support, no long-term contracts." />
 <link rel="icon" href="logo-mark-light.png" />
 <link rel="stylesheet" href="ds/styles.css" />
-<link rel="stylesheet" href="site.css?v=20" />
+<link rel="stylesheet" href="site.css?v=21" />
 <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+<script>
+/* Issue 1 fix: disable iOS Safari scroll restoration so page always opens at top */
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+window.addEventListener('pageshow', function(e) {
+  /* covers BFCache restore (back/forward) — always reset to top */
+  window.scrollTo(0, 0);
+});
+</script>
 </head>
 <body>
 <div class="wd-site">
@@ -1329,8 +1337,14 @@
     }
 
     /* ---- Resize handler ---- */
+    /* Issue 2 fix: iOS address bar show/hide fires resize with width unchanged.
+       Only re-render when viewport WIDTH changes — height-only = address bar, skip. */
     var rsTimer;
+    var rsLastW = window.innerWidth;
     window.addEventListener('resize', function() {
+      var w = window.innerWidth;
+      if (w === rsLastW) return;
+      rsLastW = w;
       clearTimeout(rsTimer);
       rsTimer = setTimeout(function() { if (cachedUS) renderMap(cachedUS); }, 180);
     });
