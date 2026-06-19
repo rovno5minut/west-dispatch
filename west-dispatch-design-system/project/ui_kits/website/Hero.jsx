@@ -42,7 +42,7 @@ function Hero() {
             </div>
             <div>
               <div className="wd-stars"><Icon name="star" size={14} color="var(--warning)"/><Icon name="star" size={14} color="var(--warning)"/><Icon name="star" size={14} color="var(--warning)"/><Icon name="star" size={14} color="var(--warning)"/><Icon name="star" size={14} color="var(--warning)"/></div>
-              <div className="wd-hero__prooftext">Trusted by <strong>1,200+</strong> owner-operators nationwide</div>
+              <div className="wd-hero__prooftext">Trusted by <strong>200+</strong> owner-operators</div>
             </div>
           </div>
         </div>

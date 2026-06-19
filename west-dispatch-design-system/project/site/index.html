@@ -7,7 +7,7 @@
 <meta name="description" content="West Dispatch finds high-paying loads, negotiates your rates, and handles the paperwork — so you stay loaded, cut downtime, and grow your revenue. 24/7 dispatcher support, no long-term contracts." />
 <link rel="icon" href="logo-mark-light.png" />
 <link rel="stylesheet" href="ds/styles.css" />
-<link rel="stylesheet" href="site.css?v=21" />
+<link rel="stylesheet" href="site.css?v=22" />
 <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
 <script>
 /* Issue 1 fix: disable iOS Safari scroll restoration so page always opens at top */
@@ -33,7 +33,7 @@ window.addEventListener('pageshow', function(e) {
         <a href="#services" class="wd-nav__link">Services</a>
         <a href="#why" class="wd-nav__link">Why Us</a>
         <a href="#how" class="wd-nav__link">How It Works</a>
-        <a href="#faq" class="wd-nav__link">FAQ</a>
+        <a href="faq/" class="wd-nav__link">FAQ</a>
       </nav>
 
       <div class="wd-header__cta wd-desktop">
@@ -48,7 +48,7 @@ window.addEventListener('pageshow', function(e) {
       <a href="#services" class="wd-mobilemenu__link">Services</a>
       <a href="#why" class="wd-mobilemenu__link">Why Us</a>
       <a href="#how" class="wd-mobilemenu__link">How It Works</a>
-      <a href="#faq" class="wd-mobilemenu__link">FAQ</a>
+      <a href="faq/" class="wd-mobilemenu__link">FAQ</a>
       <a href="#contact" class="wd-btn wd-btn--primary wd-btn--block">Get Started Today <span class="wd-ico"><i data-lucide="arrow-right"></i></span></a>
     </div>
   </header>
@@ -122,7 +122,7 @@ window.addEventListener('pageshow', function(e) {
     <div class="wd-container wd-hero__inner">
       <div class="wd-hero__copy">
         <span class="wd-eyebrow">— Live load board</span>
-        <h2 class="wd-hero__title">Real loads, real rates,<br /><span class="wd-hero__accent">booked while you drive.</span></h2>
+        <h2 class="wd-hero__title"><span class="wd-reveal-line" style="--d:0ms">Real loads,</span> <span class="wd-reveal-line" style="--d:450ms">real rates,</span><br /><span class="wd-hero__accent wd-reveal-line" style="--d:900ms">booked while you drive.</span></h2>
         <p class="wd-hero__sub">Every load below was sourced, negotiated, and booked by your dispatch team. You keep rolling — we keep the board full.</p>
         <div class="wd-hero__cta">
           <a href="#contact" class="wd-btn wd-btn--primary wd-btn--lg">Get Started Today <span class="wd-ico"><i data-lucide="arrow-right"></i></span></a>
@@ -143,7 +143,7 @@ window.addEventListener('pageshow', function(e) {
               <span class="wd-ico"><i data-lucide="star" fill="currentColor"></i></span>
               <span class="wd-ico"><i data-lucide="star" fill="currentColor"></i></span>
             </div>
-            <div class="wd-hero__prooftext">Trusted by <strong>1,200+</strong> owner-operators nationwide</div>
+            <div class="wd-hero__prooftext">Trusted by <strong>200+</strong> owner-operators</div>
           </div>
         </div>
       </div>
@@ -152,7 +152,10 @@ window.addEventListener('pageshow', function(e) {
         <div class="wd-board">
           <div class="wd-board__head">
             <div class="wd-board__title"><span class="wd-board__live"></span> Live Load Board</div>
-            <span class="wd-board__tag">DALLAS, TX</span>
+            <div class="wd-board__tag-wrap">
+              <span class="wd-board__tag">DALLAS, TX</span>
+              <div class="wd-board__updated">Updated <span id="wd-board-secs">12s</span> ago</div>
+            </div>
           </div>
 
           <div class="wd-load">
@@ -188,9 +191,14 @@ window.addEventListener('pageshow', function(e) {
             </div>
           </div>
 
+          <div class="wd-board__ticker">
+            <span class="wd-ticker__dot"></span>
+            <span class="wd-ticker__msg" id="wd-ticker-msg">Load booked: Dallas → Atlanta</span>
+          </div>
+
           <div class="wd-board__foot">
             <div class="wd-stat">
-              <div class="wd-stat__value">$7,420<span> wk</span></div>
+              <div class="wd-stat__value">$7,420<span> wk</span><span class="wd-stat__growth">↑ +18%</span></div>
               <div class="wd-stat__label">Booked this week</div>
             </div>
             <button class="wd-btn wd-btn--energy wd-btn--sm">Book Next Load</button>
@@ -213,16 +221,19 @@ window.addEventListener('pageshow', function(e) {
           <span class="wd-svc__icon"><span class="wd-ico"><i data-lucide="truck"></i></span></span>
           <h3 class="wd-svc__title">Load Sourcing</h3>
           <p class="wd-svc__body">We scour load boards, broker networks, and direct shippers to keep your truck on the highest-paying lanes.</p>
+          <div class="wd-svc__metric">2,400+ loads sourced</div>
         </div>
         <div class="wd-card wd-card--interactive wd-svc wd-reveal">
           <span class="wd-svc__icon"><span class="wd-ico"><i data-lucide="badge-dollar-sign"></i></span></span>
           <h3 class="wd-svc__title">Rate Negotiation</h3>
           <p class="wd-svc__body">Our dispatchers negotiate every rate so you earn what the freight is truly worth — not the first number offered.</p>
+          <div class="wd-svc__metric">Avg +$0.18/mi gained</div>
         </div>
         <div class="wd-card wd-card--interactive wd-svc wd-reveal">
           <span class="wd-svc__icon"><span class="wd-ico"><i data-lucide="route"></i></span></span>
           <h3 class="wd-svc__title">Route Planning</h3>
           <p class="wd-svc__body">Smart routing that minimizes deadhead miles, balances hours of service, and maximizes revenue per mile.</p>
+          <div class="wd-svc__metric">18% fewer empty miles</div>
         </div>
         <div class="wd-card wd-card--interactive wd-svc wd-reveal">
           <span class="wd-svc__icon"><span class="wd-ico"><i data-lucide="phone-call"></i></span></span>
@@ -297,6 +308,7 @@ window.addEventListener('pageshow', function(e) {
             <div>
               <div class="wd-why__t">No long-term contracts</div>
               <div class="wd-why__b">Month-to-month. Stay because the loads are good — never because you're locked in.</div>
+              <div class="wd-why__metric">96% of carriers renew month over month</div>
             </div>
           </div>
           <div class="wd-why__item">
@@ -304,6 +316,7 @@ window.addEventListener('pageshow', function(e) {
             <div>
               <div class="wd-why__t">Transparent flat fee</div>
               <div class="wd-why__b">One clear dispatch fee per load. No hidden cuts, no surprise factoring deductions.</div>
+              <div class="wd-why__metric">Flat rate — zero hidden deductions</div>
             </div>
           </div>
           <div class="wd-why__item">
@@ -311,6 +324,7 @@ window.addEventListener('pageshow', function(e) {
             <div>
               <div class="wd-why__t">24/7 dispatcher support</div>
               <div class="wd-why__b">Real people on the phone when you need them — nights, weekends, and breakdowns included.</div>
+              <div class="wd-why__metric">Avg. 2 min dispatcher response</div>
             </div>
           </div>
           <div class="wd-why__item">
@@ -318,6 +332,7 @@ window.addEventListener('pageshow', function(e) {
             <div>
               <div class="wd-why__t">Higher revenue per mile</div>
               <div class="wd-why__b">Our negotiators consistently book lanes above market — more money on every haul.</div>
+              <div class="wd-why__metric">+$0.22/mi above market average</div>
             </div>
           </div>
         </div>
@@ -346,10 +361,27 @@ window.addEventListener('pageshow', function(e) {
             <div class="wd-stat__label">Dispatcher availability</div>
           </div>
         </div>
-        <div class="wd-why__quote">
-          <span class="wd-ico"><i data-lucide="quote"></i></span>
-          <p>"They keep me loaded every single week. I just drive — they handle everything else."</p>
-          <div class="wd-why__quoteby">— Marcus R., reefer owner-op, 3 trucks</div>
+        <div class="wd-carousel">
+          <div class="wd-why__quote is-active">
+            <span class="wd-ico"><i data-lucide="quote"></i></span>
+            <p>"They keep me loaded every single week. I just drive — they handle everything else."</p>
+            <div class="wd-why__quoteby">— Marcus R., reefer owner-op, 3 trucks</div>
+          </div>
+          <div class="wd-why__quote">
+            <span class="wd-ico"><i data-lucide="quote"></i></span>
+            <p>"They consistently negotiate better rates than I could get on my own. The extra revenue more than covers the dispatch fee."</p>
+            <div class="wd-why__quoteby">— David K., 26ft box truck owner-operator</div>
+          </div>
+          <div class="wd-why__quote">
+            <span class="wd-ico"><i data-lucide="quote"></i></span>
+            <p>"Communication is fast, paperwork is handled, and I always know what's next. It feels like having my own dispatch office."</p>
+            <div class="wd-why__quoteby">— James T., Box Truck carrier, 3 trucks</div>
+          </div>
+        </div>
+        <div class="wd-carousel__dots" role="tablist" aria-label="Testimonials">
+          <button class="wd-carousel__dot is-active" aria-label="Testimonial 1" aria-selected="true"></button>
+          <button class="wd-carousel__dot" aria-label="Testimonial 2" aria-selected="false"></button>
+          <button class="wd-carousel__dot" aria-label="Testimonial 3" aria-selected="false"></button>
         </div>
       </div>
     </div>
@@ -494,49 +526,6 @@ window.addEventListener('pageshow', function(e) {
     </div>
   </section>
 
-  <!-- ===================== FAQ ===================== -->
-  <section class="wd-section" id="faq" data-screen-label="FAQ">
-    <div class="wd-container wd-faq">
-      <div class="wd-faq__head wd-reveal">
-        <span class="wd-eyebrow">— Questions</span>
-        <h2 class="wd-sectionhead__title">Everything you want to know</h2>
-        <p class="wd-sectionhead__sub" style="margin-left:0">Still unsure? Call a real dispatcher at (205) 557-3100 — no bots, no phone trees.</p>
-      </div>
-      <div class="wd-faq__body wd-reveal">
-        <div class="wd-acc" id="wd-acc">
-          <div class="wd-acc__item is-open">
-            <button class="wd-acc__q">Do you require a long-term contract?<span class="wd-acc__plus">+</span></button>
-            <div class="wd-acc__panel"><div class="wd-acc__a">No. West Dispatch is month-to-month agreement. We earn your business one load at a time — if you're not making more money, you're free to walk.</div></div>
-          </div>
-          <div class="wd-acc__item">
-            <button class="wd-acc__q">What do you charge?<span class="wd-acc__plus">+</span></button>
-            <div class="wd-acc__panel"><div class="wd-acc__a">
-              <p style="margin:0">We charge a 10% dispatch fee based on the load amount. However, whenever possible, we negotiate higher rates with brokers and shippers to cover our fee.</p>
-              <p style="margin:12px 0 0">For example, if a load pays $1,000, our fee would normally be $100. Instead, we may negotiate the rate up to $1,100, allowing you to receive the full $1,000 while our fee is covered by the increased rate.</p>
-              <p style="margin:12px 0 0">Our goal is simple: maximize your revenue while keeping your trucks moving.</p>
-            </div></div>
-          </div>
-          <div class="wd-acc__item">
-            <button class="wd-acc__q">How fast can I get my first load?<span class="wd-acc__plus">+</span></button>
-            <div class="wd-acc__panel"><div class="wd-acc__a">Most owner-operators are onboarded and booked on a paying load within 24 hours, as long as your authority and insurance are active.</div></div>
-          </div>
-          <div class="wd-acc__item">
-            <button class="wd-acc__q">Do I need my own authority?<span class="wd-acc__plus">+</span></button>
-            <div class="wd-acc__panel"><div class="wd-acc__a">Yes — you'll need active operating authority (MC/DOT) and insurance. If you're still setting up, we can point you to trusted partners who help with that.</div></div>
-          </div>
-          <div class="wd-acc__item">
-            <button class="wd-acc__q">Can you work with my preferred lanes and home time?<span class="wd-acc__plus">+</span></button>
-            <div class="wd-acc__panel"><div class="wd-acc__a">Absolutely. Your dedicated dispatcher builds your schedule around the lanes you want to run and the days you need to be home.</div></div>
-          </div>
-          <div class="wd-acc__item">
-            <button class="wd-acc__q">What equipment types do you dispatch?<span class="wd-acc__plus">+</span></button>
-            <div class="wd-acc__panel"><div class="wd-acc__a">Dry van, reefer, flatbed, step deck, and power-only. Tell us what you run and we'll match you with a dispatcher who knows that freight.</div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- ===================== CONTACT ===================== -->
   <section class="wd-section wd-contact" id="contact" data-screen-label="Contact">
     <div class="wd-container wd-contact__grid">
@@ -616,10 +605,8 @@ window.addEventListener('pageshow', function(e) {
         </a>
         <p class="wd-footer__tag">Keeping America's owner-operators loaded, paid, and moving — 24/7.</p>
         <div class="wd-footer__social">
-          <a href="#" class="wd-footer__soc" aria-label="facebook"><span class="wd-ico"><i data-lucide="facebook"></i></span></a>
-          <a href="#" class="wd-footer__soc" aria-label="instagram"><span class="wd-ico"><i data-lucide="instagram"></i></span></a>
-          <a href="#" class="wd-footer__soc" aria-label="linkedin"><span class="wd-ico"><i data-lucide="linkedin"></i></span></a>
-          <a href="#" class="wd-footer__soc" aria-label="youtube"><span class="wd-ico"><i data-lucide="youtube"></i></span></a>
+          <a href="https://www.facebook.com/profile.php?id=100063668031144" class="wd-footer__soc" aria-label="facebook" target="_blank" rel="noopener noreferrer"><span class="wd-ico"><i data-lucide="facebook"></i></span></a>
+          <a href="https://www.instagram.com/west_dispatch/" class="wd-footer__soc" aria-label="instagram" target="_blank" rel="noopener noreferrer"><span class="wd-ico"><i data-lucide="instagram"></i></span></a>
         </div>
       </div>
       <div class="wd-footer__col">
@@ -638,7 +625,7 @@ window.addEventListener('pageshow', function(e) {
       </div>
       <div class="wd-footer__col">
         <div class="wd-footer__h">Resources</div>
-        <a href="#faq" class="wd-footer__link">FAQ</a>
+        <a href="faq/" class="wd-footer__link">FAQ</a>
         <a href="#" class="wd-footer__link">Owner-Operator Guide</a>
         <a href="#" class="wd-footer__link">Rate Calculator</a>
         <a href="#" class="wd-footer__link">Blog</a>
@@ -677,21 +664,24 @@ window.addEventListener('pageshow', function(e) {
   });
 
   // ----- Accordion -----
-  document.getElementById("wd-acc").querySelectorAll(".wd-acc__q").forEach(function (btn) {
-    btn.setAttribute("aria-expanded", btn.closest(".wd-acc__item").classList.contains("is-open") ? "true" : "false");
-    btn.addEventListener("click", function () {
-      var item = btn.closest(".wd-acc__item");
-      var isOpen = item.classList.contains("is-open");
-      document.querySelectorAll(".wd-acc__item").forEach(function (i) {
-        i.classList.remove("is-open");
-        i.querySelector(".wd-acc__q").setAttribute("aria-expanded", "false");
+  var accEl = document.getElementById("wd-acc");
+  if (accEl) {
+    accEl.querySelectorAll(".wd-acc__q").forEach(function (btn) {
+      btn.setAttribute("aria-expanded", btn.closest(".wd-acc__item").classList.contains("is-open") ? "true" : "false");
+      btn.addEventListener("click", function () {
+        var item = btn.closest(".wd-acc__item");
+        var isOpen = item.classList.contains("is-open");
+        accEl.querySelectorAll(".wd-acc__item").forEach(function (i) {
+          i.classList.remove("is-open");
+          i.querySelector(".wd-acc__q").setAttribute("aria-expanded", "false");
+        });
+        if (!isOpen) {
+          item.classList.add("is-open");
+          btn.setAttribute("aria-expanded", "true");
+        }
       });
-      if (!isOpen) {
-        item.classList.add("is-open");
-        btn.setAttribute("aria-expanded", "true");
-      }
     });
-  });
+  }
 
   // ----- Telegram bot config -----
   var TG_TOKEN = "8871274229:AAH8Vo7X2xYpkR3sSbGjcPiHElNdfu8A42w";
@@ -1623,6 +1613,221 @@ window.addEventListener('pageshow', function(e) {
     io.observe(section);
   } else {
     setTimeout(cycle, 800);
+  }
+})();
+</script>
+<script>
+(function () {
+  var h = document.querySelector('#loadboard .wd-hero__title');
+  if (!h || !window.IntersectionObserver) return;
+  h.classList.add('js-reveal-ready');
+  var io = new IntersectionObserver(function (entries) {
+    if (entries[0].isIntersecting) {
+      h.classList.add('wd-revealed');
+      io.disconnect();
+    }
+  }, { threshold: 0.3 });
+  io.observe(h);
+})();
+</script>
+<script>
+(function () {
+  /* Activity ticker */
+  var msgs = [
+    'Load booked: Dallas → Atlanta',
+    'New rate posted: $2.31/mi',
+    'Driver checked in: Houston',
+    'Load delivered: Phoenix'
+  ];
+  var idx = 0;
+  var msgEl = document.getElementById('wd-ticker-msg');
+  if (msgEl) {
+    setInterval(function () {
+      msgEl.style.opacity = '0';
+      setTimeout(function () {
+        idx = (idx + 1) % msgs.length;
+        msgEl.textContent = msgs[idx];
+        msgEl.style.opacity = '1';
+      }, 300);
+    }, 6000);
+  }
+
+  /* Timestamp counter — resets to "Just now" when board cycles */
+  var secsEl = document.getElementById('wd-board-secs');
+  if (secsEl) {
+    var count = 12;
+    setInterval(function () {
+      count++;
+      secsEl.textContent = count + 's';
+    }, 1000);
+    /* Reset on each board data cycle (listen for the existing cycle event) */
+    document.addEventListener('wd-board-refresh', function () {
+      count = 0;
+      secsEl.textContent = 'Just now';
+    });
+  }
+})();
+</script>
+<script>
+(function () {
+  var list = document.querySelector('#why .wd-why__list');
+  if (!list || !window.IntersectionObserver) return;
+  var items = list.querySelectorAll('.wd-why__item');
+  items.forEach(function (el) { el.classList.add('js-why-hidden'); });
+  var io = new IntersectionObserver(function (entries) {
+    if (entries[0].isIntersecting) {
+      items.forEach(function (el, i) {
+        setTimeout(function () {
+          el.classList.remove('js-why-hidden');
+          el.classList.add('wd-why-revealed');
+        }, i * 150);
+      });
+      io.disconnect();
+    }
+  }, { threshold: 0.2 });
+  io.observe(list);
+})();
+</script>
+<script>
+(function () {
+  var carousel = document.querySelector('.wd-carousel');
+  if (!carousel) return;
+
+  var cards = Array.from(carousel.querySelectorAll('.wd-why__quote'));
+  var dots  = Array.from(document.querySelectorAll('.wd-carousel__dot'));
+  var total = cards.length;
+  var current = 0;
+  var autoTimer = null;
+  var pauseTimer = null;
+  var paused = false;
+  var started = false;
+
+  /* ── init: measure heights, store texts, blank every card ── */
+  cards.forEach(function (card) {
+    var p  = card.querySelector('p');
+    var by = card.querySelector('.wd-why__quoteby');
+    if (!p) return;
+    p.dataset.text = p.textContent.trim();
+    p.style.minHeight = p.offsetHeight + 'px';
+    p.textContent = '';
+    if (by) {
+      by.style.opacity = '0';
+      by.style.transition = 'opacity 700ms ease';
+    }
+  });
+
+  /* ── typewriter for one card ── */
+  var typeTimer = null;
+
+  function typeCard(cardIdx, onDone) {
+    clearTimeout(typeTimer);
+    var card = cards[cardIdx];
+    var p    = card.querySelector('p');
+    var by   = card.querySelector('.wd-why__quoteby');
+    if (!p) { onDone && onDone(); return; }
+
+    var text = p.dataset.text || '';
+    p.textContent = '';
+    if (by) by.style.opacity = '0';
+
+    var i = 0;
+    function tick() {
+      if (i >= text.length) {
+        /* typing done — fade in author then call back */
+        if (by) {
+          setTimeout(function () {
+            by.style.opacity = '1';
+            onDone && setTimeout(onDone, 700);
+          }, 120);
+        } else {
+          onDone && onDone();
+        }
+        return;
+      }
+      p.textContent = text.slice(0, ++i);
+      var ch = text[i - 1];
+      var delay = 30;
+      if (ch === ',') delay = 120;
+      else if (ch === '.' || ch === '!' || ch === '?') delay = 250;
+      typeTimer = setTimeout(tick, delay);
+    }
+    tick();
+  }
+
+  /* ── activate a card (crossfade + type) ── */
+  function activate(idx) {
+    /* hide old */
+    cards[current].classList.remove('is-active');
+    dots[current].classList.remove('is-active');
+    dots[current].setAttribute('aria-selected', 'false');
+    /* show new */
+    current = ((idx % total) + total) % total;
+    cards[current].classList.add('is-active');
+    dots[current].classList.add('is-active');
+    dots[current].setAttribute('aria-selected', 'true');
+    /* type — after fade-in (650ms) */
+    clearTimeout(typeTimer);
+    clearTimeout(autoTimer);
+    setTimeout(function () {
+      typeCard(current, function () {
+        /* after author fades in, wait 2s then advance */
+        autoTimer = setTimeout(function () {
+          if (!paused) advance();
+        }, 2000);
+      });
+    }, 650);
+  }
+
+  function advance() {
+    activate(current + 1);
+  }
+
+  function pauseFor(ms) {
+    paused = true;
+    clearTimeout(pauseTimer);
+    pauseTimer = setTimeout(function () { paused = false; }, ms);
+  }
+
+  /* ── dot clicks ── */
+  dots.forEach(function (dot, i) {
+    dot.addEventListener('click', function () {
+      clearTimeout(autoTimer);
+      pauseFor(10000);
+      activate(i);
+    });
+  });
+
+  /* ── swipe ── */
+  var tx = 0;
+  carousel.addEventListener('touchstart', function (e) {
+    tx = e.touches[0].clientX;
+  }, { passive: true });
+  carousel.addEventListener('touchend', function (e) {
+    var dx = e.changedTouches[0].clientX - tx;
+    if (Math.abs(dx) > 50) {
+      clearTimeout(autoTimer);
+      pauseFor(10000);
+      activate(current + (dx > 0 ? -1 : 1));
+    }
+  }, { passive: true });
+
+  /* ── start when carousel enters viewport ── */
+  function begin() {
+    if (started) return;
+    started = true;
+    /* type the first card that is already visible (is-active) */
+    typeCard(current, function () {
+      autoTimer = setTimeout(advance, 2000);
+    });
+  }
+
+  if (window.IntersectionObserver) {
+    var io = new IntersectionObserver(function (entries) {
+      if (entries[0].isIntersecting) { io.disconnect(); begin(); }
+    }, { threshold: 0.4 });
+    io.observe(carousel);
+  } else {
+    begin();
   }
 })();
 </script>
