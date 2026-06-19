@@ -72,11 +72,11 @@
       </div>
       <div class="ssh__market-bar" role="region" aria-label="Live freight market data">
         <div class="ssh__mbar-stat ssh__mbar-stat--loads">
-          <div class="ssh__mbar-num">1,247</div>
+          <div class="ssh__mbar-num" id="mbar-loads">1,247</div>
           <div class="ssh__mbar-label">Available Loads</div>
         </div>
         <div class="ssh__mbar-stat">
-          <div class="ssh__mbar-num ssh__mbar-num--rate">$2.48</div>
+          <div class="ssh__mbar-num ssh__mbar-num--rate" id="mbar-rate">$2.48</div>
           <div class="ssh__mbar-label">Average Rate</div>
         </div>
         <div class="ssh__mbar-stat">
@@ -1396,6 +1396,66 @@
 
   LIVE.forEach(function (s, i) {
     setTimeout(function () { schedule(s); }, Math.random() * 1500 + i * 500);
+  });
+})();
+</script>
+<script>
+/* ---- Live market bar: Available Loads + Average Rate ---- */
+(function () {
+  function rndF(a, b) { return a + Math.random() * (b - a); }
+  function ease(t) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
+
+  var stats = [
+    {
+      id: 'mbar-loads',
+      min: 60, max: 137, minJump: 7,
+      cur: Math.round(rndF(60, 137)),
+      hist: [],
+      fmt: function(v) { return String(Math.round(v)); }
+    },
+    {
+      id: 'mbar-rate',
+      min: 1.67, max: 2.21, minJump: 0.06,
+      cur: parseFloat(rndF(1.67, 2.21).toFixed(2)),
+      hist: [],
+      fmt: function(v) { return '$' + v.toFixed(2); }
+    }
+  ];
+
+  stats.forEach(function(s) {
+    var el = document.getElementById(s.id);
+    if (el) el.textContent = s.fmt(s.cur);
+  });
+
+  function nextVal(s) {
+    var n, tries = 0, isInt = s.id === 'mbar-loads';
+    do {
+      n = isInt ? Math.round(rndF(s.min, s.max)) : parseFloat(rndF(s.min, s.max).toFixed(2));
+      tries++;
+    } while (tries < 30 && (Math.abs(n - s.cur) < s.minJump || s.hist.indexOf(n) !== -1));
+    s.hist.push(n);
+    if (s.hist.length > 3) s.hist.shift();
+    return n;
+  }
+
+  function animate(s, target) {
+    var from = s.cur, dur = 900 + Math.random() * 400, t0 = performance.now();
+    var el = document.getElementById(s.id);
+    if (!el) return;
+    (function tick(now) {
+      var p = Math.min((now - t0) / dur, 1);
+      el.textContent = s.fmt(from + (target - from) * ease(p));
+      if (p < 1) { requestAnimationFrame(tick); }
+      else { s.cur = target; schedule(s); }
+    })(t0);
+  }
+
+  function schedule(s) {
+    setTimeout(function() { animate(s, nextVal(s)); }, 3000 + Math.random() * 4000);
+  }
+
+  stats.forEach(function(s, i) {
+    setTimeout(function() { schedule(s); }, 800 + i * 1400 + Math.random() * 800);
   });
 })();
 </script>
