@@ -378,39 +378,51 @@ textarea.wd-field__input { height: auto; padding: 14px 16px; resize: vertical; }
 }
 .fmap__badge {
   position: absolute; top: 14px; right: 14px; z-index: 10;
-  background: rgba(8,17,31,0.80);
-  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 10px;
-  padding: 10px 13px 11px;
+  width: 148px;
+  background: linear-gradient(155deg, rgba(11,22,42,0.92) 0%, rgba(7,13,25,0.96) 100%);
+  backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 18px;
+  padding: 14px 16px 16px;
   pointer-events: none;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.50);
+  text-align: center;
+  box-shadow:
+    0 0 0 1px rgba(58,141,255,0.07) inset,
+    0 10px 48px rgba(0,0,0,0.70),
+    0 0 36px rgba(18,52,128,0.12);
 }
-.fmap__badge-header { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+.fmap__badge-live {
+  display: flex; align-items: center; justify-content: center;
+  gap: 6px; margin-bottom: 10px;
+}
 .fmap__badge-dot {
-  width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
+  width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
   background: #22c55e;
-  box-shadow: 0 0 6px 2px rgba(34,197,94,0.40);
+  box-shadow: 0 0 5px 1px rgba(34,197,94,0.55);
   animation: badge-pulse 2.4s ease-in-out infinite;
 }
 @keyframes badge-pulse {
-  0%,100% { opacity: 1; box-shadow: 0 0 6px 2px rgba(34,197,94,0.40); }
-  50%      { opacity: 0.65; box-shadow: 0 0 10px 3px rgba(34,197,94,0.18); }
+  0%,100% { opacity: 1;    box-shadow: 0 0 5px 1px rgba(34,197,94,0.55); }
+  50%      { opacity: 0.55; box-shadow: 0 0 9px 2px rgba(34,197,94,0.20); }
 }
 @media (prefers-reduced-motion: reduce) { .fmap__badge-dot { animation: none; } }
-.fmap__badge-label {
-  font-family: var(--font-mono); font-size: 8px; font-weight: 700;
-  letter-spacing: 0.12em; color: rgba(255,255,255,0.32);
-  text-transform: uppercase; white-space: nowrap;
+.fmap__badge-live-text {
+  font-family: var(--font-mono); font-size: 9px; font-weight: 700;
+  letter-spacing: 0.16em; color: rgba(34,197,94,0.75);
+  text-transform: uppercase;
 }
-.fmap__badge-count {
-  font-size: 11px; font-weight: 400;
-  color: rgba(255,255,255,0.50); white-space: nowrap;
+.fmap__badge-num {
+  font-family: var(--font-display); font-size: 44px; font-weight: 700;
+  line-height: 1; letter-spacing: -0.025em;
+  color: #edf1fa;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 9px;
+  transition: opacity 200ms ease;
 }
-.fmap__badge-count strong {
-  font-family: var(--font-display); font-size: 15px; font-weight: 700;
-  color: #e4eaf4; font-variant-numeric: tabular-nums; letter-spacing: -0.01em;
-  transition: opacity 180ms ease;
+.fmap__badge-sub {
+  font-family: var(--font-mono); font-size: 8px; font-weight: 600;
+  letter-spacing: 0.09em; color: rgba(255,255,255,0.22);
+  text-transform: uppercase; line-height: 1.5;
 }
 .ssh__scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(8,12,20,0.5) 0%, rgba(8,12,20,0) 30%), linear-gradient(0deg, rgba(8,12,20,0.88) 0%, rgba(8,12,20,0) 50%); pointer-events: none; }
 .ssh__content { position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column; justify-content: flex-end; padding: clamp(28px, 6vw, 92px); pointer-events: none; }
@@ -446,11 +458,11 @@ textarea.wd-field__input { height: auto; padding: 14px 16px; resize: vertical; }
     background: #08111F;
   }
 
-  /* Live dispatch badge — compact on mobile */
-  .fmap__badge { top: 10px; right: 10px; padding: 8px 10px 9px; }
-  .fmap__badge-label { font-size: 7px; }
-  .fmap__badge-count { font-size: 10px; }
-  .fmap__badge-count strong { font-size: 13px; }
+  /* Live dispatch badge — scaled for mobile */
+  .fmap__badge { top: 10px; right: 10px; width: 126px; padding: 12px 14px 14px; border-radius: 16px; }
+  .fmap__badge-num { font-size: 38px; margin-bottom: 7px; }
+  .fmap__badge-sub { font-size: 7px; }
+  .fmap__badge-live-text { font-size: 8px; }
 
   /* Map becomes a fixed-height block — no longer fills viewport */
   .fmap {
