@@ -376,6 +376,42 @@ textarea.wd-field__input { height: auto; padding: 14px 16px; resize: vertical; }
   .fmap__legend { bottom: 18px; right: 14px; padding: 8px 10px 9px; }
   .fmap__legend-title { font-size: 8px; }
 }
+.fmap__badge {
+  position: absolute; top: 14px; right: 14px; z-index: 10;
+  background: rgba(8,17,31,0.80);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: 10px 13px 11px;
+  pointer-events: none;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.50);
+}
+.fmap__badge-header { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+.fmap__badge-dot {
+  width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
+  background: #22c55e;
+  box-shadow: 0 0 6px 2px rgba(34,197,94,0.40);
+  animation: badge-pulse 2.4s ease-in-out infinite;
+}
+@keyframes badge-pulse {
+  0%,100% { opacity: 1; box-shadow: 0 0 6px 2px rgba(34,197,94,0.40); }
+  50%      { opacity: 0.65; box-shadow: 0 0 10px 3px rgba(34,197,94,0.18); }
+}
+@media (prefers-reduced-motion: reduce) { .fmap__badge-dot { animation: none; } }
+.fmap__badge-label {
+  font-family: var(--font-mono); font-size: 8px; font-weight: 700;
+  letter-spacing: 0.12em; color: rgba(255,255,255,0.32);
+  text-transform: uppercase; white-space: nowrap;
+}
+.fmap__badge-count {
+  font-size: 11px; font-weight: 400;
+  color: rgba(255,255,255,0.50); white-space: nowrap;
+}
+.fmap__badge-count strong {
+  font-family: var(--font-display); font-size: 15px; font-weight: 700;
+  color: #e4eaf4; font-variant-numeric: tabular-nums; letter-spacing: -0.01em;
+  transition: opacity 180ms ease;
+}
 .ssh__scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(8,12,20,0.5) 0%, rgba(8,12,20,0) 30%), linear-gradient(0deg, rgba(8,12,20,0.88) 0%, rgba(8,12,20,0) 50%); pointer-events: none; }
 .ssh__content { position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column; justify-content: flex-end; padding: clamp(28px, 6vw, 92px); pointer-events: none; }
 .ssh__content .wd-btn,
@@ -409,6 +445,12 @@ textarea.wd-field__input { height: auto; padding: 14px 16px; resize: vertical; }
     min-height: 0;
     background: #08111F;
   }
+
+  /* Live dispatch badge — compact on mobile */
+  .fmap__badge { top: 10px; right: 10px; padding: 8px 10px 9px; }
+  .fmap__badge-label { font-size: 7px; }
+  .fmap__badge-count { font-size: 10px; }
+  .fmap__badge-count strong { font-size: 13px; }
 
   /* Map becomes a fixed-height block — no longer fills viewport */
   .fmap {

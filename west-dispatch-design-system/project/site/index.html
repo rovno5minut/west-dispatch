@@ -53,6 +53,13 @@
         <canvas id="fmap-canvas" class="fmap__canvas"></canvas>
         <svg id="fmap-svg" class="fmap__svg"></svg>
         <div id="fmap-tooltip" class="fmap__tooltip"></div>
+        <div class="fmap__badge" role="status" aria-live="polite" aria-label="Live dispatch network">
+          <div class="fmap__badge-header">
+            <span class="fmap__badge-dot"></span>
+            <span class="fmap__badge-label">LIVE DISPATCH NETWORK</span>
+          </div>
+          <div class="fmap__badge-count"><strong id="fmap-badge-trucks">57</strong> Trucks Dispatched Today</div>
+        </div>
         <div class="fmap__legend" aria-label="Freight volume legend">
           <div class="fmap__legend-title">FREIGHT DEMAND</div>
           <div class="fmap__legend-scale">
@@ -1468,6 +1475,28 @@
   stats.forEach(function(s, i) {
     setTimeout(function() { schedule(s); }, 800 + i * 1400 + Math.random() * 800);
   });
+})();
+</script>
+
+<!-- Live dispatch badge counter -->
+<script>
+(function () {
+  var el = document.getElementById('fmap-badge-trucks');
+  if (!el) return;
+  var cur = Math.round(50 + Math.random() * 40);
+  el.textContent = cur;
+
+  function step() {
+    var r = Math.random();
+    var delta = r < 0.70 ? 1 : 2;
+    var pos = (cur - 50) / 40;
+    var dir = pos > 0.85 ? -1 : pos < 0.15 ? 1 : (Math.random() < 0.5 ? 1 : -1);
+    cur = Math.max(50, Math.min(90, cur + dir * delta));
+    el.style.opacity = '0';
+    setTimeout(function() { el.textContent = cur; el.style.opacity = '1'; }, 180);
+    setTimeout(step, 15000 + Math.random() * 15000);
+  }
+  setTimeout(step, 15000 + Math.random() * 15000);
 })();
 </script>
 
